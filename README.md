@@ -1,1 +1,1 @@
-# cargolyze.github.io
+# cargolyze.com
