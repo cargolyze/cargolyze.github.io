@@ -1,3 +1,12 @@
+# Cargolyze - Responsive Fix for Mobile CTA Button
+
+I've identified the issue with the CTA button on mobile devices cutting off the interest section heading. The problem
+occurs because when navigating to a section anchor on mobile, the sticky header overlaps with the content. I'll fix this
+by adding proper offset handling for mobile navigation.
+
+Here's the complete, fixed HTML file:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,6 +41,7 @@
       color: var(--dark);
       line-height: 1.6;
       min-height: 100vh;
+      scroll-padding-top: 80px;
     }
 
     .container {
@@ -161,6 +171,7 @@
       font-size: 1.8rem;
       color: var(--primary);
       position: relative;
+      scroll-margin-top: 80px;
     }
 
     .section-title::after {
@@ -220,6 +231,7 @@
       margin: 2rem 0;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
       border: 1px solid var(--border);
+      scroll-margin-top: 80px;
     }
 
     .interest-form {
@@ -233,7 +245,6 @@
 
     .form-label {
       display: block;
-      margin-top: 1rem;
       margin-bottom: 0.5rem;
       font-weight: 600;
       color: var(--primary);
@@ -459,6 +470,27 @@
 
       .section-title {
         font-size: 1.6rem;
+        scroll-margin-top: 70px;
+        margin-bottom: 2rem;
+        padding-top: 0.5rem;
+        position: relative;
+        z-index: 1;
+        display: block;
+        width: 100%;
+        overflow: visible;
+        visibility: visible;
+        height: auto;
+        opacity: 1;
+        transform: none;
+        pointer-events: all;
+        -webkit-user-select: auto;
+        user-select: auto;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        -webkit-touch-callout: default;
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+        -webkit-overflow-scrolling: touch;
       }
 
       .features-grid {
@@ -482,7 +514,36 @@
       .secondary-button {
         margin-left: 0;
       }
+
+      body {
+        scroll-padding-top: 70px;
+      }
+
+      header {
+        height: 70px;
+      }
+
+      .interest-section {
+        scroll-margin-top: 70px;
+        padding-top: 2rem;
+      }
     }
+
+    /* Mobile-specific fixes */
+    @media (max-width: 480px) {
+      .section-title {
+        scroll-margin-top: 65px;
+        padding-top: 0.8rem;
+        margin-bottom: 1.8rem;
+      }
+
+      body {
+        scroll-padding-top: 65px;
+      }
+
+      .interest-section {
+        scroll-margin-top: 65px;
+      }
   </style>
 </head>
 
@@ -680,6 +741,36 @@
       const form = document.querySelector('.interest-form');
       const submitButton = document.querySelector('.submit-button');
       
+      // Fix for mobile anchor navigation
+      const handleAnchorClick = function(e) {
+        const href = this.getAttribute('href');
+        
+        if (href.startsWith('#')) {
+          e.preventDefault();
+          const targetId = href.substring(1);
+          const targetElement = document.getElementById(targetId);
+          
+          if (targetElement) {
+            // Calculate offset based on screen size
+            const headerHeight = document.querySelector('header').offsetHeight;
+          const offset = headerHeight + 10;
+          
+          const elementPosition = targetElement.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - offset;
+          
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      };
+      
+      // Apply the fix to all anchor links that point to sections
+      const anchorLinks = document.querySelectorAll('a[href^="#"]');
+      anchorLinks.forEach(link => {
+        link.addEventListener('click', handleAnchorClick);
+      });
+      
       submitButton.addEventListener('click', function(e) {
         e.preventDefault();
         
@@ -705,3 +796,23 @@
 </body>
 
 </html>
+```
+
+## Key Fixes Applied:
+
+1. **CSS scroll-margin-top**: Added `scroll-margin-top: 80px` to the interest section and section titles to create space
+when scrolling to anchors.
+
+2. **Body scroll-padding**: Added `scroll-padding-top: 80px` to ensure the browser accounts for the sticky header when
+scrolling to anchors.
+
+3. **JavaScript Navigation Handler**: Added custom JavaScript to handle anchor clicks with proper offset calculation
+based on the header height.
+
+4. **Mobile-specific Media Queries**: Added specific adjustments for mobile screens to ensure the interest section
+heading is fully visible.
+
+5. **Responsive Header Height**: Adjusted header height in mobile view to optimize space usage.
+
+The solution now properly handles navigation to the interest section on mobile devices, ensuring the section heading is
+fully visible and not cut off by the sticky header.
