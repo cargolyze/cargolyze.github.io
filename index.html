@@ -238,13 +238,30 @@
       scroll-margin-top: 80px;
     }
 
+    .required {
+      color: var(--danger);
+      font-weight: bold;
+      margin-left: 3px;
+      font-size: 1.1em;
+    }
+    
+    .form-group {
+      position: relative;
+    }
+    
+    .form-label .required {
+      position: absolute;
+      margin-left: 0;
+    }
+    
+    .form-input:required {
+      background-color: rgba(0, 180, 216, 0.02);
+      border-left: 3px solid var(--accent);
+    }
+    
     .interest-form {
       max-width: 500px;
       margin: 0 auto;
-    }
-
-    .form-group {
-      margin-bottom: 1.2rem;
     }
 
     .form-label {
@@ -586,16 +603,16 @@
       </p>
       <div class="interest-form">
         <div class="form-group">
-          <label class="form-label" for="name">Full Name</label>
-          <input type="text" id="name" class="form-input" placeholder="Enter your full name">
+          <label class="form-label" for="name">Full Name <span class="required">*</span></label>
+          <input type="text" id="name" class="form-input" placeholder="Enter your full name" required>
         </div>
         <div class="form-group">
           <label class="form-label" for="company">Company</label>
           <input type="text" id="company" class="form-input" placeholder="Enter your company name">
         </div>
         <div class="form-group">
-          <label class="form-label" for="email">Email Address</label>
-          <input type="email" id="email" class="form-input" placeholder="Enter your business email">
+          <label class="form-label" for="email">Email Address <span class="required">*</span></label>
+          <input type="email" id="email" class="form-input" placeholder="Enter your business email" required>
         </div>
         <div class="form-group">
           <label class="form-label" for="message">Specific Requirements</label>
@@ -603,8 +620,8 @@
         </div>
         <button class="cta-button submit-button">Submit Interest</button>
         <div class="interest-note">
-          Your information will be sent to <strong>hello@cargolyze.com</strong> and we'll contact you as we approach
-          launch.
+          <p><span class="required">*</span> indicates required fields</p>
+          <p>Your information will be sent to <strong>hello@cargolyze.com</strong> and we'll contact you as we approach launch.</p>
         </div>
       </div>
     </div>
@@ -739,11 +756,11 @@
     </div>
   </footer>
 
-    <script>
+      <script>
     document.addEventListener('DOMContentLoaded', function() {
       const form = document.querySelector('.interest-form');
       const submitButton = document.querySelector('.submit-button');
-    
+      
       // Fix for mobile anchor navigation
       const handleAnchorClick = function(e) {
         const href = this.getAttribute('href');
@@ -767,7 +784,7 @@
             });
           }
         }
-      }; // <-- Added this closing brace and semicolon
+      };
       
       // Apply the fix to all anchor links that point to sections
       const anchorLinks = document.querySelectorAll('a[href^="#"]');
@@ -778,18 +795,31 @@
       submitButton.addEventListener('click', function(e) {
         e.preventDefault();
         
-        const name = document.getElementById('name').value;
-        const company = document.getElementById('company').value;
-        const email = document.getElementById('email').value;
-        const message = document.getElementById('message').value;
+        const name = document.getElementById('name').value.trim();
+        const company = document.getElementById('company').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
         
         if (!name || !email) {
           alert('Please fill in at least your name and email address.');
           return;
         }
         
-        const subject = `Interest in Cargolyze - ${name} from ${company}`;
-        const body = `Name: ${name}\nCompany: ${company}\nEmail: ${email}\nMessage: ${message}`;
+        // Build subject with conditional company inclusion
+        let subject = `Interest in Cargolyze - ${name}`;
+        if (company) {
+          subject += ` from ${company}`;
+        }
+        
+        // Build body with conditional company field
+        let body = `Name: ${name}\n`;
+        if (company) {
+          body += `Company: ${company}\n`;
+        }
+        body += `Email: ${email}`;
+        if (message) {
+          body += `\nMessage: ${message}`;
+        }
         
         const mailtoLink = `mailto:hello@cargolyze.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         
