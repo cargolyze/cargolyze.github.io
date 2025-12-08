@@ -739,11 +739,11 @@
     </div>
   </footer>
 
-  <script>
+    <script>
     document.addEventListener('DOMContentLoaded', function() {
       const form = document.querySelector('.interest-form');
       const submitButton = document.querySelector('.submit-button');
-      
+    
       // Fix for mobile anchor navigation
       const handleAnchorClick = function(e) {
         const href = this.getAttribute('href');
@@ -756,17 +756,18 @@
           if (targetElement) {
             // Calculate offset based on screen size
             const headerHeight = document.querySelector('header').offsetHeight;
-          const offset = headerHeight + 10;
-          
-          const elementPosition = targetElement.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - offset;
-          
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          });
+            const offset = headerHeight + 10;
+            
+            const elementPosition = targetElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+            
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }
         }
-      };
+      }; // <-- Added this closing brace and semicolon
       
       // Apply the fix to all anchor links that point to sections
       const anchorLinks = document.querySelectorAll('a[href^="#"]');
