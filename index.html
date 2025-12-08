@@ -70,6 +70,7 @@
       gap: 10px;
       font-size: 1.5rem;
       font-weight: 700;
+      position: relative;
     }
 
     .logo i {
@@ -93,6 +94,21 @@
 
     .built-with:hover {
       opacity: 1;
+    }
+
+    /* Status Badge - Updated */
+    .status-badge {
+      position: absolute;
+      top: 50%;
+      right: -90px;
+      transform: translateY(-50%);
+      background: var(--warning);
+      color: white;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      white-space: nowrap;
     }
 
     /* Hero Section */
@@ -436,21 +452,6 @@
       border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    /* Status Badge */
-    .status-badge {
-      position: absolute;
-      top: 50%;
-      right: -90px;
-      transform: translateY(-50%);
-      background: var(--warning);
-      color: white;
-      padding: 0.4rem 1rem;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
     /* Responsive Design */
     @media (max-width: 768px) {
       .hero h1 {
@@ -537,6 +538,19 @@
       .interest-section {
         scroll-margin-top: 65px;
       }
+    }
+
+    /* Updated mobile responsive for status badge */
+    @media (max-width: 768px) {
+      .status-badge {
+        position: static;
+        transform: none;
+        margin-left: 1rem;
+        margin-top: 0.2rem;
+        font-size: 0.75rem;
+        padding: 0.3rem 0.8rem;
+      }
+    }
   </style>
 </head>
 
