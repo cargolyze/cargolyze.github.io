@@ -73,6 +73,19 @@
       position: relative;
     }
 
+   .logo a {
+     text-decoration: none;
+   }
+
+   .logo a:hover span {
+     text-decoration: none;
+   }
+
+   .logo a:focus span {
+     text-decoration: none;
+     outline: none;
+   }
+    
     .logo i {
       color: var(--accent);
     }
@@ -573,8 +586,10 @@
     <div class="container">
       <div class="header-content">
         <div class="logo">
-          <i class="fas fa-ship"></i>
-          <span>Cargolyze</span>
+          <a href="#home">
+            <i class="fas fa-ship"></i>
+            <span>Cargolyze</span>
+          </a>
         </div>
         <span class="status-badge">Coming Soon</span>
       </div>
