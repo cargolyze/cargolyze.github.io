@@ -98,17 +98,14 @@
 
     /* Status Badge - Updated */
     .status-badge {
-      position: absolute;
-      top: 50%;
-      left: +90px;
-      transform: translateY(-50%);
       background: var(--warning);
       color: white;
-      padding: 0.4rem 1rem;
+      padding: 0.4rem 1.2rem;
       border-radius: 20px;
       font-size: 0.85rem;
       font-weight: 600;
       white-space: nowrap;
+      margin-left: auto;
     }
 
     /* Hero Section */
@@ -545,8 +542,7 @@
       .status-badge {
         position: static;
         transform: none;
-        margin-left: 1rem;
-        margin-top: 0.2rem;
+        margin-top: auto;
         font-size: 0.75rem;
         padding: 0.3rem 0.8rem;
       }
@@ -562,8 +558,8 @@
         <div class="logo">
           <i class="fas fa-ship"></i>
           <span>Cargolyze</span>
-          <span class="status-badge">Coming Soon</span>
         </div>
+        <span class="status-badge">Coming Soon</span>
       </div>
     </div>
   </header>
