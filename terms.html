@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cargolyze - Terms of Service</title>
+  <link rel="icon" type="image/png" href="./image/favicon.svg">
+  <link rel="shortcut icon" type="image/png" href="./image/favicon.svg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    :root {
+      --slate-grey: #37474F;
+      --industrial-orange: #FF5722;
+      --light-slate-grey: #546E7A;
+      --white: #FFFFFF;
+      --light: #f8fafc;
+      --dark: #1e293b;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+    }
+
+    body {
+      background: var(--light);
+      color: var(--slate-grey);
+      line-height: 1.6;
+      min-height: 100vh;
+      scroll-padding-top: 80px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header Styles */
+    header {
+      background: var(--slate-grey);
+      color: white;
+      padding: 0.8rem 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 2px solid var(--industrial-orange);
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.6rem;
+      font-weight: 700;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .logo a {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-symbol {
+      position: relative;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: scale(0.6);
+    }
+
+    .logo-symbol-inner {
+      position: relative;
+      width: 32px;
+      height: 32px;
+      transform: rotate(45deg);
+      overflow: visible;
+    }
+
+    .logo-symbol-inner::before {
+      content: '';
+      position: absolute;
+      width: 80px;
+      height: 50px;
+      background: var(--white);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    .logo-symbol-inner::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-left: 25px solid var(--industrial-orange);
+      border-top: 25px solid transparent;
+      border-bottom: 25px solid transparent;
+      top: 50%;
+      left: 50%;
+      transform: translate(7.5px, -43.75px) rotate(135deg);
+    }
+
+    .logo-symbol-inner .logo-square {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: var(--industrial-orange);
+      top: 50%;
+      left: 50%;
+      transform: translate(35px, -275%) rotate(-45deg);
+    }
+
+    .logo-text {
+      color: var(--white);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      position: absolute;
+      font-size: 1.8rem;
+      font-family: 'Montserrat', sans-serif;
+      text-transform: uppercase;
+      left: 175%;
+    }
+
+    /* Back Button */
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .back-button:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Main Content */
+    .main-content {
+      padding: 4rem 0;
+    }
+
+    .page-title {
+      font-size: 2.5rem;
+      color: var(--slate-grey);
+      margin-bottom: 1.5rem;
+      text-align: center;
+      position: relative;
+      padding-bottom: 1rem;
+    }
+
+    .page-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: var(--industrial-orange);
+    }
+
+    .last-updated {
+      text-align: center;
+      color: var(--light-slate-grey);
+      margin-bottom: 3rem;
+      font-size: 0.95rem;
+    }
+
+    /* TOS Content */
+    .tos-content {
+      background: var(--white);
+      padding: 3rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      margin-bottom: 3rem;
+    }
+
+    .section {
+      margin-bottom: 2.5rem;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      color: var(--slate-grey);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .section-subtitle {
+      font-size: 1.2rem;
+      color: var(--slate-grey);
+      margin: 1.5rem 0 0.75rem;
+      font-weight: 600;
+    }
+
+    .section p {
+      margin-bottom: 1rem;
+      color: var(--dark);
+      opacity: 0.9;
+    }
+
+    .section ul {
+      margin-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .section li {
+      margin-bottom: 0.5rem;
+      color: var(--dark);
+      opacity: 0.9;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--slate-grey);
+      color: white;
+      padding: 2.5rem 0 1.2rem;
+      text-align: center;
+      margin-top: 2rem;
+      border-top: 2px solid var(--industrial-orange);
+    }
+
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+      opacity: 0.8;
+      transition: opacity 0.3s;
+      font-size: 0.9rem;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+      color: var(--industrial-orange);
+    }
+
+    .copyright {
+      opacity: 0.7;
+      font-size: 0.85rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 2rem;
+      }
+
+      .tos-content {
+        padding: 2rem;
+      }
+
+      .section-title {
+        font-size: 1.3rem;
+      }
+
+      .section-subtitle {
+        font-size: 1.1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .tos-content {
+        padding: 1.5rem;
+      }
+
+      .page-title {
+        font-size: 1.8rem;
+      }
+
+      .footer-links {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <a href="index.html" class="logo-link">
+            <div class="logo-symbol">
+              <div class="logo-symbol-inner">
+                <div class="logo-square"></div>
+              </div>
+            </div>
+            <span class="logo-text">CARGOLYZE</span>
+          </a>
+        </div>
+        <a href="index.html" class="back-button">
+          <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <h1 class="page-title">Terms of Service</h1>
+      <p class="last-updated">Last Updated: December 2025</p>
+
+      <div class="tos-content">
+        <!-- Introduction -->
+        <section class="section">
+          <h2 class="section-title">1. Agreement to Terms</h2>
+          <p>By accessing and using Cargolyze ("the Application"), you accept and agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, you must not use our Application.</p>
+          <p>Cargolyze is a desktop application that provides shipment tracking automation, predictive analytics, and logistics intelligence services.</p>
+        </section>
+
+        <!-- License -->
+        <section class="section">
+          <h2 class="section-title">2. License Grant</h2>
+          <p>Subject to your compliance with these Terms, Cargolyze grants you a limited, non-exclusive, non-transferable, revocable license to:</p>
+          <ul>
+            <li>Download and install the Application on compatible devices</li>
+            <li>Use the Application for your internal business purposes</li>
+            <li>Access the features and services provided through the Application</li>
+          </ul>
+        </section>
+
+        <!-- User Accounts -->
+        <section class="section">
+          <h2 class="section-title">3. User Accounts</h2>
+          <p>To use certain features of the Application, you may need to create an account. You agree to:</p>
+          <ul>
+            <li>Provide accurate, current, and complete information</li>
+            <li>Maintain and promptly update your account information</li>
+            <li>Maintain the security of your account credentials</li>
+            <li>Accept responsibility for all activities under your account</li>
+            <li>Notify us immediately of any unauthorized access or security breach</li>
+          </ul>
+        </section>
+
+        <!-- Acceptable Use -->
+        <section class="section">
+          <h2 class="section-title">4. Acceptable Use</h2>
+          <p>You agree not to:</p>
+          <ul>
+            <li>Use the Application for any illegal purpose or in violation of any laws</li>
+            <li>Reverse engineer, decompile, or disassemble the Application</li>
+            <li>Attempt to gain unauthorized access to our systems or other users' accounts</li>
+            <li>Interfere with or disrupt the integrity or performance of the Application</li>
+            <li>Use the Application to transmit viruses, malware, or other harmful code</li>
+            <li>Scrape, crawl, or use automated means to access the Application</li>
+            <li>Share your account credentials with third parties</li>
+          </ul>
+        </section>
+
+        <!-- Intellectual Property -->
+        <section class="section">
+          <h2 class="section-title">5. Intellectual Property Rights</h2>
+          <p>The Application, including its source code, database, features, functionality, design, and content, are owned by Cargolyze and are protected by copyright, trademark, and other intellectual property laws.</p>
+          <p>You may not:</p>
+          <ul>
+            <li>Copy, modify, or create derivative works of the Application</li>
+            <li>Use our trademarks, logos, or branding without permission</li>
+            <li>Remove any proprietary notices or labels</li>
+          </ul>
+        </section>
+
+        <!-- Data and Privacy -->
+        <section class="section">
+          <h2 class="section-title">6. Data and Privacy</h2>
+          <p>Our Privacy Policy governs the collection, use, and disclosure of your personal information. By using the Application, you consent to our data practices as described in our Privacy Policy.</p>
+          <p>The Application may:</p>
+          <ul>
+            <li>Process shipment data you provide or retrieve from carrier websites</li>
+            <li>Store tracking information for analysis and reporting</li>
+            <li>Use aggregated, anonymized data to improve our services</li>
+          </ul>
+        </section>
+
+        <!-- Payment and Subscriptions -->
+        <section class="section">
+          <h2 class="section-title">7. Payment and Subscriptions</h2>
+          <p>Cargolyze offers both free and paid subscription plans:</p>
+          <ul>
+            <li>Free trial periods may be offered at our discretion</li>
+            <li>Paid subscriptions automatically renew unless canceled</li>
+            <li>Payment processing is handled by Paddle.com Market Ltd</li>
+            <li>All fees are non-refundable except as required by law</li>
+            <li>We reserve the right to change subscription fees with 30 days' notice</li>
+          </ul>
+        </section>
+
+        <!-- Termination -->
+        <section class="section">
+          <h2 class="section-title">8. Termination</h2>
+          <p>We may suspend or terminate your access to the Application:</p>
+          <ul>
+            <li>If you violate these Terms</li>
+            <li>For non-payment of subscription fees</li>
+            <li>If required by law or to protect our rights</li>
+          </ul>
+          <p>Upon termination:</p>
+          <ul>
+            <li>Your right to use the Application immediately ceases</li>
+            <li>You must stop all use of the Application</li>
+            <li>Any outstanding payments remain due</li>
+          </ul>
+        </section>
+
+        <!-- Disclaimer of Warranties -->
+        <section class="section">
+          <h2 class="section-title">9. Disclaimer of Warranties</h2>
+          <p>The Application is provided "as is" and "as available" without warranties of any kind, either express or implied. We do not warrant that:</p>
+          <ul>
+            <li>The Application will meet your specific requirements</li>
+            <li>The Application will be uninterrupted, timely, or error-free</li>
+            <li>The results obtained from the Application will be accurate or reliable</li>
+            <li>Any errors in the Application will be corrected</li>
+          </ul>
+        </section>
+
+        <!-- Limitation of Liability -->
+        <section class="section">
+          <h2 class="section-title">10. Limitation of Liability</h2>
+          <p>To the maximum extent permitted by law, Cargolyze shall not be liable for:</p>
+          <ul>
+            <li>Any indirect, incidental, special, consequential, or punitive damages</li>
+            <li>Loss of profits, revenue, data, or use</li>
+            <li>Damages related to carrier website changes or API modifications</li>
+            <li>Business interruption or procurement of substitute goods or services</li>
+          </ul>
+          <p>Our total liability for any claims under these Terms shall not exceed the amount you paid us in the 12 months preceding the claim.</p>
+        </section>
+
+        <!-- Indemnification -->
+        <section class="section">
+          <h2 class="section-title">11. Indemnification</h2>
+          <p>You agree to indemnify and hold harmless Cargolyze, its affiliates, officers, directors, employees, and agents from any claims, damages, losses, liabilities, and expenses arising from:</p>
+          <ul>
+            <li>Your use of the Application</li>
+            <li>Your violation of these Terms</li>
+            <li>Your violation of any third-party rights</li>
+            <li>Your violation of any applicable laws</li>
+          </ul>
+        </section>
+
+        <!-- Third-Party Services -->
+        <section class="section">
+          <h2 class="section-title">12. Third-Party Services</h2>
+          <p>The Application integrates with and retrieves data from third-party carrier websites and services. We are not responsible for:</p>
+          <ul>
+            <li>The accuracy, completeness, or timeliness of third-party data</li>
+            <li>Changes to third-party websites or APIs</li>
+            <li>Third-party terms of service or privacy policies</li>
+            <li>Any issues arising from third-party service interruptions</li>
+          </ul>
+        </section>
+
+        <!-- Changes to Terms -->
+        <section class="section">
+          <h2 class="section-title">13. Changes to Terms</h2>
+          <p>We reserve the right to modify these Terms at any time. We will provide notice of material changes:</p>
+          <ul>
+            <li>By posting the updated Terms on our website</li>
+            <li>By sending an email to registered users</li>
+            <li>Through in-application notifications</li>
+          </ul>
+          <p>Your continued use of the Application after changes constitutes acceptance of the modified Terms.</p>
+        </section>
+
+        <!-- Governing Law -->
+        <section class="section">
+          <h2 class="section-title">14. Governing Law</h2>
+          <p>These Terms shall be governed by and construed in accordance with the laws of India/Gujarat, without regard to its conflict of law provisions.</p>
+        </section>
+
+        <!-- Dispute Resolution -->
+        <section class="section">
+          <h2 class="section-title">15. Dispute Resolution</h2>
+          <p>Any disputes arising from these Terms shall be resolved through binding arbitration in accordance with the rules of Indian Council of Arbitration (ICA). The arbitration shall take place in Vadodara, India/Gujarat.</p>
+        </section>
+
+        <!-- Contact Information -->
+        <section class="section">
+          <h2 class="section-title">16. Contact Information</h2>
+          <p>For questions about these Terms, please contact us:</p>
+          <ul>
+            <li>Email: legal@cargolyze.com</li>
+            <li>Website: www.cargolyze.com</li>
+            <li>Address: 31A, Kadam Nagar, Nizampura, Vadodara, Gujarat - 390024</li>
+          </ul>
+        </section>
+
+        <!-- Entire Agreement -->
+        <section class="section">
+          <h2 class="section-title">17. Entire Agreement</h2>
+          <p>These Terms, together with our Privacy Policy, constitute the entire agreement between you and Cargolyze regarding the Application and supersede all prior agreements and understandings.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-logo">CARGOLYZE</div>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="mailto:hello@cargolyze.com">Contact</a>
+        </div>
+      </div>
+      <div class="copyright">
+        &copy; 2025 Cargolyze. All rights reserved.
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
