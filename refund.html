@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cargolyze - Refund Policy</title>
+  <link rel="icon" type="image/png" href="./image/favicon.svg">
+  <link rel="shortcut icon" type="image/png" href="./image/favicon.svg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    :root {
+      --slate-grey: #37474F;
+      --industrial-orange: #FF5722;
+      --industrial-orange-light: rgba(255, 87, 34, 0.1);
+      --industrial-orange-dark: #E64A19;
+      --light-slate-grey: #546E7A;
+      --white: #FFFFFF;
+      --light: #f8fafc;
+      --dark: #1e293b;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --grey-light: #f5f5f5;
+      --grey-medium: #e0e0e0;
+    }
+
+    body {
+      background: var(--light);
+      color: var(--slate-grey);
+      line-height: 1.6;
+      min-height: 100vh;
+      scroll-padding-top: 80px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header Styles */
+    header {
+      background: var(--slate-grey);
+      color: white;
+      padding: 0.8rem 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 2px solid var(--industrial-orange);
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.6rem;
+      font-weight: 700;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .logo a {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-symbol {
+      position: relative;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: scale(0.6);
+    }
+
+    .logo-symbol-inner {
+      position: relative;
+      width: 32px;
+      height: 32px;
+      transform: rotate(45deg);
+      overflow: visible;
+    }
+
+    .logo-symbol-inner::before {
+      content: '';
+      position: absolute;
+      width: 80px;
+      height: 50px;
+      background: var(--white);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    .logo-symbol-inner::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-left: 25px solid var(--industrial-orange);
+      border-top: 25px solid transparent;
+      border-bottom: 25px solid transparent;
+      top: 50%;
+      left: 50%;
+      transform: translate(7.5px, -43.75px) rotate(135deg);
+    }
+
+    .logo-symbol-inner .logo-square {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: var(--industrial-orange);
+      top: 50%;
+      left: 50%;
+      transform: translate(35px, -275%) rotate(-45deg);
+    }
+
+    .logo-text {
+      color: var(--white);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      position: absolute;
+      font-size: 1.8rem;
+      font-family: 'Montserrat', sans-serif;
+      text-transform: uppercase;
+      left: 175%;
+    }
+
+    /* Navigation */
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-links a.active {
+      background: var(--industrial-orange);
+    }
+
+    /* Main Content */
+    .main-content {
+      padding: 4rem 0;
+    }
+
+    .page-title {
+      font-size: 2.5rem;
+      color: var(--slate-grey);
+      margin-bottom: 1rem;
+      text-align: center;
+      position: relative;
+      padding-bottom: 1rem;
+    }
+
+    .page-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: var(--industrial-orange);
+    }
+
+    .last-updated {
+      text-align: center;
+      color: var(--light-slate-grey);
+      margin-bottom: 3rem;
+      font-size: 0.95rem;
+    }
+
+    /* Policy Content */
+    .policy-content {
+      background: var(--white);
+      padding: 3rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      margin-bottom: 3rem;
+    }
+
+    .section {
+      margin-bottom: 2.5rem;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      color: var(--slate-grey);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .section-subtitle {
+      font-size: 1.2rem;
+      color: var(--slate-grey);
+      margin: 1.5rem 0 0.75rem;
+      font-weight: 600;
+    }
+
+    .section p {
+      margin-bottom: 1rem;
+      color: var(--dark);
+      opacity: 0.9;
+    }
+
+    .section ul {
+      margin-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .section li {
+      margin-bottom: 0.5rem;
+      color: var(--dark);
+      opacity: 0.9;
+      line-height: 1.5;
+    }
+
+    /* Highlight Boxes */
+    .highlight-box {
+      background: rgba(255, 87, 34, 0.05);
+      border-left: 4px solid var(--industrial-orange);
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .highlight-box p {
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .warning-box {
+      background: rgba(245, 158, 11, 0.05);
+      border-left: 4px solid var(--warning);
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .success-box {
+      background: rgba(16, 185, 129, 0.05);
+      border-left: 4px solid var(--success);
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    /* Process Steps */
+    .process-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .process-step {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    .step-number {
+      background: var(--industrial-orange);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .step-content h4 {
+      color: var(--slate-grey);
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .step-content p {
+      margin-bottom: 0;
+    }
+
+    /* Refund Table */
+    .refund-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+    }
+
+    .refund-table th,
+    .refund-table td {
+      padding: 1rem;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+
+    .refund-table th {
+      background: var(--light);
+      font-weight: 600;
+    }
+
+    .refund-table td:nth-child(2),
+    .refund-table td:nth-child(3) {
+      font-weight: 600;
+    }
+
+    .refund-status {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .status-eligible {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--success);
+    }
+
+    .status-not-eligible {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--danger);
+    }
+
+    /* Contact Card */
+    .contact-card {
+      background: var(--light);
+      border-radius: 8px;
+      padding: 2rem;
+      margin: 2rem 0;
+      text-align: center;
+    }
+
+    .contact-card h3 {
+      color: var(--slate-grey);
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+
+    .contact-card p {
+      margin-bottom: 1.5rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .contact-button {
+      display: inline-block;
+      background: var(--industrial-orange);
+      color: white;
+      padding: 0.8rem 2rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .contact-button:hover {
+      background: var(--industrial-orange-dark);
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--slate-grey);
+      color: white;
+      padding: 2.5rem 0 1.2rem;
+      text-align: center;
+      margin-top: 2rem;
+      border-top: 2px solid var(--industrial-orange);
+    }
+
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+      opacity: 0.8;
+      transition: opacity 0.3s;
+      font-size: 0.9rem;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+      color: var(--industrial-orange);
+    }
+
+    .copyright {
+      opacity: 0.7;
+      font-size: 0.85rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .policy-content {
+        padding: 2rem;
+      }
+
+      .page-title {
+        font-size: 2rem;
+      }
+
+      .section-title {
+        font-size: 1.3rem;
+      }
+
+      .process-step {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .step-number {
+        align-self: flex-start;
+      }
+
+      .refund-table {
+        display: block;
+        overflow-x: auto;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .policy-content {
+        padding: 1.5rem;
+      }
+
+      .page-title {
+        font-size: 1.8rem;
+      }
+
+      .contact-card {
+        padding: 1.5rem;
+      }
+
+      .footer-links {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <a href="index.html" class="logo-link">
+            <div class="logo-symbol">
+              <div class="logo-symbol-inner">
+                <div class="logo-square"></div>
+              </div>
+            </div>
+            <span class="logo-text">CARGOLYZE</span>
+          </a>
+        </div>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="refund.html" class="active">Refund Policy</a>
+          <a href="mailto:hello@cargolyze.com">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <h1 class="page-title">Refund Policy</h1>
+      <p class="last-updated">Last Updated: December 2025</p>
+
+      <div class="policy-content">
+        <!-- Introduction -->
+        <section class="section">
+          <h2 class="section-title">1. Overview</h2>
+          <p>At Cargolyze, we strive to provide excellent service and customer satisfaction. This Refund Policy outlines the terms and conditions under which refunds may be granted for our services.</p>
+          <p>All payments are processed securely through Paddle.com Market Ltd, our authorized payment processor. By subscribing to our services, you agree to the terms outlined in this policy.</p>
+          
+          <div class="highlight-box">
+            <p><i class="fas fa-exclamation-circle"></i> <strong>Important:</strong> Please read this policy carefully before making a purchase. Your purchase indicates acceptance of these terms.</p>
+          </div>
+        </section>
+
+        <!-- Refund Eligibility -->
+        <section class="section">
+          <h2 class="section-title">2. Refund Eligibility</h2>
+          
+          <h3 class="section-subtitle">2.1 Annual Subscriptions</h3>
+          <p>Customers with annual subscriptions are eligible for a full refund under the following conditions:</p>
+          <ul>
+            <li>The refund request is made within <strong>30 days</strong> of the initial purchase</li>
+            <li>You have used the service for less than 5 shipments</li>
+            <li>The request is not related to a violation of our Terms of Service</li>
+            <li>You have contacted our support team to resolve any issues first</li>
+          </ul>
+
+          <div class="success-box">
+            <p><i class="fas fa-check-circle"></i> <strong>30-Day Money-Back Guarantee:</strong> All annual plans include a 30-day money-back guarantee. If you're not satisfied, contact us within 30 days for a full refund.</p>
+          </div>
+
+          <h3 class="section-subtitle">2.2 Monthly Subscriptions</h3>
+          <p>Monthly subscriptions follow different guidelines:</p>
+          <ul>
+            <li>No refunds for partial months used</li>
+            <li>You can cancel at any time to avoid future charges</li>
+            <li>Cancellation takes effect at the end of the current billing period</li>
+            <li>Refunds are considered on a case-by-case basis for technical issues</li>
+          </ul>
+
+          <h3 class="section-subtitle">2.3 Free Trials</h3>
+          <p>Our 14-day free trial requires no payment information. After the trial period:</p>
+          <ul>
+            <li>If you don't cancel, your chosen plan will automatically start</li>
+            <li>Once billing begins, standard refund policies apply</li>
+            <li>You can cancel anytime during the trial to avoid charges</li>
+          </ul>
+
+          <div class="warning-box">
+            <p><i class="fas fa-exclamation-triangle"></i> <strong>Important:</strong> Free trial users must cancel before the trial ends to avoid being charged for the first billing period.</p>
+          </div>
+        </section>
+
+        <!-- Non-Refundable Items -->
+        <section class="section">
+          <h2 class="section-title">3. Non-Refundable Items</h3>
+          <p>The following are generally not eligible for refunds:</p>
+          <ul>
+            <li>Monthly subscription fees for periods already used</li>
+            <li>Services rendered or partially used</li>
+            <li>Custom development or enterprise implementation fees</li>
+            <li>Charges related to violations of our Terms of Service</li>
+            <li>Third-party fees or charges (carrier data access, etc.)</li>
+            <li>Bank fees, currency conversion fees, or payment processor fees</li>
+          </ul>
+        </section>
+
+        <!-- Refund Scenarios -->
+        <section class="section">
+          <h2 class="section-title">4. Common Refund Scenarios</h2>
+          
+          <table class="refund-table">
+            <thead>
+              <tr>
+                <th>Scenario</th>
+                <th>Refund Type</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Annual subscription within 30 days</td>
+                <td>Full Refund</td>
+                <td><span class="refund-status status-eligible">Eligible</span></td>
+              </tr>
+              <tr>
+                <td>Monthly subscription cancellation</td>
+                <td>No Refund (Future charges only)</td>
+                <td><span class="refund-status status-not-eligible">Not Eligible</span></td>
+              </tr>
+              <tr>
+                <td>Technical issues preventing use</td>
+                <td>Pro-rated Refund</td>
+                <td><span class="refund-status status-eligible">Eligible*</span></td>
+              </tr>
+              <tr>
+                <td>Duplicate or incorrect charge</td>
+                <td>Full Refund</td>
+                <td><span class="refund-status status-eligible">Eligible</span></td>
+              </tr>
+              <tr>
+                <td>Change of mind after using service</td>
+                <td>No Refund</td>
+                <td><span class="refund-status status-not-eligible">Not Eligible</span></td>
+              </tr>
+              <tr>
+                <td>Billing error or unauthorized charge</td>
+                <td>Full Refund</td>
+                <td><span class="refund-status status-eligible">Eligible</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <p><small>* Technical issues must be verified by our support team and must prevent significant use of the service.</small></p>
+        </section>
+
+        <!-- Refund Process -->
+        <section class="section">
+          <h2 class="section-title">5. How to Request a Refund</h2>
+          
+          <div class="process-steps">
+            <div class="process-step">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h4>Contact Support</h4>
+                <p>Email support@cargolyze.com with your account details and reason for refund. Please include your invoice number.</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h4>Review Period</h4>
+                <p>We'll review your request within 3-5 business days. We may ask for additional information or try to resolve your issue first.</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h4>Decision & Processing</h4>
+                <p>If approved, we'll process your refund within 10 business days. Refunds are issued to your original payment method.</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h4>Confirmation</h4>
+                <p>You'll receive an email confirmation once the refund is processed. It may take additional time for your bank to show the refund.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p><i class="fas fa-clock"></i> <strong>Processing Times:</strong> Refunds typically take 5-10 business days to appear in your account, depending on your bank or payment provider.</p>
+          </div>
+        </section>
+
+        <!-- Cancellation Policy -->
+        <section class="section">
+          <h2 class="section-title">6. Cancellation Policy</h2>
+          
+          <h3 class="section-subtitle">6.1 How to Cancel</h3>
+          <p>You can cancel your subscription at any time:</p>
+          <ul>
+            <li><strong>Self-Service:</strong> Log into your account and visit Billing Settings</li>
+            <li><strong>Email:</strong> Send cancellation request to billing@cargolyze.com</li>
+            <li><strong>Through Paddle:</strong> Contact Paddle support directly if you purchased through them</li>
+          </ul>
+
+          <h3 class="section-subtitle">6.2 Cancellation Effects</h3>
+          <p>When you cancel:</p>
+          <ul>
+            <li>Your subscription remains active until the end of the current billing period</li>
+            <li>You retain access to all features until the billing period ends</li>
+            <li>No further charges will be made</li>
+            <li>You can restart your subscription at any time</li>
+          </ul>
+        </section>
+
+        <!-- Special Circumstances -->
+        <section class="section">
+          <h2 class="section-title">7. Special Circumstances</h2>
+          
+          <h3 class="section-subtitle">7.1 Service Discontinuation</h3>
+          <p>If we discontinue Cargolyze permanently, we will provide:</p>
+          <ul>
+            <li>At least 60 days notice to all active users</li>
+            <li>Pro-rated refunds for any unused portion of annual subscriptions</li>
+            <li>Data export tools to migrate your information</li>
+          </ul>
+
+          <h3 class="section-subtitle">7.2 Force Majeure</h3>
+          <p>We are not liable for service interruptions caused by:</p>
+          <ul>
+            <li>Acts of God, natural disasters, or weather events</li>
+            <li>Government actions or regulatory changes</li>
+            <li>Third-party carrier website changes or API disruptions</li>
+            <li>Internet or infrastructure failures beyond our control</li>
+          </ul>
+
+          <h3 class="section-subtitle">7.3 Legal Compliance</h3>
+          <p>Refunds may be required by law in certain jurisdictions. We comply with:</p>
+          <ul>
+            <li>Consumer protection laws in your country/region</li>
+            <li>Distance selling regulations where applicable</li>
+            <li>Digital content regulations</li>
+          </ul>
+        </section>
+
+        <!-- Paddle Integration -->
+        <section class="section">
+          <h2 class="section-title">8. Paddle Payment Processing</h2>
+          
+          <p>As our payment processor, Paddle.com Market Ltd handles:</p>
+          <ul>
+            <li>Payment collection and security</li>
+            <li>Tax/VAT calculation and remittance</li>
+            <li>Currency conversion</li>
+            <li>Initial refund processing</li>
+          </ul>
+
+          <div class="highlight-box">
+            <p><i class="fas fa-info-circle"></i> <strong>Note:</strong> Paddle acts as the merchant of record for all transactions. They issue invoices and handle customer billing inquiries directly.</p>
+          </div>
+
+          <p>For payment-related questions, you can contact:</p>
+          <ul>
+            <li><strong>Paddle Support:</strong> https://paddle.com/support</li>
+            <li><strong>Your Paddle Invoice:</strong> Contains direct contact information</li>
+            <li><strong>Paddle Dashboard:</strong> Manage subscriptions and view billing history</li>
+          </ul>
+        </section>
+
+        <!-- Changes to Policy -->
+        <section class="section">
+          <h2 class="section-title">9. Policy Changes</h2>
+          <p>We may update this Refund Policy periodically. When we do:</p>
+          <ul>
+            <li>We'll update the "Last Updated" date at the top</li>
+            <li>Material changes will be communicated via email</li>
+            <li>Changes won't apply retroactively to previous purchases</li>
+            <li>Continued use of our services indicates acceptance of changes</li>
+          </ul>
+        </section>
+
+        <!-- Contact Information -->
+        <section class="section">
+          <h2 class="section-title">10. Contact Us</h2>
+          
+          <div class="contact-card">
+            <h3>Need Help with a Refund?</h3>
+            <p>Our support team is here to help. Before requesting a refund, please give us a chance to resolve any issues you're experiencing.</p>
+            <p><strong>Contact Options:</strong></p>
+            <p style="margin-bottom: 0.5rem;"><strong>Email:</strong> support@cargolyze.com</p>
+            <p style="margin-bottom: 0.5rem;"><strong>Billing Inquiries:</strong> billing@cargolyze.com</p>
+            <p style="margin-bottom: 1.5rem;"><strong>Response Time:</strong> 24-48 hours during business days</p>
+            <a href="mailto:support@cargolyze.com" class="contact-button">Contact Support</a>
+          </div>
+
+          <p>For fastest resolution, please include in your email:</p>
+          <ul>
+            <li>Your account email address</li>
+            <li>Invoice number or transaction ID</li>
+            <li>Reason for refund request</li>
+            <li>Any relevant screenshots or details</li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-logo">CARGOLYZE</div>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="refund.html">Refund Policy</a>
+          <a href="mailto:hello@cargolyze.com">Contact</a>
+        </div>
+      </div>
+      <div class="copyright">
+        &copy; 2025 Cargolyze. All rights reserved. Payments processed by Paddle.com.
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
