@@ -41,8 +41,13 @@
 
     .container {
       width: 100%;
-      max-width: 1200px;
+      max-width: 2400px;
       margin: 0 auto;
+      padding: 0 0px;
+    }
+
+    .compact-container {
+      max-width: 1300px;
       padding: 0 20px;
     }
 
@@ -62,9 +67,12 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 20px;
+      margin-left: 0%;
+      margin-right: 0%;
+      padding: 0 50px; 
     }
 
+    /* Logo Styles */
     .logo {
       display: flex;
       align-items: center;
@@ -74,6 +82,11 @@
       position: relative;
       text-decoration: none;
       color: inherit;
+      width: 35%;
+    }
+
+    .logo:hover {
+      transform: scale(1.025);
     }
 
     .logo a {
@@ -135,15 +148,32 @@
       transform: translate(35px, -275%) rotate(-45deg);
     }
 
+    /* Logo Text */
     .logo-text {
       color: var(--white);
       font-weight: 800;
       letter-spacing: -0.5px;
-      position: absolute;
+      position: relative;
       font-size: 1.8rem;
       font-family: 'Montserrat', sans-serif;
       text-transform: uppercase;
-      left: 175%;
+      left: 10%;
+      margin-right: 0px;
+    }
+
+    .logo-text:hover {
+      color: var(--industrial-orange);
+    }
+
+    .logo-tagline {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--industrial-orange);
+      opacity: 0.9;
+      letter-spacing: 0.5px;
+      margin-left: 4px;
+      text-transform: uppercase;
+      transform: translate(0,-15px);
     }
 
     /* Back Button */
@@ -165,7 +195,7 @@
 
     /* Main Content */
     .main-content {
-      padding: 4rem 0;
+      padding: 4rem 50px;
     }
 
     .page-title {
@@ -276,9 +306,9 @@
     footer {
       background: var(--slate-grey);
       color: white;
-      padding: 2.5rem 0 1.2rem;
+      padding: 3rem 0 1.5rem;
       text-align: center;
-      margin-top: 2rem;
+      margin-top: 3rem;
       border-top: 2px solid var(--industrial-orange);
     }
 
@@ -286,21 +316,23 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1.5rem;
-      margin-bottom: 1.5rem;
+      gap: 2rem;
+      margin-bottom: 2rem;
     }
 
     .footer-logo {
-      font-size: 1.5rem;
-      font-weight: 700;
+      font-size: 1.8rem;
+      font-weight: 800;
       color: var(--white);
+      margin-bottom: -0.8rem;
     }
 
     .footer-links {
       display: flex;
-      gap: 1.5rem;
+      gap: 2rem;
       flex-wrap: wrap;
       justify-content: center;
+      margin: 1rem 0;
     }
 
     .footer-links a {
@@ -308,7 +340,8 @@
       text-decoration: none;
       opacity: 0.8;
       transition: opacity 0.3s;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
+      font-weight: 600;
     }
 
     .footer-links a:hover {
@@ -316,11 +349,31 @@
       color: var(--industrial-orange);
     }
 
+    .footer-legal {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .footer-legal a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.3s;
+    }
+
+    .footer-legal a:hover {
+      color: var(--white);
+    }
+
     .copyright {
       opacity: 0.7;
       font-size: 0.85rem;
-      padding-top: 1.2rem;
+      padding-top: 1.5rem;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 1.5rem;
     }
 
     /* Responsive Design */
@@ -348,6 +401,34 @@
     }
 
     @media (max-width: 480px) {
+      header {
+	height: 60px;
+      }
+
+      .header-content {
+	height: 33px;
+        padding: 0 10px;
+      }
+
+      .logo {
+        transform: translate(0px, 0px) scale(0.7);
+        width: 65%;
+        left: -7.5%;
+      }
+
+      .logo-text {
+        font-size: 1.8rem;
+      }
+
+      .back-button {
+        transform: scale(1);
+        padding: 8px 10px;
+      }
+
+      .main-content {
+        padding: 4rem 20px;
+      }
+
       .policy-content {
         padding: 1.5rem;
       }
@@ -356,8 +437,8 @@
         font-size: 1.8rem;
       }
 
-      .footer-links {
-        flex-direction: column;
+      .footer-legal {
+        flex-direction: row;
         gap: 1rem;
       }
     }
@@ -657,11 +738,12 @@
     <div class="container">
       <div class="footer-content">
         <div class="footer-logo">CARGOLYZE</div>
-        <div class="footer-links">
-          <a href="index.html">Home</a>
+        <div class="logo-tagline">SHIPMENT TRACKING AUTOMATION</div>
+        <div class="footer-legal">
           <a href="terms.html">Terms of Service</a>
           <a href="privacy.html">Privacy Policy</a>
-          <a href="mailto:hello@cargolyze.com">Contact</a>
+          <a href="refund.html">Refund Policy</a>
+          <a href="mailto:support@cargolyze.com">Support</a>
         </div>
       </div>
       <div class="copyright">

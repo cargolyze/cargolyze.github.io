@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -87,6 +87,10 @@
       text-decoration: none;
       color: inherit;
       width: 35%;
+    }
+
+    .logo:hover {
+      transform: scale(1.025);
     }
 
     .logo a {
@@ -634,9 +638,9 @@
     footer {
       background: var(--slate-grey);
       color: white;
-      padding: 2.5rem 0 1.2rem;
+      padding: 3rem 0 1.5rem;
       text-align: center;
-      margin-top: 2rem;
+      margin-top: 3rem;
       border-top: 2px solid var(--industrial-orange);
     }
 
@@ -644,8 +648,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1.5rem;
-      margin-bottom: 1.5rem;
+      gap: 2rem;
+      margin-bottom: 2rem;
     }
 
     .footer-logo {
@@ -778,9 +782,9 @@
     }
 
     /* Responsive Design */
-    @media (max-width: 874px) {
+    @media (max-width: 887px) {
       .header-content {
-        padding: 0 30px;
+        padding: 0 20px;
       }
     }
 
@@ -868,8 +872,8 @@
       }
 
       .footer-legal {
-        flex-direction: column;
-        gap: 0.5rem;
+        flex-direction: row;
+        gap: 1rem;
       }
     }
   </style>
@@ -960,10 +964,10 @@
                 <i class="fas fa-check"></i>
                 <span class="feature-text">Basic ETA tracking for 5 carriers</span>
               </li>
-              <li class="feature-item">
+              <!-- <li class="feature-item">
                 <i class="fas fa-check"></i>
                 <span class="feature-text">Port-to-port transit analysis</span>
-              </li>
+              </li> -->
               <li class="feature-item">
                 <i class="fas fa-check"></i>
                 <span class="feature-text">Excel file integration</span>
@@ -972,9 +976,17 @@
                 <i class="fas fa-check"></i>
                 <span class="feature-text">Email support (48-hour response)</span>
               </li>
-              <li class="feature-item">
+              <!-- <li class="feature-item">
                 <i class="fas fa-times"></i>
                 <span class="feature-text"><del>Predictive analytics</del></span>
+              </li> -->
+              <li class="feature-item">
+                <i class="fas fa-times"></i>
+                <span class="feature-text"><del>Port-to-port transit analysis</del></span>
+              </li>
+              <li class="feature-item">
+                <i class="fas fa-times"></i>
+                <span class="feature-text"><del>Custom reporting & dashboards</del></span>
               </li>
               <li class="feature-item">
                 <i class="fas fa-times"></i>
@@ -1006,19 +1018,23 @@
               </li>
               <li class="feature-item">
                 <i class="fas fa-check"></i>
-                <span class="feature-text">Advanced tracking for all carriers <span class="feature-label">ALL 5</span></span>
+                <span class="feature-text">Advanced tracking for all carriers <span class="feature-label">ALL 5+</span></span>
               </li>
-              <li class="feature-item">
+              <!-- <li class="feature-item">
                 <i class="fas fa-check"></i>
                 <span class="feature-text">Predictive ETA with AI algorithms</span>
               </li>
               <li class="feature-item">
                 <i class="fas fa-check"></i>
                 <span class="feature-text">Port congestion analytics</span>
-              </li>
+              </li> -->
               <li class="feature-item">
                 <i class="fas fa-check"></i>
                 <span class="feature-text">Custom reporting & dashboards</span>
+              </li>
+              <li class="feature-item">
+                <i class="fas fa-check"></i>
+                <span class="feature-text">Excel file integration</span>
               </li>
               <li class="feature-item">
                 <i class="fas fa-check"></i>
@@ -1106,13 +1122,13 @@
               <td>All + Custom</td>
             </tr>
             <tr>
-              <td>Predictive ETA Analytics</td>
+              <td>Port & Transit Details</td>
               <td><i class="fas fa-times cross-icon"></i></td>
               <td><i class="fas fa-check check-icon"></i></td>
               <td><i class="fas fa-check check-icon"></i></td>
             </tr>
             <tr>
-              <td>Port Congestion Data</td>
+              <td>Access to New Features</td>
               <td><i class="fas fa-times cross-icon"></i></td>
               <td><i class="fas fa-check check-icon"></i></td>
               <td><i class="fas fa-check check-icon"></i></td>
@@ -1130,6 +1146,12 @@
               <td><i class="fas fa-check check-icon"></i></td>
             </tr>
             <tr>
+              <td>White Labelling</td>
+              <td><i class="fas fa-times cross-icon"></i></td>
+              <td><i class="fas fa-times cross-icon"></i></td>
+              <td><i class="fas fa-check check-icon"></i></td>
+            </tr>
+            <tr>
               <td>Support</td>
               <td>Email (48h)</td>
               <td>Priority (24h)</td>
@@ -1144,8 +1166,8 @@
             <tr>
               <td>SLA Guarantee</td>
               <td><i class="fas fa-times cross-icon"></i></td>
-              <td>99.5%</td>
-              <td>99.9%</td>
+              <td>99%</td>
+              <td>99%</td>
             </tr>
           </tbody>
         </table>
@@ -1169,7 +1191,7 @@
           </div>
           <div class="faq-item">
             <h4>Do you offer refunds?</h4>
-            <p>We offer a 30-day money-back guarantee for annual subscriptions. Monthly plans can be canceled anytime without penalty.</p>
+            <p>We offer a 30-day money-back guarantee for annual subscriptions. Monthly plans can be canceled anytime without penalty. Please read our refund policy for more details.</p>
           </div>
           <div class="faq-item">
             <h4>Is my data secure?</h4>

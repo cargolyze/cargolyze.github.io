@@ -86,6 +86,10 @@
       width: 35%;
     }
 
+    .logo:hover {
+      transform: scale(1.025);
+    }
+
     .logo a {
       text-decoration: none;
       display: flex;
@@ -913,8 +917,8 @@
       }
 
       .footer-legal {
-        flex-direction: column;
-        gap: 0.5rem;
+        flex-direction: row;
+        gap: 1rem;
       }
     }
 
@@ -981,10 +985,10 @@
   <section class="hero" id="home">
     <div class="hero-content">
       <h1>Intelligent Shipment Tracking & Analytics</h1>
-      <p>Advanced desktop application providing real-time cargo tracking, predictive ETAs, port analytics, and comprehensive transit insights.</p>
+      <p>Advanced desktop application providing shipment tracking automation solution with accurate ETAs, port details, and transit time calculations.</p>
       <div class="button-group">
         <a href="pricing.html" class="cta-button">View Pricing Plans</a>
-        <a href="#interest" class="cta-button secondary">Join Waitlist</a>
+        <a href="#interest" class="cta-button secondary">Join Us</a>
       </div>
     </div>
   </section>
@@ -998,12 +1002,12 @@
           <p>Carrier Integrations</p>
         </div>
         <div class="stat-item">
-          <h3>99.5%</h3>
+          <h3>99%</h3>
           <p>Tracking Accuracy</p>
         </div>
         <div class="stat-item">
-          <h3>24/7</h3>
-          <p>Real-time Updates</p>
+          <h3>24/7*</h3>
+          <p>Technical Support</p>
         </div>
         <div class="stat-item">
           <h3>95%</h3>
@@ -1017,10 +1021,10 @@
   <section class="features" id="features">
     <div class="container compact-container">
       <h2 class="section-title">Advanced Features</h2>
-      <p class="section-subtitle">Powerful tools designed to streamline your logistics operations and provide actionable insights.</p>
+      <p class="section-subtitle">Powerful tools designed to streamline your logistics operations and provide actionable insights. Many other attractive and useful features are under active development and will soon be at your service.</p>
       
       <div class="features-grid">
-        <div class="feature-card">
+        <!-- <div class="feature-card">
           <div class="feature-icon">
             <i class="fas fa-clock"></i>
           </div>
@@ -1047,7 +1051,7 @@
           </div>
           <h3>Real-time Analytics</h3>
           <p>Interactive dashboards with real-time tracking data and comprehensive reporting tools.</p>
-        </div>
+        </div> -->
         <div class="feature-card">
           <div class="feature-icon">
             <i class="fas fa-file-excel"></i>
@@ -1060,7 +1064,7 @@
             <i class="fas fa-robot"></i>
           </div>
           <h3>Automated Tracking</h3>
-          <p>Automated shipment tracking across multiple carriers with customizable update intervals.</p>
+          <p>Automated shipment tracking across multiple carriers with transit time calculation.</p>
         </div>
       </div>
     </div>
@@ -1070,7 +1074,7 @@
   <section class="interest-section" id="interest">
     <div class="container compact-container">
       <h2 class="section-title">Get Started Today</h2>
-      <p class="section-subtitle">Join industry leaders who trust Cargolyze for accurate shipment tracking and predictive analytics. Start with a free 14-day trial.</p>
+      <p class="section-subtitle">Join Cargolyze for effortless and accurate shipment tracking and save your time. Start with a free 14-day trial.</p>
       
       <div class="interest-form">
         <div class="form-group">
@@ -1092,7 +1096,7 @@
         <button class="cta-button submit-button">Start Free Trial</button>
         <div class="interest-note">
           <p><span class="required">*</span> indicates required fields</p>
-          <p>Your information will be sent to <strong>hello@cargolyze.com</strong> and we'll contact you with next steps.</p>
+          <p>Your information will be sent to <strong>support@cargolyze.com</strong> and we'll contact you with next steps.</p>
         </div>
       </div>
     </div>
@@ -1102,7 +1106,7 @@
   <section class="carriers" id="carriers">
     <div class="container compact-container">
       <h2 class="section-title">Integrated Carriers</h2>
-      <p class="section-subtitle">Track shipments across all major shipping lines with our comprehensive carrier integration.</p>
+      <p class="section-subtitle">Track shipments across all major shipping lines with our comprehensive carrier integration. We are working on adding more carriers to your service.</p>
       <div class="carriers-grid">
         <div class="carrier-card">
           <div class="carrier-logo">
@@ -1191,7 +1195,7 @@
   <section class="cta-section">
     <div class="container compact-container">
       <h2>Ready to Optimize Your Logistics?</h2>
-      <p>Join hundreds of logistics professionals who trust Cargolyze for accurate tracking and predictive analytics.</p>
+      <p>Join Cargolyze for effortless and accurate shipment tracking automation, saving hours of manual labor.</p>
       <a href="pricing.html" class="cta-button">View Pricing Plans</a>
     </div>
   </section>
@@ -1208,19 +1212,19 @@
           <a href="#features">Features</a>
           <a href="#carriers">Carriers</a>
           <a href="pricing.html">Pricing</a>
-          <a href="#interest">Contact</a>
+          <a href="#interest">Join Us</a>
         </div>
         
         <div class="footer-legal">
           <a href="terms.html">Terms of Service</a>
           <a href="privacy.html">Privacy Policy</a>
           <a href="refund.html">Refund Policy</a>
-          <a href="mailto:hello@cargolyze.com">Support</a>
+          <a href="mailto:support@cargolyze.com">Support</a>
         </div>
       </div>
       
       <div class="copyright">
-        &copy; 2025 Cargolyze. All rights reserved. Prices in USD. Payments processed by Paddle.com.
+        &copy; 2025 Cargolyze. All rights reserved.
       </div>
     </div>
   </footer>
@@ -1334,7 +1338,7 @@
         }
         body += `\n---\nSent from Cargolyze Website`;
         
-        const mailtoLink = `mailto:hello@cargolyze.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        const mailtoLink = `mailto:support@cargolyze.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         
         window.location.href = mailtoLink;
       });
