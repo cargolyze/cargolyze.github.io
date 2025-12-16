@@ -48,7 +48,7 @@
     }
 
     .compact-container {
-      max-width: 900px;
+      max-width: 1300px;
       padding: 0 20px;
     }
 
@@ -70,10 +70,10 @@
       align-items: center;
       margin-left: 0%;
       margin-right: 0%;
-      padding: 0 20px; 
+      padding: 0 50px; 
     }
 
-    /* Logo Styles - Updated to match business card */
+    /* Logo Styles */
     .logo {
       display: flex;
       align-items: center;
@@ -83,6 +83,7 @@
       position: relative;
       text-decoration: none;
       color: inherit;
+      width: 35%;
     }
 
     .logo a {
@@ -92,7 +93,6 @@
       gap: 12px;
     }
 
-    /* Updated Logo Symbol to match business card */
     .logo-symbol {
       position: relative;
       width: 45px;
@@ -111,7 +111,6 @@
       overflow: visible;
     }
 
-    /* Updated logo graphic to match business card */
     .logo-symbol-inner::before {
       content: '';
       position: absolute;
@@ -136,7 +135,6 @@
       transform: translate(7.5px, -43.75px) rotate(135deg);
     }
 
-    /* Add the small square from business card logo */
     .logo-symbol-inner .logo-square {
       position: absolute;
       width: 20px;
@@ -147,16 +145,21 @@
       transform: translate(35px, -275%) rotate(-45deg);
     }
 
-    /* Logo Text - Updated to match business card */
+    /* Logo Text */
     .logo-text {
       color: var(--white);
       font-weight: 800;
       letter-spacing: -0.5px;
-      position: absolute;
+      position: relative;
       font-size: 1.8rem;
       font-family: 'Montserrat', sans-serif;
       text-transform: uppercase;
-      left: 175%;
+      left: 10%;
+      margin-right: 0px;
+    }
+
+    .logo-text:hover {
+      color: var(--industrial-orange);
     }
 
     .logo-tagline {
@@ -170,29 +173,110 @@
       transform: translate(0,-15px);
     }
 
-    /* Hover effects */
-    .logo:hover .logo-symbol-inner {
-      transform: rotate(45deg) scale(1.05);
+    /* Navigation Styles */
+    .nav-links {
+      display: flex;
+      /*gap: 1rem;*/
+      align-items: center;
+      justify-content: flex-end;
+      margin-left: 0%;
+    }
+
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-links a.cta-nav {
+      background: none;
+      color: var(--industrial-orange);
+      padding: 8px 20px;
+      border-radius: 4px;
+      font-weight: 700;
       transition: all 0.3s ease;
     }
 
-    .logo:hover .logo-text {
+    .nav-links a.cta-nav:hover {
+      background: var(--white);
       color: var(--industrial-orange);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 87, 34, 0.3);
     }
 
-    .built-with {
-      font-size: 0.75rem;
-      color: var(--light);
+    .nav-links a.current-nav {
+      background: var(--industrial-orange);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 4px;
+      font-weight: 700;
+      transition: all 0.3s ease;
+    }
+
+    /* Mobile Menu */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    .mobile-nav {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--slate-grey);
+      padding: 1rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      z-index: 99;
+    }
+
+    .mobile-nav.active {
+      display: block;
+    }
+
+    .mobile-nav a {
+      display: block;
+      color: white;
       text-decoration: none;
-      opacity: 0.8;
-      transition: opacity 0.3s;
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-weight: 600;
     }
 
-    .built-with:hover {
-      opacity: 1;
+    .mobile-nav a.current-nav {
+      display: block;
+      color: var(--industrial-orange);
+      text-decoration: none;
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-weight: 600;
+      /*text-indent: 25px;*/
     }
 
-    /* Status Badge - Updated to use industrial orange */
+    .mobile-nav a:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .mobile-nav a:last-child {
+      border-bottom: none;
+    }
+
+    /* Status Badge */
     .status-badge {
       background: var(--industrial-orange);
       color: white;
@@ -203,80 +287,121 @@
       white-space: nowrap;
     }
 
-    /* Hero Section - Updated colors */
+    /* Hero Section */
     .hero {
-      padding: 4rem 0 3rem;
+      padding: 6rem 0 4rem;
       text-align: center;
       background: linear-gradient(rgba(55, 71, 79, 0.6), rgba(55, 71, 79, 0.8)), url('image/hero_bg.png');
       color: white;
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      background-attachment: fixed; /* Creates a parallax effect */
+      background-attachment: fixed;
       border-radius: 0 0 20px 20px;
       margin-bottom: 2rem;
       position: relative;
       overflow: hidden;
-      min-height: 630px; /* Ensure minimum height */
+      min-height: 630px;
       display: flex;
       align-items: center;
+      justify-content: center;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
     }
 
     .hero h1 {
-      font-size: 2.8rem;
-      margin-bottom: 1rem;
-      font-weight: 700;
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      font-weight: 800;
       line-height: 1.2;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     }
 
     .hero p {
-      font-size: 1.1rem;
-      max-width: 600px;
-      margin: 0 auto 1.8rem;
+      font-size: 1.2rem;
+      margin: 0 auto 2.5rem;
       opacity: 0.9;
+      max-width: 600px;
     }
 
-    /* CTA Button - Updated to industrial orange */
+    /* Stats Section */
+    .stats-section {
+      background: var(--white);
+      padding: 3rem 0;
+      margin-bottom: 3rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .stat-item h3 {
+      font-size: 2.5rem;
+      color: var(--industrial-orange);
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-item p {
+      color: var(--slate-grey);
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    /* CTA Button */
     .cta-button {
       display: inline-block;
       background: var(--industrial-orange);
       color: white;
-      padding: 10px 25px;
+      padding: 12px 30px;
       border-radius: 6px;
-      font-weight: 600;
-      font-size: 1rem;
+      font-weight: 700;
+      font-size: 1.1rem;
       text-decoration: none;
       transition: all 0.3s ease;
-      box-shadow: 0 2px 8px rgba(255, 87, 34, 0.3);
+      box-shadow: 0 4px 12px rgba(255, 87, 34, 0.3);
       border: none;
       cursor: pointer;
+      position: relative;
+      overflow: hidden;
     }
 
     .cta-button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(255, 87, 34, 0.4);
+      box-shadow: 0 6px 16px rgba(255, 87, 34, 0.4);
       background: #e64a19;
     }
 
-    .secondary-button {
+    .cta-button.secondary {
       background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      border: 2px solid var(--white);
       margin-left: 1rem;
+      padding: 10px 30px;
     }
 
-    .secondary-button:hover {
+    .cta-button.secondary:hover {
       background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
     }
 
     /* Features Section */
     .features {
-      padding: 3rem 0;
+      padding: 4rem 0;
     }
 
     .section-title {
       text-align: center;
-      margin-bottom: 2.5rem;
-      font-size: 1.8rem;
+      margin-bottom: 3rem;
+      font-size: 2.2rem;
       color: var(--slate-grey);
       position: relative;
       scroll-margin-top: 80px;
@@ -285,61 +410,89 @@
     .section-title::after {
       content: '';
       display: block;
-      width: 60px;
-      height: 3px;
+      width: 80px;
+      height: 4px;
       background: var(--industrial-orange);
-      margin: 8px auto;
+      margin: 12px auto;
       border-radius: 2px;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--light-slate-grey);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto 3rem;
     }
 
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
     }
 
     .feature-card {
       background: var(--surface);
-      border-radius: 8px;
-      padding: 1.8rem;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      border-radius: 12px;
+      padding: 2.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       text-align: center;
       border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
     }
 
     .feature-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      transform: translateY(-10px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--industrial-orange);
     }
 
     .feature-icon {
-      font-size: 2rem;
+      font-size: 2.5rem;
       color: var(--industrial-orange);
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.5rem;
+      display: inline-block;
+      background: rgba(255, 87, 34, 0.1);
+      width: 80px;
+      height: 80px;
+      line-height: 80px;
+      border-radius: 50%;
     }
 
     .feature-card h3 {
-      font-size: 1.2rem;
-      margin-bottom: 0.8rem;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
       color: var(--slate-grey);
     }
 
     .feature-card p {
       color: var(--dark);
       opacity: 0.8;
-      font-size: 0.95rem;
+      font-size: 1rem;
+      line-height: 1.6;
     }
 
     /* Interest Section */
     .interest-section {
       background: var(--surface);
-      padding: 3rem 0;
+      padding: 4rem 0;
       border-radius: 12px;
       margin: 2rem 0;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
       border: 1px solid var(--border);
-      scroll-margin-top: 80px;
+      scroll-margin-top: 40px;
+      text-align: center;
     }
 
     .required {
@@ -351,37 +504,27 @@
     
     .form-group {
       position: relative;
+      margin-bottom: 1.5rem;
     }
     
-    .form-label .required {
-      position: absolute;
-      margin-left: 0;
-    }
-    
-    .form-input:required {
-      background-color: rgba(255, 87, 34, 0.02);
-      border-left: 3px solid var(--industrial-orange);
-    }
-    
-    .interest-form {
-      max-width: 500px;
-      margin: 0 auto;
-    }
-
     .form-label {
       display: block;
-      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
       font-weight: 600;
       color: var(--slate-grey);
-    }
-
-    .form-input {
-      width: 100%;
-      padding: 0.8rem 1rem;
-      border: 1px solid var(--border);
-      border-radius: 6px;
       font-size: 0.95rem;
+      text-align: left;
+      margin-left: 13%;
+    }
+    
+    .form-input {
+      width: 75%;
+      padding: 1rem;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      font-size: 1rem;
       transition: all 0.3s ease;
+      background: var(--white);
     }
 
     .form-input:focus {
@@ -392,143 +535,175 @@
 
     .form-textarea {
       resize: vertical;
-      min-height: 100px;
+      min-height: 120px;
+      font-family: inherit;
     }
 
     .submit-button {
-      width: 100%;
-      padding: 0.9rem;
-      font-size: 1rem;
+      display: inline-block;
+      width: 50%;
+      padding: 1rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-top: 1rem;
     }
 
     .interest-note {
       text-align: center;
-      margin-top: 1.5rem;
+      margin-top: 2rem;
       font-size: 0.9rem;
       color: var(--dark);
       opacity: 0.8;
+      line-height: 1.5;
     }
 
     /* Supported Carriers */
     .carriers {
-      padding: 3rem 0;
-      background: var(--light);
+      padding: 4rem 0;
+      background: var(--white);
       border-radius: 12px;
+      margin-bottom: 2rem;
     }
 
     .carriers-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 1.2rem;
-      margin-top: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
     }
 
     .carrier-card {
-      background: white;
-      border-radius: 8px;
-      padding: 1.2rem;
+      background: var(--light);
+      border-radius: 12px;
+      padding: 2rem 1rem;
       text-align: center;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
       transition: all 0.3s ease;
       border: 1px solid var(--border);
     }
 
     .carrier-card:hover {
-      transform: scale(1.03);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      border-color: var(--industrial-orange);
     }
 
     .carrier-logo {
-      height: 50px;
+      height: 60px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 0.8rem;
+      margin-bottom: 1rem;
     }
 
     .carrier-logo i {
-      font-size: 2rem;
+      font-size: 2.5rem;
       color: var(--industrial-orange);
     }
 
     .carrier-name {
-      font-weight: 600;
+      font-weight: 700;
       color: var(--slate-grey);
-      font-size: 0.9rem;
+      font-size: 1rem;
     }
 
-    /* How It Works */
-    .how-it-works {
-      padding: 3rem 0;
+    /* Testimonials */
+    .testimonials {
+      padding: 4rem 0;
     }
 
-    .steps {
+    .testimonial-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
     }
 
-    .step {
-      text-align: center;
+    .testimonial-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
       position: relative;
     }
 
-    .step-number {
-      width: 40px;
-      height: 40px;
+    .testimonial-card::before {
+      content: '"';
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 4rem;
+      color: var(--industrial-orange);
+      opacity: 0.2;
+      font-family: Georgia, serif;
+    }
+
+    .testimonial-text {
+      color: var(--dark);
+      font-style: italic;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .author-avatar {
+      width: 50px;
+      height: 50px;
       background: var(--industrial-orange);
-      color: white;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.2rem;
+      color: white;
       font-weight: 700;
-      margin: 0 auto 1.2rem;
+      font-size: 1.2rem;
     }
 
-    .step h3 {
-      margin-bottom: 0.8rem;
+    .author-info h4 {
       color: var(--slate-grey);
-      font-size: 1.1rem;
+      margin-bottom: 0.2rem;
+      font-size: 0.8rem;
     }
 
-    .step p {
-      color: var(--dark);
-      opacity: 0.8;
-      font-size: 0.95rem;
+    .author-info p {
+      color: var(--light-slate-grey);
+      font-size: 0.6rem;
     }
 
-    /* CTA Section - Updated colors */
+    /* CTA Section */
     .cta-section {
       background: linear-gradient(rgba(55, 71, 79, 0.6), rgba(55, 71, 79, 0.8)), url('image/cta_bg.png');
       color: white;
       background-size: cover;
       background-position: center 35%;
       background-repeat: no-repeat;
-      background-attachment: scroll;
-      border-radius: 0 0 20px 20px;
-      margin-bottom: 2rem;
+      border-radius: 12px;
+      margin: 3rem 0;
       position: relative;
       overflow: hidden;
       min-height: 400px;
       display: flex;
       align-items: center;
       text-align: center;
-      border-radius: 12px;
-      margin-top: 2rem;
     }
 
     .cta-section h2 {
-      font-size: 2rem;
-      margin-bottom: 1.2rem;
+      font-size: 2.2rem;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     }
 
     .cta-section p {
-      font-size: 1.1rem;
+      font-size: 1rem;
       max-width: 600px;
-      margin: 0 auto 1.8rem;
+      margin: 0 auto 2rem;
       opacity: 0.9;
     }
 
@@ -536,9 +711,9 @@
     footer {
       background: var(--slate-grey);
       color: white;
-      padding: 2.5rem 0 1.2rem;
+      padding: 3rem 0 1.5rem;
       text-align: center;
-      margin-top: 2rem;
+      margin-top: 3rem;
       border-top: 2px solid var(--industrial-orange);
     }
 
@@ -546,22 +721,23 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1.5rem;
-      margin-bottom: 1.5rem;
-      padding: 0 20px;
+      gap: 2rem;
+      margin-bottom: 2rem;
     }
 
     .footer-logo {
-      font-size: 1.5rem;
-      font-weight: 700;
+      font-size: 1.8rem;
+      font-weight: 800;
       color: var(--white);
+      margin-bottom: -0.8rem;
     }
 
     .footer-links {
       display: flex;
-      gap: 1.5rem;
+      gap: 2rem;
       flex-wrap: wrap;
       justify-content: center;
+      margin: 1rem 0;
     }
 
     .footer-links a {
@@ -569,7 +745,8 @@
       text-decoration: none;
       opacity: 0.8;
       transition: opacity 0.3s;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
+      font-weight: 600;
     }
 
     .footer-links a:hover {
@@ -577,15 +754,41 @@
       color: var(--industrial-orange);
     }
 
+    .footer-legal {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .footer-legal a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.3s;
+    }
+
+    .footer-legal a:hover {
+      color: var(--white);
+    }
+
     .copyright {
       opacity: 0.7;
       font-size: 0.85rem;
-      padding-top: 1.2rem;
+      padding-top: 1.5rem;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 1.5rem;
     }
 
     /* Responsive Design */
-    @media (max-width: 768px) {
+    @media (max-width: 874px) {
+      .header-content {
+        padding: 0 30px;
+      }
+    }
+
+    @media (max-width: 834px) {
       .hero h1 {
         font-size: 2.2rem;
       }
@@ -595,40 +798,29 @@
       }
 
       .section-title {
-        font-size: 1.6rem;
+        font-size: 1.8rem;
         scroll-margin-top: 70px;
-        margin-bottom: 2rem;
-        padding-top: 0.5rem;
-        position: relative;
-        z-index: 1;
-        display: block;
-        width: 100%;
-        overflow: visible;
-        visibility: visible;
-        height: auto;
-        opacity: 1;
-        transform: none;
-        pointer-events: all;
-        -webkit-user-select: auto;
-        user-select: auto;
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-        -webkit-touch-callout: default;
-        -webkit-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-        text-size-adjust: 100%;
-        -webkit-overflow-scrolling: touch;
       }
 
       .features-grid {
         grid-template-columns: 1fr;
       }
 
-      .steps {
-        grid-template-columns: 1fr;
-      }
-
       .carriers-grid {
         grid-template-columns: repeat(2, 1fr);
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .hero {
+        padding: 5rem 0 3rem;
+        min-height: 500px;
       }
 
       .button-group {
@@ -637,7 +829,7 @@
         gap: 1rem;
       }
 
-      .secondary-button {
+      .cta-button.secondary {
         margin-left: 0;
       }
 
@@ -653,20 +845,23 @@
         scroll-margin-top: 70px;
         padding-top: 2rem;
       }
-		
-      /* Mobile logo adjustments */
-      .logo-symbol {
-        width: 35px;
-        height: 35px;
-      }
-      
-      .logo-text {
-        font-size: 1.5rem;
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
       }
     }
 
-    /* Mobile-specific fixes */
     @media (max-width: 480px) {
+      header {
+	height: 60px;
+      }
+
+      .header-content {
+	height: 33px;
+        padding: 0 10px;
+      }
+
       .section-title {
         scroll-margin-top: 65px;
         padding-top: 0.8rem;
@@ -681,13 +876,45 @@
         scroll-margin-top: 65px;
       }
 
+      .form-label {
+        margin-left: 5%;
+      }
+
+      .form-input {
+        width: 90%;
+      }
+
       .logo {
-	transform: translate(0px, 3px) scale(0.8);
+        transform: translate(0px, 0px) scale(0.7);
+        width: 65%;
+        left: -7.5%;
       }
 
       .logo-text {
-        padding-left: 1.4rem;
-        transform: scale(1.2);
+        font-size: 1.8rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .testimonials {
+        padding: 0 20px;
+      }
+
+      .carriers-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+
+      .footer-links {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .footer-legal {
+        flex-direction: column;
+        gap: 0.5rem;
       }
     }
 
@@ -710,7 +937,7 @@
     <div class="container">
       <div class="header-content">
         <div class="logo">
-          <a href="#" class="logo-link">
+          <a href="index.html" class="logo-link">
             <div class="logo-symbol">
               <div class="logo-symbol-inner">
                 <div class="logo-square"></div>
@@ -719,52 +946,68 @@
             <span class="logo-text">CARGOLYZE</span>
           </a>
         </div>
-        <span class="status-badge">Coming Soon</span>
+        
+        <!-- Desktop Navigation -->
+        <nav class="nav-links">
+          <a href="index.html" class="current-nav">Home</a>
+          <a href="#features">Features</a>
+          <a href="#carriers">Carriers</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="#interest" class="cta-nav">Get Started</a>
+        </nav>
+        
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+          <i class="fas fa-bars"></i>
+        </button>
+        
+      </div>
+      
+      <!-- Mobile Navigation -->
+      <div class="mobile-nav" id="mobileNav">
+        <a href="index.html" class="current-nav">Home</a>
+        <a href="#features">Features</a>
+        <a href="#carriers">Carriers</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="#interest">Get Started</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="refund.html">Refund Policy</a>
       </div>
     </div>
   </header>
 
   <!-- Hero Section -->
   <section class="hero" id="home">
-    <div class="container compact-container">
+    <div class="hero-content">
       <h1>Intelligent Shipment Tracking & Analytics</h1>
-      <p>Advanced desktop application providing real-time cargo tracking, predictive ETAs, port analytics, and
-        comprehensive transit insights.</p>
+      <p>Advanced desktop application providing real-time cargo tracking, predictive ETAs, port analytics, and comprehensive transit insights.</p>
       <div class="button-group">
-        <a href="#interest" class="cta-button">Join Waitlist</a>
-        <a href="#interest" class="cta-button secondary-button">Show Interest</a>
+        <a href="pricing.html" class="cta-button">View Pricing Plans</a>
+        <a href="#interest" class="cta-button secondary">Join Waitlist</a>
       </div>
     </div>
   </section>
 
-  <!-- Interest Section -->
-  <section class="interest-section" id="interest">
+  <!-- Stats Section -->
+  <section class="stats-section">
     <div class="container compact-container">
-      <h2 class="section-title">Express Your Interest</h2>
-      <p style="text-align: center; max-width: 600px; margin: 0 auto 2rem; opacity: 0.9;">Cargolyze is currently under
-        active development. Share your details to receive early access, product updates, and exclusive launch offers.
-      </p>
-      <div class="interest-form">
-        <div class="form-group">
-          <label class="form-label" for="name">Full Name <span class="required">*</span></label>
-          <input type="text" id="name" class="form-input" placeholder="Enter your full name" required>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <h3>5+</h3>
+          <p>Carrier Integrations</p>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="company">Company</label>
-          <input type="text" id="company" class="form-input" placeholder="Enter your company name">
+        <div class="stat-item">
+          <h3>99.5%</h3>
+          <p>Tracking Accuracy</p>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="email">Email Address <span class="required">*</span></label>
-          <input type="email" id="email" class="form-input" placeholder="Enter your business email" required>
+        <div class="stat-item">
+          <h3>24/7</h3>
+          <p>Real-time Updates</p>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="message">Specific Requirements</label>
-          <textarea id="message" class="form-input form-textarea" placeholder="Tell us about your specific tracking needs or requirements"></textarea>
-        </div>
-        <button class="cta-button submit-button">Submit Interest</button>
-        <div class="interest-note">
-          <p><span class="required">*</span> indicates required fields</p>
-          <p>Your information will be sent to <strong>hello@cargolyze.com</strong> and we'll contact you as we approach launch.</p>
+        <div class="stat-item">
+          <h3>95%</h3>
+          <p>Customer Satisfaction</p>
         </div>
       </div>
     </div>
@@ -774,6 +1017,8 @@
   <section class="features" id="features">
     <div class="container compact-container">
       <h2 class="section-title">Advanced Features</h2>
+      <p class="section-subtitle">Powerful tools designed to streamline your logistics operations and provide actionable insights.</p>
+      
       <div class="features-grid">
         <div class="feature-card">
           <div class="feature-icon">
@@ -796,6 +1041,59 @@
           <h3>Transit Optimization</h3>
           <p>Route optimization and carrier performance analytics to reduce transit times by up to 18%.</p>
         </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h3>Real-time Analytics</h3>
+          <p>Interactive dashboards with real-time tracking data and comprehensive reporting tools.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-file-excel"></i>
+          </div>
+          <h3>Excel Integration</h3>
+          <p>Seamless import/export capabilities with Excel files for easy data management and analysis.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-robot"></i>
+          </div>
+          <h3>Automated Tracking</h3>
+          <p>Automated shipment tracking across multiple carriers with customizable update intervals.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interest Section -->
+  <section class="interest-section" id="interest">
+    <div class="container compact-container">
+      <h2 class="section-title">Get Started Today</h2>
+      <p class="section-subtitle">Join industry leaders who trust Cargolyze for accurate shipment tracking and predictive analytics. Start with a free 14-day trial.</p>
+      
+      <div class="interest-form">
+        <div class="form-group">
+          <label class="form-label" for="name">Full Name <span class="required">*</span></label>
+          <input type="text" id="name" class="form-input" placeholder="Enter your full name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="company">Company</label>
+          <input type="text" id="company" class="form-input" placeholder="Enter your company name">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="email">Email Address <span class="required">*</span></label>
+          <input type="email" id="email" class="form-input" placeholder="Enter your business email" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="message">Specific Requirements</label>
+          <textarea id="message" class="form-input form-textarea" placeholder="Tell us about your specific tracking needs or requirements"></textarea>
+        </div>
+        <button class="cta-button submit-button">Start Free Trial</button>
+        <div class="interest-note">
+          <p><span class="required">*</span> indicates required fields</p>
+          <p>Your information will be sent to <strong>hello@cargolyze.com</strong> and we'll contact you with next steps.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -804,6 +1102,7 @@
   <section class="carriers" id="carriers">
     <div class="container compact-container">
       <h2 class="section-title">Integrated Carriers</h2>
+      <p class="section-subtitle">Track shipments across all major shipping lines with our comprehensive carrier integration.</p>
       <div class="carriers-grid">
         <div class="carrier-card">
           <div class="carrier-logo">
@@ -835,48 +1134,65 @@
           </div>
           <div class="carrier-name">PIL</div>
         </div>
-        <div class="carrier-card">
-          <div class="carrier-logo">
-            <i class="fas fa-ship"></i>
-          </div>
-          <div class="carrier-name">ONE</div>
-        </div>
       </div>
     </div>
   </section>
 
-  <!-- How It Works -->
-  <section class="how-it-works">
+  <!-- Testimonials -->
+  <!-- <section class="testimonials">
     <div class="container compact-container">
-      <h2 class="section-title">Implementation Workflow</h2>
-      <div class="steps">
-        <div class="step">
-          <div class="step-number">1</div>
-          <h3>Data Integration</h3>
-          <p>Seamless integration with your existing systems and carrier APIs for comprehensive data aggregation.</p>
+      <h2 class="section-title">Trusted by Logistics Professionals</h2>
+      <p class="section-subtitle">See what industry experts say about Cargolyze</p>
+      
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            "Cargolyze has transformed how we track shipments. The predictive ETAs are incredibly accurate and have helped us optimize our supply chain operations."
+          </div>
+          <div class="testimonial-author">
+            <div class="author-avatar">JS</div>
+            <div class="author-info">
+              <h4>John Smith</h4>
+              <p>Logistics Director, Global Freight Solutions</p>
+            </div>
+          </div>
         </div>
-        <div class="step">
-          <div class="step-number">2</div>
-          <h3>Real-time Tracking</h3>
-          <p>Continuous monitoring of vessel movements, port operations, and cargo status across all carriers.</p>
+        
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            "The automation features save us hours each day. Being able to track across multiple carriers from one dashboard is a game-changer for our operations."
+          </div>
+          <div class="testimonial-author">
+            <div class="author-avatar">MJ</div>
+            <div class="author-info">
+              <h4>Maria Johnson</h4>
+              <p>Operations Manager, SeaLink Logistics</p>
+            </div>
+          </div>
         </div>
-        <div class="step">
-          <div class="step-number">3</div>
-          <h3>Analytics & Reporting</h3>
-          <p>Advanced analytics providing actionable insights, performance metrics, and optimization recommendations.
-          </p>
+        
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            "Excellent customer support and continuous updates. The team listens to feedback and consistently improves the platform based on user needs."
+          </div>
+          <div class="testimonial-author">
+            <div class="author-avatar">RW</div>
+            <div class="author-info">
+              <h4>Robert Williams</h4>
+              <p>Supply Chain Analyst, TradeWinds Inc.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- CTA Section -->
   <section class="cta-section">
     <div class="container compact-container">
-      <h2>Ready to Transform Your Logistics?</h2>
-      <p>Join industry leaders who are already expressing interest in Cargolyze's advanced shipment tracking
-        capabilities.</p>
-      <a href="#interest" class="cta-button">Express Your Interest</a>
+      <h2>Ready to Optimize Your Logistics?</h2>
+      <p>Join hundreds of logistics professionals who trust Cargolyze for accurate tracking and predictive analytics.</p>
+      <a href="pricing.html" class="cta-button">View Pricing Plans</a>
     </div>
   </section>
 
@@ -884,83 +1200,108 @@
   <footer>
     <div class="container">
       <div class="footer-content">
-        <div class="footer-logo">CARGOLYZE</div><div class="logo-tagline">SHIPMENT TRACKING AUTOMATION</div>
+        <div class="footer-logo">CARGOLYZE</div>
+        <div class="logo-tagline">SHIPMENT TRACKING AUTOMATION</div>
+        
         <div class="footer-links">
-          <a href="#home">Home</a>
-          <a href="#interest">Interest</a>
+          <a href="index.html">Home</a>
           <a href="#features">Features</a>
           <a href="#carriers">Carriers</a>
-          <a href="mailto:hello@cargolyze.com">Contact</a>
-	  	  <a href="terms.html">Terms of Service</a>
-          <a href="privacy.html">Privacy Policy</a>			
+          <a href="pricing.html">Pricing</a>
+          <a href="#interest">Contact</a>
+        </div>
+        
+        <div class="footer-legal">
+          <a href="terms.html">Terms of Service</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="refund.html">Refund Policy</a>
+          <a href="mailto:hello@cargolyze.com">Support</a>
         </div>
       </div>
+      
       <div class="copyright">
-        &copy; 2025 Cargolyze. All rights reserved. Currently in active development.
+        &copy; 2025 Cargolyze. All rights reserved. Prices in USD. Payments processed by Paddle.com.
       </div>
     </div>
   </footer>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const form = document.querySelector('.interest-form');
-      const submitButton = document.querySelector('.submit-button');
-      const logoLink = document.querySelector('.logo-link');
+      // Mobile Menu Toggle
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const mobileNav = document.getElementById('mobileNav');
       
-      // Function to scroll to top
-      function scrollToTop() {
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        });
-      }
-      
-      // Handle logo click to scroll to top
-      logoLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        scrollToTop();
+      mobileMenuBtn.addEventListener('click', function() {
+        mobileNav.classList.toggle('active');
+        const icon = this.querySelector('i');
+        if (mobileNav.classList.contains('active')) {
+          icon.classList.remove('fa-bars');
+          icon.classList.add('fa-times');
+        } else {
+          icon.classList.remove('fa-times');
+          icon.classList.add('fa-bars');
+        }
       });
-      
-      // Fix for mobile anchor navigation
-      const handleAnchorClick = function(e) {
-        const href = this.getAttribute('href');
-        
-        if (href.startsWith('#')) {
-          e.preventDefault();
+
+      // Close mobile menu when clicking outside
+      document.addEventListener('click', function(event) {
+        if (!mobileNav.contains(event.target) && !mobileMenuBtn.contains(event.target)) {
+          mobileNav.classList.remove('active');
+          const icon = mobileMenuBtn.querySelector('i');
+          icon.classList.remove('fa-times');
+          icon.classList.add('fa-bars');
+        }
+      });
+
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          
+          // Skip if it's just "#"
+          if (href === '#') return;
+                    
+          // Close mobile menu if open
+          if (mobileNav.classList.contains('active')) {
+            mobileNav.classList.remove('active');
+            const icon = mobileMenuBtn.querySelector('i');
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+          }
+          
           const targetId = href.substring(1);
           
           // If it's home link, scroll to top
-          if (targetId === 'home' || targetId === '') {
-            scrollToTop();
+          if (targetId === 'home' || href === 'index.html') {
+            window.scrollTo({
+              top: 0,
+              behavior: 'smooth'
+            });
             return;
           }
           
           const targetElement = document.getElementById(targetId);
           
           if (targetElement) {
+            e.preventDefault();
             // Calculate offset based on screen size
             const headerHeight = document.querySelector('header').offsetHeight;
-            const offset = headerHeight - 30;
+            const offset = headerHeight + 20;
             
             const elementPosition = targetElement.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - offset;
+            const offsetPosition = elementPosition + window.pageYOffset - offset + 40;
             
             window.scrollTo({
               top: offsetPosition,
               behavior: 'smooth'
             });
           }
-        }
-      };
-      
-      // Apply the fix to all anchor links that point to sections
-      const anchorLinks = document.querySelectorAll('a[href^="#"]');
-      anchorLinks.forEach(link => {
-        // Skip the logo link since we already handle it
-        if (link !== logoLink) {
-          link.addEventListener('click', handleAnchorClick);
-        }
+        });
       });
+
+      // Form submission
+      const submitButton = document.querySelector('.submit-button');
+      const interestForm = document.querySelector('.interest-form');
       
       submitButton.addEventListener('click', function(e) {
         e.preventDefault();
@@ -976,20 +1317,22 @@
         }
         
         // Build subject with conditional company inclusion
-        let subject = `Interest in Cargolyze - ${name}`;
+        let subject = `New Trial Request - Cargolyze`;
         if (company) {
           subject += ` from ${company}`;
         }
         
         // Build body with conditional company field
-        let body = `Name: ${name}\n`;
+        let body = `New Trial Request:\n\n`;
+        body += `Name: ${name}\n`;
         if (company) {
           body += `Company: ${company}\n`;
         }
-        body += `Email: ${email}`;
+        body += `Email: ${email}\n`;
         if (message) {
-          body += `\nMessage: ${message}`;
+          body += `Requirements: ${message}\n`;
         }
+        body += `\n---\nSent from Cargolyze Website`;
         
         const mailtoLink = `mailto:hello@cargolyze.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         
