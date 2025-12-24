@@ -280,6 +280,24 @@
       border-bottom: none;
     }
 
+/* Logged-in user styles */
+.nav-links a.logged-in {
+  background: var(--industrial-orange);
+  color: white !important;
+  padding: 8px 16px !important;
+}
+
+.nav-links a.logged-in:hover {
+  background: #e64a19 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 87, 34, 0.3);
+}
+
+.mobile-nav a.logged-in {
+  color: var(--industrial-orange) !important;
+  font-weight: 700;
+}
+
     /* Status Badge */
     .status-badge {
       background: var(--industrial-orange);
@@ -957,7 +975,12 @@
           <a href="#features">Features</a>
           <a href="#carriers">Carriers</a>
           <a href="pricing.html">Pricing</a>
-          <a href="#interest" class="cta-nav">Get Started</a>
+          <!-- Dynamic Account Link -->
+          <span id="accountNavContainer">
+            <a href="login.html" id="accountLink" class="cta-nav">
+              <i class="fas fa-user" style="margin-right: 5px;"></i> Sign Up
+            </a>
+          </span>
         </nav>
         
         <!-- Mobile Menu Button -->
@@ -973,10 +996,12 @@
         <a href="#features">Features</a>
         <a href="#carriers">Carriers</a>
         <a href="pricing.html">Pricing</a>
-        <a href="#interest">Get Started</a>
-        <a href="terms.html">Terms of Service</a>
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="refund.html">Refund Policy</a>
+        <!-- Dynamic Account Link -->
+        <span id="mobileAccountNavContainer">
+          <a href="login.html" id="mobileAccountLink">
+            <i class="fas fa-user-plus" style="margin-right: 8px;"></i> Sign Up
+          </a>
+        </span>        
       </div>
     </div>
   </header>
@@ -1343,6 +1368,134 @@
         window.location.href = mailtoLink;
       });
     });
+
+// User Session Management
+function updateNavigationForUser() {
+  const userData = localStorage.getItem('cargolyze_user');
+  const accountLink = document.getElementById('accountLink');
+  const mobileAccountLink = document.getElementById('mobileAccountLink');
+  
+  console.log('Checking user data:', userData);
+  
+  if (userData) {
+    try {
+      const user = JSON.parse(userData);
+      
+      console.log('User found:', user);
+      
+      // Update desktop navigation - Show Dashboard
+      if (accountLink) {
+        accountLink.innerHTML = `<i class="fas fa-tachometer-alt" style="margin-right: 5px;"></i> Dashboard`;
+        accountLink.href = 'dashboard.html';
+        accountLink.classList.add('logged-in');
+        accountLink.classList.remove('cta-nav');
+      }
+      
+      // Update mobile navigation - Show Dashboard
+      if (mobileAccountLink) {
+        mobileAccountLink.innerHTML = `<i class="fas fa-tachometer-alt" style="margin-right: 8px;"></i> Dashboard`;
+        mobileAccountLink.href = 'dashboard.html';
+        mobileAccountLink.classList.add('logged-in');
+      }
+      
+    } catch (error) {
+      console.error('Error parsing user data:', error);
+      resetNavigationToSignUp();
+    }
+  } else {
+    resetNavigationToSignUp();
+  }
+}
+
+function resetNavigationToSignUp() {
+  const accountLink = document.getElementById('accountLink');
+  const mobileAccountLink = document.getElementById('mobileAccountLink');
+  
+  console.log('Resetting navigation to Sign Up');
+  
+  if (accountLink) {
+    accountLink.innerHTML = '<i class="fas fa-user-plus" style="margin-right: 5px;"></i> Sign Up';
+    accountLink.href = 'login.html';
+    accountLink.classList.remove('logged-in');
+    accountLink.classList.add('cta-nav');
+  }
+  
+  if (mobileAccountLink) {
+    mobileAccountLink.innerHTML = '<i class="fas fa-user-plus" style="margin-right: 8px;"></i> Sign Up';
+    mobileAccountLink.href = 'login.html';
+    mobileAccountLink.classList.remove('logged-in');
+  }
+}
+
+// Check login status on page load
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('Index page loaded, checking user status');
+  
+  // Clear any logout events
+  localStorage.removeItem('cargolyze_logout_event');
+  
+  // Update navigation based on current user state
+  updateNavigationForUser();
+  
+  // Listen for storage events to sync across tabs
+  window.addEventListener('storage', function(e) {
+    console.log('Storage event detected:', e.key);
+    
+    if (e.key === 'cargolyze_user') {
+      console.log('User data changed, updating navigation');
+      updateNavigationForUser();
+    }
+    
+    if (e.key === 'cargolyze_logout_event') {
+      console.log('Logout event detected');
+      localStorage.removeItem('cargolyze_user');
+      updateNavigationForUser();
+    }
+  });
+  
+  // Listen for message events
+  window.addEventListener('message', function(e) {
+    console.log('Message received:', e.data);
+    
+    if (e.data === 'userLoggedIn') {
+      console.log('User logged in message received');
+      // Reload to update navigation
+      setTimeout(() => {
+        updateNavigationForUser();
+      }, 100);
+    }
+    
+    if (e.data === 'userLoggedOut') {
+      console.log('User logged out message received');
+      localStorage.removeItem('cargolyze_user');
+      updateNavigationForUser();
+    }
+  });
+
+// Listen for login events from login page
+window.addEventListener('message', function(e) {
+    console.log('Message received in index:', e.data);
+    
+    if (e.data === 'userLoggedIn') {
+        console.log('Login successful, updating navigation');
+        // Force a reload to update the navigation
+        setTimeout(() => {
+            window.location.reload();
+        }, 500);
+    }
+});
+
+// Also listen for storage events
+window.addEventListener('storage', function(e) {
+    console.log('Storage event in index:', e.key);
+    
+    if (e.key === 'cargolyze_login_event') {
+        console.log('Login event detected via storage');
+        // Refresh to update navigation
+        window.location.reload();
+    }
+});
+});
   </script>
 </body>
 
