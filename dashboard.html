@@ -166,103 +166,105 @@
 <!-- Load Supabase SDK FIRST -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>    
 <script>
+// Supabase configuration
+const SUPABASE_URL = 'https://ijxchpbubzomytxouhqw.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlqeGNocGJ1YnpvbXl0eG91aHF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU5NDk0NzUsImV4cCI6MjA4MTUyNTQ3NX0.Ro6zlvBrKRaczXJ6t2kF6_U7Kc3sYN56K115nBaNuwI';
+
 // Wait for the page to load
 document.addEventListener('DOMContentLoaded', async function() {
-    console.log('Dashboard page loaded');
+    console.log('Dashboard page loaded - checking authentication');
     
-    // 1. First check localStorage for user data
-    const userData = localStorage.getItem('cargolyze_user');
-    console.log('User data from localStorage:', userData);
+    // Initialize Supabase client
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
     
-    if (!userData) {
-        console.log('No user found in localStorage, redirecting to login');
-        window.location.href = 'login.html';
-        return;
-    }
-    
-    // 2. Parse the user data
-    let user;
     try {
-        user = JSON.parse(userData);
-        console.log('User parsed successfully:', user.email);
-    } catch (error) {
-        console.error('Error parsing user data:', error);
-        localStorage.removeItem('cargolyze_user');
-        window.location.href = 'login.html';
-        return;
-    }
-    
-    // 3. Initialize Supabase
-    const SUPABASE_URL = 'https://ijxchpbubzomytxouhqw.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlqeGNocGJ1YnpvbXl0eG91aHF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU5NDk0NzUsImV4cCI6MjA4MTUyNTQ3NX0.Ro6zlvBrKRaczXJ6t2kF6_U7Kc3sYN56K115nBaNuwI';
-    
-    console.log('Initializing Supabase...');
-    
-    // Check if Supabase SDK is available
-    if (typeof supabase === 'undefined' || !supabase.createClient) {
-        console.error('ERROR: Supabase SDK not loaded!');
+        // 1. First, check if there's a valid Supabase session (for Google OAuth)
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
         
-        // Show user info anyway (fallback)
-        showUserInfo(user);
-        setupLogout();
-        return;
-    }
-    
-    let supabaseClient;
-    try {
-        // Create Supabase client
-        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        console.log('Supabase client created successfully');
-    } catch (error) {
-        console.error('Failed to create Supabase client:', error);
-        // Continue with cached user data
-        showUserInfo(user);
-        setupLogout();
-        return;
-    }
-    
-    // 4. Verify Supabase session (optional but recommended)
-    try {
-        const { data, error } = await supabaseClient.auth.getSession();
-        
-        if (error) {
-            console.warn('Warning: Supabase session check failed:', error.message);
-            console.log('Continuing with cached user data...');
-        } else if (!data.session) {
-            console.warn('Warning: No active Supabase session');
-            console.log('Continuing with cached user data...');
-        } else {
-            console.log('✅ Active Supabase session verified for:', data.session.user.email);
-            
-            // Update user data with fresh info from Supabase if needed
-            if (data.session.user.email !== user.email) {
-                console.log('Updating user data from Supabase session...');
-                user.email = data.session.user.email;
-                user.name = data.session.user.user_metadata?.full_name || user.name;
-                localStorage.setItem('cargolyze_user', JSON.stringify(user));
-            }
+        if (sessionError) {
+            console.error('Error checking session:', sessionError);
+            // Try localStorage fallback
+            checkLocalStorage();
+            return;
         }
-    } catch (sessionError) {
-        console.warn('Session check error:', sessionError);
-        // Continue anyway - user might have valid localStorage data
+        
+        // 2. If we have a Supabase session (Google OAuth or regular login)
+        if (session && session.user) {
+            console.log('✅ Supabase session found:', session.user.email);
+            
+            // Extract user data from Supabase session
+            const user = {
+                name: session.user.user_metadata?.full_name || 
+                      session.user.user_metadata?.name || 
+                      session.user.email?.split('@')[0] || 'User',
+                email: session.user.email,
+                id: session.user.id,
+                company: session.user.user_metadata?.company || 
+                        session.user.user_metadata?.full_name || 
+                        session.user.email?.split('@')[1]?.split('.')[0] || 'Company',
+                role: 'carrier',
+                loginTime: new Date().toISOString(),
+                isGoogleAuth: true
+            };
+            
+            // Save to localStorage for consistency
+            localStorage.setItem('cargolyze_user', JSON.stringify(user));
+            
+            // Show dashboard
+            showDashboard(user, supabase);
+            return;
+        }
+        
+        // 3. No Supabase session, check localStorage (for regular email login)
+        checkLocalStorage();
+        
+    } catch (error) {
+        console.error('Dashboard initialization error:', error);
+        checkLocalStorage();
     }
     
-    // 5. Show user info on dashboard
-    showUserInfo(user);
-    
-    // 6. Setup logout functionality
-    setupLogout(supabaseClient);
+    // Function to check localStorage (for regular email login)
+    async function checkLocalStorage() {
+        const userData = localStorage.getItem('cargolyze_user');
+        
+        if (!userData) {
+            console.log('No user found, redirecting to login');
+            window.location.href = 'login.html';
+            return;
+        }
+        
+        try {
+            const user = JSON.parse(userData);
+            console.log('User from localStorage:', user.email);
+            
+            // Optional: Verify the session with Supabase for email login users
+            const { data: { session }, error } = await supabase.auth.getSession();
+            
+            if (error || !session) {
+                console.warn('Warning: Supabase session expired or invalid');
+                // User can still access dashboard with cached data
+            }
+            
+            showDashboard(user, supabase);
+            
+        } catch (error) {
+            console.error('Error parsing localStorage data:', error);
+            localStorage.removeItem('cargolyze_user');
+            window.location.href = 'login.html';
+        }
+    }
 });
 
-// Function to display user information
-function showUserInfo(user) {
-    const userInfoDiv = document.getElementById('userInfo');
-    if (!userInfoDiv) {
-        console.error('User info div not found!');
-        return;
-    }
+// Function to show dashboard
+function showDashboard(user, supabase) {
+    // Hide loading indicator
+    document.getElementById('loadingIndicator').style.display = 'none';
     
-    // Get initials from name
+    // Show dashboard content
+    document.getElementById('dashboardContent').style.display = 'block';
+    
+    // Display user info
+    const userInfoDiv = document.getElementById('userInfo');
     const initials = user.name 
         ? user.name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2)
         : 'U';
@@ -272,55 +274,52 @@ function showUserInfo(user) {
         <div class="user-details">
             <h2>Welcome, ${user.name || 'User'}</h2>
             <p>${user.email || 'No email available'}</p>
+            ${user.isGoogleAuth ? '<p><i class="fab fa-google"></i> Google Account</p>' : ''}
         </div>
     `;
     
-    console.log('User info displayed:', user.name);
+    console.log('Dashboard loaded for user:', user.email);
+    
+    // Setup logout functionality
+    setupLogout(supabase);
 }
 
 // Function to setup logout
-function setupLogout(supabaseClient) {
+function setupLogout(supabase) {
     const logoutBtn = document.getElementById('logoutBtn');
-    if (!logoutBtn) {
-        console.error('Logout button not found!');
-        return;
-    }
     
     logoutBtn.addEventListener('click', async function() {
         console.log('Logout clicked');
         
-        // Try to logout from Supabase if client exists
-        if (supabaseClient) {
-            try {
-                const { error } = await supabaseClient.auth.signOut();
-                if (error) {
-                    console.warn('Supabase logout warning:', error.message);
-                } else {
-                    console.log('✅ Supabase session cleared');
-                }
-            } catch (supabaseError) {
-                console.warn('Supabase logout error:', supabaseError);
+        // Show loading
+        document.getElementById('loadingIndicator').style.display = 'block';
+        document.getElementById('dashboardContent').style.display = 'none';
+        
+        try {
+            // Sign out from Supabase
+            const { error } = await supabase.auth.signOut();
+            if (error) {
+                console.warn('Supabase logout warning:', error.message);
+            } else {
+                console.log('✅ Supabase session cleared');
             }
+        } catch (error) {
+            console.warn('Supabase logout error:', error);
         }
         
-        // Always clear localStorage
+        // Clear localStorage
         localStorage.removeItem('cargolyze_user');
         
         // Broadcast logout to other tabs
-        if (window.postMessage) {
-            window.postMessage('userLoggedOut', '*');
-        }
+        window.postMessage('userLoggedOut', '*');
         
-        // Set a logout event in storage for other tabs
-        try {
-            localStorage.setItem('cargolyze_logout_event', Date.now().toString());
-        } catch (e) {
-            console.warn('Could not set logout event:', e);
-        }
+        // Set logout event for other tabs
+        localStorage.setItem('cargolyze_logout_event', Date.now().toString());
         
         // Redirect to home page
-        console.log('Redirecting to homepage...');
-        window.location.href = 'index.html';
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 500);
     });
 }
 
@@ -342,4 +341,5 @@ window.addEventListener('message', function(event) {
 });
 </script>
 </body>
+
 </html>
