@@ -999,7 +999,7 @@ document.querySelector('.google-button').addEventListener('click', async () => {
         const { error } = await supabase.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: `${window.location.origin}/dashboard.html`,
+                redirectTo: `${window.location.origin}/account.html`,
                 queryParams: {
                     access_type: 'offline',
                     prompt: 'consent'
@@ -1066,7 +1066,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         
         // Redirect to dashboard
         setTimeout(() => {
-            window.location.href = 'dashboard.html';
+            window.location.href = 'account.html';
         }, 1500);
         
     } catch (error) {
@@ -1130,7 +1130,7 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
                     full_name: company,
                     user_type: 'user'
                 },
-                emailRedirectTo: `${window.location.origin}/dashboard.html`
+                emailRedirectTo: `${window.location.origin}/account.html`
             }
         });
         
@@ -1271,7 +1271,7 @@ async function checkUserAndRedirect() {
         
         // Both localStorage and Supabase session are valid
         console.log('✅ User already logged in, redirecting to dashboard');
-        window.location.href = 'dashboard.html';
+        window.location.href = 'account.html';
         
     } catch (error) {
         console.error('Error checking user:', error);
@@ -1300,4 +1300,5 @@ window.addEventListener('message', function(event) {
 </body>
 
 </html>
+
 
