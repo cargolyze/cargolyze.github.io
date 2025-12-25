@@ -160,7 +160,7 @@ function generateResetEmailHTML(resetLink, email) {
               
               <p>For security reasons, this link can only be used once. After resetting your password, you'll be able to log in to your dashboard with your new credentials.</p>
               
-              <p>Need help? <a href="mailto:support@cargolyze.app" style="color: #3b82f6; text-decoration: none;">Contact our support team</a></p>
+              <p>Need help? <a href="mailto:support@cargolyze.com" style="color: #3b82f6; text-decoration: none;">Contact our support team</a></p>
               
               <p style="margin-top: 30px;">
                   Best regards,<br>
@@ -179,8 +179,8 @@ function generateResetEmailHTML(resetLink, email) {
               </p>
               <p style="margin: 10px 0 0; font-size: 12px;">
                   © ${currentYear} Cargolyze. All rights reserved.<br>
-                  <a href="https://cargolyze.app/privacy" style="color: #64748b; text-decoration: none;">Privacy Policy</a> • 
-                  <a href="https://cargolyze.app/terms" style="color: #64748b; text-decoration: none;">Terms of Service</a>
+                  <a href="https://cargolyze.com/privacy" style="color: #64748b; text-decoration: none;">Privacy Policy</a> • 
+                  <a href="https://cargolyze.com/terms" style="color: #64748b; text-decoration: none;">Terms of Service</a>
               </p>
           </div>
       </div>
@@ -202,7 +202,7 @@ If you didn't request this password reset, please ignore this email or contact o
 
 For security reasons, this link can only be used once.
 
-Need help? Contact support: support@cargolyze.app
+Need help? Contact support: support@cargolyze.com
 
 Best regards,
 The Cargolyze Team
