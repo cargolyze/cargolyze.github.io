@@ -126,170 +126,324 @@
             background: var(--industrial-orange);
             color: white;
         }
+        
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.2rem;
+            color: var(--slate-grey);
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(255, 87, 34, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--industrial-orange);
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .auth-error {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 12px;
+            max-width: 500px;
+            margin: 100px auto;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .auth-error h3 {
+            color: #e53935;
+            margin-bottom: 15px;
+        }
+        
+        .auth-error a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: var(--industrial-orange);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
     <div class="dashboard-container">
-        <a href="index.html" class="back-to-home">
-            <i class="fas fa-arrow-left"></i> Back to Home
-        </a>
+        <div class="loading" id="loadingIndicator">
+            <div class="loading-spinner"></div>
+            Authenticating...
+        </div>
         
-        <div class="dashboard-header">
-            <div class="user-info" id="userInfo">
-                <!-- User info will be populated by JavaScript -->
+        <div id="dashboardContent" style="display: none;">
+            <a href="index.html" class="back-to-home">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+            
+            <div class="dashboard-header">
+                <div class="user-info" id="userInfo">
+                    <!-- User info will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="dashboard-content">
+                <div class="dashboard-nav">
+                    <a href="#" class="active">Overview</a>
+                    <a href="#">Shipments</a>
+                    <a href="#">Analytics</a>
+                    <a href="#">Settings</a>
+                </div>
+                
+                <h3>Welcome to Your Dashboard</h3>
+                <p style="margin: 15px 0;">This is your personalized dashboard where you can track shipments, view analytics, and manage your account.</p>
+                
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <h4>Recent Activity</h4>
+                    <p>No recent shipments tracked yet.</p>
+                    <p>Start by adding your first shipment to begin tracking.</p>
+                </div>
+                
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
             </div>
         </div>
         
-        <div class="dashboard-content">
-            <div class="dashboard-nav">
-                <a href="#" class="active">Overview</a>
-                <a href="#">Shipments</a>
-                <a href="#">Analytics</a>
-                <a href="#">Settings</a>
-            </div>
-            
-            <h3>Welcome to Your Dashboard</h3>
-            <p style="margin: 15px 0;">This is your personalized dashboard where you can track shipments, view analytics, and manage your account.</p>
-            
-            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
-                <h4>Recent Activity</h4>
-                <p>No recent shipments tracked yet.</p>
-                <p>Start by adding your first shipment to begin tracking.</p>
-            </div>
-            
-            <button class="logout-btn" id="logoutBtn">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </button>
+        <div id="authError" class="auth-error" style="display: none;">
+            <h3>Authentication Required</h3>
+            <p>You need to be logged in to access the dashboard.</p>
+            <a href="login.html">Go to Login</a>
         </div>
     </div>
 
-<!-- Load Supabase SDK FIRST -->
+<!-- Load Supabase SDK -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>    
 <script>
 // Supabase configuration
 const SUPABASE_URL = 'https://ijxchpbubzomytxouhqw.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlqeGNocGJ1YnpvbXl0eG91aHF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU5NDk0NzUsImV4cCI6MjA4MTUyNTQ3NX0.Ro6zlvBrKRaczXJ6t2kF6_U7Kc3sYN56K115nBaNuwI';
 
-// Wait for the page to load
+// Initialize immediately
+console.log('Initializing Supabase client...');
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// Check for OAuth hash parameters when page loads
 document.addEventListener('DOMContentLoaded', async function() {
-    console.log('Dashboard page loaded - checking authentication');
+    console.log('Dashboard loading - checking authentication...');
     
-    // Initialize Supabase client
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    // Check URL for OAuth callback parameters
+    const urlHash = window.location.hash;
+    const urlParams = new URLSearchParams(window.location.search);
     
+    console.log('URL Hash:', urlHash);
+    console.log('URL Params:', urlParams.toString());
+    
+    // Check if we have OAuth callback parameters
+    if (urlHash.includes('access_token') || urlParams.has('code') || urlHash.includes('error')) {
+        console.log('OAuth callback detected, processing...');
+        await processOAuthCallback();
+    } else {
+        // Normal dashboard access
+        await checkAuth();
+    }
+});
+
+// Process OAuth callback (for Google login)
+async function processOAuthCallback() {
     try {
-        // 1. First, check if there's a valid Supabase session (for Google OAuth)
-        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        console.log('Processing OAuth callback...');
         
-        if (sessionError) {
-            console.error('Error checking session:', sessionError);
-            // Try localStorage fallback
+        // Get the session from the URL
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        if (error) {
+            console.error('Error getting session from OAuth:', error);
+            showAuthError();
+            return;
+        }
+        
+        if (!session) {
+            console.error('No session found after OAuth callback');
+            showAuthError();
+            return;
+        }
+        
+        console.log('✅ OAuth session established:', session.user.email);
+        
+        // Store user data
+        await storeUserData(session.user);
+        
+        // Clear URL hash/params to clean up the URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+        
+        // Show dashboard
+        showDashboard();
+        
+    } catch (error) {
+        console.error('OAuth processing error:', error);
+        showAuthError();
+    }
+}
+
+// Check authentication (for regular access)
+async function checkAuth() {
+    try {
+        console.log('Checking authentication status...');
+        
+        // Check for existing session
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        if (error) {
+            console.error('Session check error:', error);
+            // Check localStorage as fallback
             checkLocalStorage();
             return;
         }
         
-        // 2. If we have a Supabase session (Google OAuth or regular login)
         if (session && session.user) {
-            console.log('✅ Supabase session found:', session.user.email);
-            
-            // Extract user data from Supabase session
-            const user = {
-                name: session.user.user_metadata?.full_name || 
-                      session.user.user_metadata?.name || 
-                      session.user.email?.split('@')[0] || 'User',
-                email: session.user.email,
-                id: session.user.id,
-                company: session.user.user_metadata?.company || 
-                        session.user.user_metadata?.full_name || 
-                        session.user.email?.split('@')[1]?.split('.')[0] || 'Company',
-                role: 'carrier',
-                loginTime: new Date().toISOString(),
-                isGoogleAuth: true
-            };
-            
-            // Save to localStorage for consistency
-            localStorage.setItem('cargolyze_user', JSON.stringify(user));
-            
-            // Show dashboard
-            showDashboard(user, supabase);
+            console.log('✅ Active session found:', session.user.email);
+            await storeUserData(session.user);
+            showDashboard();
             return;
         }
         
-        // 3. No Supabase session, check localStorage (for regular email login)
+        // No Supabase session, check localStorage
         checkLocalStorage();
         
     } catch (error) {
-        console.error('Dashboard initialization error:', error);
+        console.error('Authentication check error:', error);
         checkLocalStorage();
     }
-    
-    // Function to check localStorage (for regular email login)
-    async function checkLocalStorage() {
-        const userData = localStorage.getItem('cargolyze_user');
-        
-        if (!userData) {
-            console.log('No user found, redirecting to login');
-            window.location.href = 'login.html';
-            return;
-        }
-        
-        try {
-            const user = JSON.parse(userData);
-            console.log('User from localStorage:', user.email);
-            
-            // Optional: Verify the session with Supabase for email login users
-            const { data: { session }, error } = await supabase.auth.getSession();
-            
-            if (error || !session) {
-                console.warn('Warning: Supabase session expired or invalid');
-                // User can still access dashboard with cached data
-            }
-            
-            showDashboard(user, supabase);
-            
-        } catch (error) {
-            console.error('Error parsing localStorage data:', error);
-            localStorage.removeItem('cargolyze_user');
-            window.location.href = 'login.html';
-        }
-    }
-});
-
-// Function to show dashboard
-function showDashboard(user, supabase) {
-    // Hide loading indicator
-    document.getElementById('loadingIndicator').style.display = 'none';
-    
-    // Show dashboard content
-    document.getElementById('dashboardContent').style.display = 'block';
-    
-    // Display user info
-    const userInfoDiv = document.getElementById('userInfo');
-    const initials = user.name 
-        ? user.name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2)
-        : 'U';
-    
-    userInfoDiv.innerHTML = `
-        <div class="user-avatar">${initials}</div>
-        <div class="user-details">
-            <h2>Welcome, ${user.name || 'User'}</h2>
-            <p>${user.email || 'No email available'}</p>
-            ${user.isGoogleAuth ? '<p><i class="fab fa-google"></i> Google Account</p>' : ''}
-        </div>
-    `;
-    
-    console.log('Dashboard loaded for user:', user.email);
-    
-    // Setup logout functionality
-    setupLogout(supabase);
 }
 
-// Function to setup logout
-function setupLogout(supabase) {
+// Check localStorage (for regular email login)
+function checkLocalStorage() {
+    const userData = localStorage.getItem('cargolyze_user');
+    
+    if (!userData) {
+        console.log('No user data found, showing login');
+        showAuthError();
+        return;
+    }
+    
+    try {
+        const user = JSON.parse(userData);
+        console.log('Found user in localStorage:', user.email);
+        
+        // Verify with Supabase if possible
+        verifySupabaseSession().then(isValid => {
+            if (!isValid) {
+                console.warn('Supabase session invalid, using cached data');
+            }
+            showDashboard();
+        }).catch(() => {
+            showDashboard();
+        });
+        
+    } catch (error) {
+        console.error('Error parsing user data:', error);
+        localStorage.removeItem('cargolyze_user');
+        showAuthError();
+    }
+}
+
+// Store user data from Supabase session
+async function storeUserData(supabaseUser) {
+    const user = {
+        name: supabaseUser.user_metadata?.full_name || 
+              supabaseUser.user_metadata?.name || 
+              supabaseUser.email?.split('@')[0] || 'User',
+        email: supabaseUser.email,
+        id: supabaseUser.id,
+        company: supabaseUser.user_metadata?.company || 
+                supabaseUser.user_metadata?.full_name || 
+                supabaseUser.email?.split('@')[1]?.split('.')[0] || 'Company',
+        role: 'carrier',
+        loginTime: new Date().toISOString(),
+        isGoogleAuth: supabaseUser.app_metadata?.provider === 'google'
+    };
+    
+    console.log('Storing user data:', user.email);
+    localStorage.setItem('cargolyze_user', JSON.stringify(user));
+    return user;
+}
+
+// Verify Supabase session
+async function verifySupabaseSession() {
+    try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        return !error && !!session;
+    } catch (error) {
+        return false;
+    }
+}
+
+// Show dashboard
+function showDashboard() {
+    const userData = localStorage.getItem('cargolyze_user');
+    
+    if (!userData) {
+        showAuthError();
+        return;
+    }
+    
+    try {
+        const user = JSON.parse(userData);
+        
+        // Hide loading indicator
+        document.getElementById('loadingIndicator').style.display = 'none';
+        
+        // Show dashboard content
+        document.getElementById('dashboardContent').style.display = 'block';
+        
+        // Display user info
+        const userInfoDiv = document.getElementById('userInfo');
+        const initials = user.name 
+            ? user.name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2)
+            : 'U';
+        
+        userInfoDiv.innerHTML = `
+            <div class="user-avatar">${initials}</div>
+            <div class="user-details">
+                <h2>Welcome, ${user.name || 'User'}</h2>
+                <p>${user.email || 'No email available'}</p>
+                ${user.isGoogleAuth ? '<p><i class="fab fa-google"></i> Google Account</p>' : ''}
+            </div>
+        `;
+        
+        console.log('Dashboard loaded for user:', user.email);
+        
+        // Setup logout functionality
+        setupLogout();
+        
+    } catch (error) {
+        console.error('Error showing dashboard:', error);
+        showAuthError();
+    }
+}
+
+// Show authentication error
+function showAuthError() {
+    document.getElementById('loadingIndicator').style.display = 'none';
+    document.getElementById('dashboardContent').style.display = 'none';
+    document.getElementById('authError').style.display = 'block';
+}
+
+// Setup logout functionality
+function setupLogout() {
     const logoutBtn = document.getElementById('logoutBtn');
     
     logoutBtn.addEventListener('click', async function() {
-        console.log('Logout clicked');
+        console.log('Logout initiated');
         
         // Show loading
         document.getElementById('loadingIndicator').style.display = 'block';
@@ -341,5 +495,4 @@ window.addEventListener('message', function(event) {
 });
 </script>
 </body>
-
 </html>
