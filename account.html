@@ -1,0 +1,2061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargolyze - Account Settings | Shipment Tracking Automation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --slate-grey: #37474F;
+            --industrial-orange: #FF5722;
+            --light-slate-grey: #546E7A;
+            --white: #FFFFFF;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --border: #e2e8f0;
+            --surface: #ffffff;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+            --radius-sm: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background: #f5f7fa;
+            color: var(--slate-grey);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        .account-header {
+            background: var(--slate-grey);
+            color: white;
+            padding: 0.8rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid var(--industrial-orange);
+        }
+
+        .header-container {
+            max-width: 2400px;
+            margin: 0 auto;
+            padding: 0 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Logo */
+        .account-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.6rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .logo-symbol {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-symbol-inner {
+            position: relative;
+            width: 28px;
+            height: 28px;
+            transform: rotate(45deg);
+            overflow: visible;
+        }
+
+        .logo-symbol-inner::before {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 44px;
+            background: var(--white);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+
+        .logo-symbol-inner::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 22px solid var(--industrial-orange);
+            border-top: 22px solid transparent;
+            border-bottom: 22px solid transparent;
+            top: 50%;
+            left: 50%;
+            transform: translate(6.5px, -38.5px) rotate(135deg);
+        }
+
+        .logo-symbol-inner .logo-square {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: var(--industrial-orange);
+            top: 50%;
+            left: 50%;
+            transform: translate(31px, -242%) rotate(-45deg);
+        }
+
+        .logo-text {
+            color: var(--white);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            font-size: 1.6rem;
+        }
+
+        .logo-tagline {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--industrial-orange);
+            opacity: 0.9;
+            letter-spacing: 0.5px;
+            margin-left: 4px;
+        }
+
+        /* Navigation */
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-links a.current-nav {
+            background: var(--industrial-orange);
+            color: white;
+        }
+
+        /* Main Content */
+        .account-main {
+            flex: 1;
+            padding: 2rem 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--slate-grey);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: var(--light-slate-grey);
+            font-size: 1rem;
+        }
+
+        /* Account Layout */
+        .account-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .account-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Sidebar */
+        .account-sidebar {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .profile-summary {
+            text-align: center;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            background: var(--industrial-orange);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 2rem;
+            margin: 0 auto 1rem;
+            position: relative;
+        }
+
+        .avatar-upload {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: var(--info);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            border: 3px solid white;
+        }
+
+        .profile-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            color: var(--slate-grey);
+        }
+
+        .profile-email {
+            color: var(--light-slate-grey);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-role {
+            display: inline-block;
+            background: rgba(255, 87, 34, 0.1);
+            color: var(--industrial-orange);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Sidebar Menu */
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .menu-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            color: var(--slate-grey);
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .menu-link:hover {
+            background: rgba(255, 87, 34, 0.1);
+            border-color: rgba(255, 87, 34, 0.3);
+        }
+
+        .menu-link.active {
+            background: rgba(255, 87, 34, 0.1);
+            border-color: rgba(255, 87, 34, 0.3);
+            color: var(--industrial-orange);
+            font-weight: 600;
+        }
+
+        .menu-icon {
+            width: 24px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        /* Content Area */
+        .account-content {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--slate-grey);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--industrial-orange);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #e64a19;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 87, 34, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--border);
+            color: var(--slate-grey);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--industrial-orange);
+            color: var(--industrial-orange);
+        }
+
+        .btn-danger {
+            background: transparent;
+            border: 2px solid var(--danger);
+            color: var(--danger);
+        }
+
+        .btn-danger:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        /* Form Styles */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--slate-grey);
+            font-size: 0.95rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--industrial-orange);
+            box-shadow: 0 0 0 3px rgba(255, 87, 34, 0.1);
+        }
+
+        .form-input:disabled {
+            background: var(--light);
+            cursor: not-allowed;
+        }
+
+        .form-help {
+            margin-top: 0.5rem;
+            color: var(--light-slate-grey);
+            font-size: 0.85rem;
+        }
+
+        /* Subscription Card */
+        .subscription-card {
+            background: linear-gradient(135deg, var(--slate-grey) 0%, #455a64 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 87, 34, 0.3);
+        }
+
+        .subscription-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 87, 34, 0.1));
+        }
+
+        .subscription-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .subscription-badge {
+            background: var(--industrial-orange);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .subscription-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .subscription-details {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .detail-item h4 {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-item p {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* API Keys */
+        .api-keys-list {
+            margin-bottom: 2rem;
+        }
+
+        .api-key-item {
+            background: var(--light);
+            border-radius: var(--radius-sm);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+        }
+
+        .api-key-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .api-key-name {
+            font-weight: 600;
+            color: var(--slate-grey);
+        }
+
+        .api-key-value {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            word-break: break-all;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .copy-key-btn {
+            background: none;
+            border: none;
+            color: var(--info);
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        /* Sessions List */
+        .sessions-list {
+            margin-bottom: 2rem;
+        }
+
+        .session-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .session-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .session-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--info);
+        }
+
+        .session-details h4 {
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .session-details p {
+            font-size: 0.85rem;
+            color: var(--light-slate-grey);
+        }
+
+        .current-session {
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: var(--radius-sm);
+        }
+
+        /* Activity Log */
+        .activity-timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .activity-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .activity-item {
+            position: relative;
+            padding: 1rem 0 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 1.5rem;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--industrial-orange);
+        }
+
+        .activity-content {
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .activity-time {
+            font-size: 0.85rem;
+            color: var(--light-slate-grey);
+        }
+
+        /* Danger Zone */
+        .danger-zone {
+            background: rgba(239, 68, 68, 0.05);
+            border: 2px solid rgba(239, 68, 68, 0.2);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .danger-zone h3 {
+            color: var(--danger);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .danger-zone p {
+            color: var(--light-slate-grey);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Notification Settings */
+        .notification-category {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .notification-category h4 {
+            margin-bottom: 1rem;
+            color: var(--slate-grey);
+        }
+
+        .notification-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .notification-option:last-child {
+            border-bottom: none;
+        }
+
+        .notification-label h5 {
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .notification-label p {
+            font-size: 0.85rem;
+            color: var(--light-slate-grey);
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 52px;
+            height: 26px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--industrial-orange);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Footer */
+        .account-footer {
+            background: var(--slate-grey);
+            color: white;
+            padding: 2rem 50px;
+            margin-top: auto;
+            border-top: 2px solid var(--industrial-orange);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--industrial-orange);
+        }
+
+        .footer-copyright {
+            opacity: 0.7;
+            font-size: 0.85rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header-container,
+            .account-main,
+            .account-footer {
+                padding: 0 20px;
+            }
+
+            .account-main {
+                padding: 1.5rem 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .subscription-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .account-sidebar {
+                position: static;
+            }
+        }
+
+        /* Loading State */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 87, 34, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--industrial-orange);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="account-header">
+        <div class="header-container">
+            <a href="index.html" class="account-logo">
+                <div class="logo-symbol">
+                    <div class="logo-symbol-inner">
+                        <div class="logo-square"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="logo-text">CARGOLYZE</div>
+                    <div class="logo-tagline">SHIPMENT TRACKING AUTOMATION</div>
+                </div>
+            </a>
+
+            <nav class="nav-links">
+                <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="account.html" class="current-nav"><i class="fas fa-user"></i> Account</a>
+                <button class="btn btn-secondary" id="logoutBtn" style="margin-left: 1rem;">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="account-main">
+        <div class="page-header">
+            <h1 class="page-title">Account Settings</h1>
+            <p class="page-subtitle">Manage your profile, subscription, and security settings</p>
+        </div>
+
+        <div class="account-layout">
+            <!-- Sidebar -->
+            <aside class="account-sidebar">
+                <div class="profile-summary">
+                    <div class="profile-avatar" id="profileAvatar">
+                        <span id="avatarText">U</span>
+                        <div class="avatar-upload" id="avatarUpload">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                    </div>
+                    <h3 class="profile-name" id="profileName">User Name</h3>
+                    <p class="profile-email" id="profileEmail">user@example.com</p>
+                    <span class="profile-role" id="profileRole">Carrier User</span>
+                </div>
+
+                <ul class="sidebar-menu">
+                    <li class="menu-item">
+                        <a href="#profile" class="menu-link active" data-section="profile">
+                            <i class="fas fa-user-circle menu-icon"></i>
+                            <span>Profile Information</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#subscription" class="menu-link" data-section="subscription">
+                            <i class="fas fa-credit-card menu-icon"></i>
+                            <span>Subscription & Billing</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#security" class="menu-link" data-section="security">
+                            <i class="fas fa-shield-alt menu-icon"></i>
+                            <span>Security & Login</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#api" class="menu-link" data-section="api">
+                            <i class="fas fa-key menu-icon"></i>
+                            <span>API Keys</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#notifications" class="menu-link" data-section="notifications">
+                            <i class="fas fa-bell menu-icon"></i>
+                            <span>Notifications</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#sessions" class="menu-link" data-section="sessions">
+                            <i class="fas fa-desktop menu-icon"></i>
+                            <span>Active Sessions</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#activity" class="menu-link" data-section="activity">
+                            <i class="fas fa-history menu-icon"></i>
+                            <span>Activity Log</span>
+                        </a>
+                    </li>
+                </ul>
+            </aside>
+
+            <!-- Content Area -->
+            <div class="account-content">
+                <!-- Profile Section -->
+                <section id="profile" class="content-section active">
+                    <div class="section-header">
+                        <h2 class="section-title">Profile Information</h2>
+                        <button class="btn btn-primary" id="saveProfile">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                    </div>
+
+                    <form id="profileForm" class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="firstName">First Name</label>
+                            <input type="text" id="firstName" class="form-input" value="John">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="lastName">Last Name</label>
+                            <input type="text" id="lastName" class="form-input" value="Doe">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="companyName">Company Name</label>
+                            <input type="text" id="companyName" class="form-input" value="Global Logistics Inc.">
+                            <p class="form-help">Your company name will appear on invoices and reports</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="jobTitle">Job Title / Role</label>
+                            <input type="text" id="jobTitle" class="form-input" value="Logistics Manager">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="phoneNumber">Phone Number</label>
+                            <input type="tel" id="phoneNumber" class="form-input" value="+1 (555) 123-4567">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="country">Country</label>
+                            <select id="country" class="form-input">
+                                <option value="US">United States</option>
+                                <option value="UK">United Kingdom</option>
+                                <option value="CA">Canada</option>
+                                <option value="AU">Australia</option>
+                                <option value="DE">Germany</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label class="form-label" for="bio">Bio / About</label>
+                            <textarea id="bio" class="form-input" rows="4" placeholder="Tell us about yourself and your logistics needs">Experienced logistics manager with 10+ years in supply chain optimization. Specialized in container shipping and port operations.</textarea>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- Subscription Section -->
+                <section id="subscription" class="content-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Subscription & Billing</h2>
+                        <button class="btn btn-primary" id="upgradePlan">
+                            <i class="fas fa-arrow-up"></i> Upgrade Plan
+                        </button>
+                    </div>
+
+                    <div class="subscription-card">
+                        <div class="subscription-header">
+                            <div>
+                                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">Pro Plan</h3>
+                                <p style="opacity: 0.9;">Perfect for growing logistics teams</p>
+                            </div>
+                            <span class="subscription-badge">Active</span>
+                        </div>
+
+                        <div class="subscription-details">
+                            <div class="detail-item">
+                                <h4>Monthly Cost</h4>
+                                <p>$99/month</p>
+                            </div>
+                            <div class="detail-item">
+                                <h4>Next Billing Date</h4>
+                                <p>Feb 15, 2025</p>
+                            </div>
+                            <div class="detail-item">
+                                <h4>Shipment Limit</h4>
+                                <p>500/month</p>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-secondary" style="background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3);">
+                            <i class="fas fa-file-invoice"></i> View Invoices
+                        </button>
+                    </div>
+
+                    <h3 style="margin-bottom: 1.5rem; color: var(--slate-grey);">Plan Features</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-check" style="color: var(--success); margin-right: 8px;"></i> Real-time Tracking</label>
+                            <p class="form-help">Track up to 500 shipments simultaneously</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-check" style="color: var(--success); margin-right: 8px;"></i> Advanced Analytics</label>
+                            <p class="form-help">Comprehensive reporting and insights</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-check" style="color: var(--success); margin-right: 8px;"></i> API Access</label>
+                            <p class="form-help">Full API integration capabilities</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-check" style="color: var(--success); margin-right: 8px;"></i> Priority Support</label>
+                            <p class="form-help">24/7 email and chat support</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Security Section -->
+                <section id="security" class="content-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Security & Login</h2>
+                        <button class="btn btn-primary" id="changePassword">
+                            <i class="fas fa-key"></i> Change Password
+                        </button>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="currentEmail">Email Address</label>
+                            <input type="email" id="currentEmail" class="form-input" value="john.doe@company.com" disabled>
+                            <p class="form-help">Contact support to change your email address</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="twoFactor">Two-Factor Authentication</label>
+                            <div style="margin-top: 0.5rem;">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="twoFactorToggle" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span style="margin-left: 10px; font-size: 0.95rem;">Enabled</span>
+                            </div>
+                            <p class="form-help">Add an extra layer of security to your account</p>
+                        </div>
+                    </div>
+
+                    <h3 style="margin: 2rem 0 1rem; color: var(--slate-grey);">Recent Security Events</h3>
+                    <div class="activity-timeline">
+                        <div class="activity-item">
+                            <div class="activity-content">Password changed successfully</div>
+                            <div class="activity-time">2 hours ago • From Chrome, Windows</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-content">New login from Chrome on Windows</div>
+                            <div class="activity-time">Yesterday • New York, USA</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-content">Two-factor authentication enabled</div>
+                            <div class="activity-time">3 days ago • From your account settings</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- API Keys Section -->
+                <section id="api" class="content-section">
+                    <div class="section-header">
+                        <h2 class="section-title">API Keys</h2>
+                        <button class="btn btn-primary" id="generateApiKey">
+                            <i class="fas fa-plus"></i> Generate New Key
+                        </button>
+                    </div>
+
+                    <p style="margin-bottom: 1.5rem; color: var(--light-slate-grey);">
+                        API keys allow you to integrate Cargolyze with your internal systems. Keep them secure and never share them publicly.
+                    </p>
+
+                    <div class="api-keys-list">
+                        <div class="api-key-item">
+                            <div class="api-key-header">
+                                <span class="api-key-name">Production Key</span>
+                                <span style="color: var(--success); font-size: 0.85rem; font-weight: 600;">
+                                    <i class="fas fa-circle" style="font-size: 0.5rem; vertical-align: middle;"></i> Active
+                                </span>
+                            </div>
+                            <div class="api-key-value">
+                                <span>carg_sk_live_51NcYt2SJ8hK7vXz9wE4rT6yU...</span>
+                                <button class="copy-key-btn" data-key="carg_sk_live_51NcYt2SJ8hK7vXz9wE4rT6yU...">
+                                    <i class="far fa-copy"></i>
+                                </button>
+                            </div>
+                            <div style="display: flex; gap: 1rem;">
+                                <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.85rem;">
+                                    <i class="fas fa-eye"></i> View Usage
+                                </button>
+                                <button class="btn btn-danger" style="padding: 6px 12px; font-size: 0.85rem;">
+                                    <i class="fas fa-trash"></i> Revoke
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="api-key-item">
+                            <div class="api-key-header">
+                                <span class="api-key-name">Development Key</span>
+                                <span style="color: var(--warning); font-size: 0.85rem; font-weight: 600;">
+                                    <i class="fas fa-circle" style="font-size: 0.5rem; vertical-align: middle;"></i> Testing
+                                </span>
+                            </div>
+                            <div class="api-key-value">
+                                <span>carg_sk_test_72MbXt3RJ9jL8wYz5vF5sT7zV...</span>
+                                <button class="copy-key-btn" data-key="carg_sk_test_72MbXt3RJ9jL8wYz5vF5sT7zV...">
+                                    <i class="far fa-copy"></i>
+                                </button>
+                            </div>
+                            <div style="display: flex; gap: 1rem;">
+                                <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.85rem;">
+                                    <i class="fas fa-eye"></i> View Usage
+                                </button>
+                                <button class="btn btn-danger" style="padding: 6px 12px; font-size: 0.85rem;">
+                                    <i class="fas fa-trash"></i> Revoke
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Notifications Section -->
+                <section id="notifications" class="content-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Notification Preferences</h2>
+                        <button class="btn btn-primary" id="saveNotifications">
+                            <i class="fas fa-save"></i> Save Preferences
+                        </button>
+                    </div>
+
+                    <div class="notification-category">
+                        <h4>Shipment Updates</h4>
+                        <div class="notification-option">
+                            <div class="notification-label">
+                                <h5>Status Changes</h5>
+                                <p>When your shipment status changes (e.g., arrived at port)</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="notification-option">
+                            <div class="notification-label">
+                                <h5>Delay Alerts</h5>
+                                <p>Get notified when shipments are delayed</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="notification-option">
+                            <div class="notification-label">
+                                <h5>ETA Updates</h5>
+                                <p>Receive updates when estimated arrival times change</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="notification-category">
+                        <h4>Account & Security</h4>
+                        <div class="notification-option">
+                            <div class="notification-label">
+                                <h5>Login Alerts</h5>
+                                <p>Notify me of new logins from unknown devices</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="notification-option">
+                            <div class="notification-label">
+                                <h5>Billing Notifications</h5>
+                                <p>Invoice reminders and payment confirmations</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="notification-option">
+                            <div class="notification-label">
+                                <h5>Product Updates</h5>
+                                <p>News about new features and improvements</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Sessions Section -->
+                <section id="sessions" class="content-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Active Sessions</h2>
+                        <button class="btn btn-danger" id="logoutAll">
+                            <i class="fas fa-sign-out-alt"></i> Logout All Devices
+                        </button>
+                    </div>
+
+                    <p style="margin-bottom: 1.5rem; color: var(--light-slate-grey);">
+                        This is a list of devices that have logged into your account. Revoke any sessions that you don't recognize.
+                    </p>
+
+                    <div class="sessions-list">
+                        <div class="session-item current-session">
+                            <div class="session-info">
+                                <div class="session-icon">
+                                    <i class="fas fa-desktop"></i>
+                                </div>
+                                <div class="session-details">
+                                    <h4>Chrome on Windows</h4>
+                                    <p>New York, USA • Current Session</p>
+                                    <p style="font-size: 0.8rem; color: var(--success);"><i class="fas fa-circle" style="font-size: 0.5rem;"></i> Active now</p>
+                                </div>
+                            </div>
+                            <button class="btn btn-secondary" disabled style="padding: 6px 12px; font-size: 0.85rem;">
+                                Current
+                            </button>
+                        </div>
+
+                        <div class="session-item">
+                            <div class="session-info">
+                                <div class="session-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <div class="session-details">
+                                    <h4>Safari on iPhone</h4>
+                                    <p>London, UK • Last active 2 hours ago</p>
+                                </div>
+                            </div>
+                            <button class="btn btn-danger" style="padding: 6px 12px; font-size: 0.85rem;">
+                                Revoke
+                            </button>
+                        </div>
+
+                        <div class="session-item">
+                            <div class="session-info">
+                                <div class="session-icon">
+                                    <i class="fas fa-desktop"></i>
+                                </div>
+                                <div class="session-details">
+                                    <h4>Firefox on Mac</h4>
+                                    <p>Tokyo, Japan • Last active yesterday</p>
+                                </div>
+                            </div>
+                            <button class="btn btn-danger" style="padding: 6px 12px; font-size: 0.85rem;">
+                                Revoke
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Activity Log Section -->
+                <section id="activity" class="content-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Activity Log</h2>
+                        <button class="btn btn-secondary" id="exportActivity">
+                            <i class="fas fa-download"></i> Export Log
+                        </button>
+                    </div>
+
+                    <p style="margin-bottom: 1.5rem; color: var(--light-slate-grey);">
+                        Track all important activities on your account for security and auditing purposes.
+                    </p>
+
+                    <div class="activity-timeline">
+                        <div class="activity-item">
+                            <div class="activity-content">Profile information updated</div>
+                            <div class="activity-time">Today, 10:30 AM</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-content">New API key generated: Development Key</div>
+                            <div class="activity-time">Yesterday, 3:15 PM</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-content">Password changed successfully</div>
+                            <div class="activity-time">Jan 5, 2025 • From Chrome, Windows</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-content">Login from new device: Safari on iPhone</div>
+                            <div class="activity-time">Jan 4, 2025 • London, UK</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-content">Subscription upgraded to Pro Plan</div>
+                            <div class="activity-time">Jan 1, 2025 • $99/month</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-content">Account created successfully</div>
+                            <div class="activity-time">Dec 15, 2024 • Welcome to Cargolyze!</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Danger Zone (Always visible) -->
+                <div class="danger-zone">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Danger Zone</h3>
+                    <p>These actions are irreversible. Please proceed with caution.</p>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <button class="btn btn-danger" id="deleteAccount">
+                            <i class="fas fa-trash"></i> Delete Account
+                        </button>
+                        <button class="btn btn-danger" id="exportData">
+                            <i class="fas fa-download"></i> Export All Data
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="account-footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="#">Support</a>
+                <a href="privacy.html">Privacy</a>
+                <a href="terms.html">Terms</a>
+            </div>
+            <div class="footer-copyright">
+                &copy; 2025 Cargolyze. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+
+<!-- Load Supabase SDK -->
+<script src="js/config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>   
+<script>
+    // ========== SUPABASE CONFIGURATION ==========
+    const SUPABASE_URL = CONFIG.SUPABASE_URL;
+    const SUPABASE_KEY = CONFIG.SUPABASE_ANON_URL;
+
+    let currentUser = null;
+    let supabase = null;
+
+    // ========== INITIALIZATION ==========
+    document.addEventListener('DOMContentLoaded', async function() {
+        console.log('Account page initializing...');
+        
+        try {
+            // Initialize Supabase
+            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            console.log('Supabase initialized');
+            
+            // Check authentication
+            await checkAuthentication();
+            
+            // Update UI with user data
+            updateUserDisplay();
+            
+            // Setup section navigation
+            setupSectionNavigation();
+            
+            // Load saved avatar and profile data
+            loadUserPreferences();
+            
+            console.log('Account page initialized successfully');
+            
+        } catch (error) {
+            console.error('Initialization error:', error);
+            redirectToLogin();
+        }
+    });
+
+    // ========== AUTHENTICATION CHECK ==========
+    async function checkAuthentication() {
+        console.log('Checking authentication...');
+        
+        try {
+            // 1. First check Supabase session (for Google OAuth users)
+            const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+            
+            if (sessionError) {
+                console.warn('Session check error:', sessionError);
+                // Continue with localStorage check
+            } else if (session && session.user) {
+                console.log('✅ Supabase session found:', session.user.email);
+                await handleSupabaseSession(session.user);
+                return;
+            }
+            
+            // 2. Check localStorage (for regular email users)
+            const userData = localStorage.getItem('cargolyze_user');
+            
+            if (!userData) {
+                console.log('No user data found');
+                redirectToLogin();
+                return;
+            }
+            
+            try {
+                currentUser = JSON.parse(userData);
+                console.log('User from localStorage:', currentUser.email);
+                
+                // Verify the user still exists in Supabase
+                await verifyUserSession();
+                
+            } catch (error) {
+                console.error('Error parsing user data:', error);
+                redirectToLogin();
+            }
+            
+        } catch (error) {
+            console.error('Authentication check error:', error);
+            redirectToLogin();
+        }
+    }
+
+    async function handleSupabaseSession(supabaseUser) {
+        console.log('Processing Supabase session...');
+        
+        // Extract user data from Supabase session
+        currentUser = {
+            name: supabaseUser.user_metadata?.full_name || 
+                  supabaseUser.user_metadata?.name || 
+                  supabaseUser.email?.split('@')[0] || 'User',
+            email: supabaseUser.email,
+            id: supabaseUser.id,
+            company: supabaseUser.user_metadata?.company || 
+                    supabaseUser.user_metadata?.full_name || 
+                    supabaseUser.email?.split('@')[1]?.split('.')[0] || 'Company',
+            role: 'carrier',
+            loginTime: new Date().toISOString(),
+            isGoogleAuth: supabaseUser.app_metadata?.provider === 'google'
+        };
+        
+        console.log('User from Supabase:', currentUser.email);
+        
+        // Save to localStorage for consistency
+        localStorage.setItem('cargolyze_user', JSON.stringify(currentUser));
+    }
+
+    async function verifyUserSession() {
+        if (!supabase) return true;
+        
+        try {
+            const { data: { session }, error } = await supabase.auth.getSession();
+            return !error && !!session;
+        } catch (error) {
+            console.warn('Session verification error:', error);
+            return false;
+        }
+    }
+
+    function redirectToLogin() {
+        console.log('Redirecting to login...');
+        window.location.href = 'login.html';
+    }
+
+    // ========== USER DATA MANAGEMENT ==========
+    function updateUserDisplay() {
+        if (!currentUser) {
+            redirectToLogin();
+            return;
+        }
+
+        // Update profile information
+        document.getElementById('profileName').textContent = currentUser.name || currentUser.email.split('@')[0];
+        document.getElementById('profileEmail').textContent = currentUser.email;
+        document.getElementById('currentEmail').value = currentUser.email;
+        document.getElementById('profileRole').textContent = currentUser.isGoogleAuth ? 'Google User' : 'Carrier User';
+        
+        // Update avatar
+        const avatarText = document.getElementById('avatarText');
+        if (currentUser.name) {
+            const initials = currentUser.name.split(' ').map(n => n[0]).join('').toUpperCase();
+            avatarText.textContent = initials.substring(0, 2);
+        } else {
+            avatarText.textContent = currentUser.email[0].toUpperCase();
+        }
+
+        // Load saved profile data
+        loadProfileData();
+    }
+
+    function loadProfileData() {
+        if (!currentUser) return;
+        
+        const savedProfile = JSON.parse(localStorage.getItem(`cargolyze_profile_${currentUser?.id}`));
+        if (savedProfile) {
+            document.getElementById('firstName').value = savedProfile.firstName || '';
+            document.getElementById('lastName').value = savedProfile.lastName || '';
+            document.getElementById('companyName').value = savedProfile.companyName || '';
+            document.getElementById('jobTitle').value = savedProfile.jobTitle || '';
+            document.getElementById('phoneNumber').value = savedProfile.phoneNumber || '';
+            document.getElementById('country').value = savedProfile.country || 'US';
+            document.getElementById('bio').value = savedProfile.bio || '';
+        } else {
+            // Set default company name from email domain
+            if (currentUser.email && currentUser.email.includes('@')) {
+                const domain = currentUser.email.split('@')[1].split('.')[0];
+                document.getElementById('companyName').value = domain.charAt(0).toUpperCase() + domain.slice(1);
+            }
+        }
+    }
+
+    function saveProfileData() {
+        if (!currentUser) return;
+        
+        const profileData = {
+            firstName: document.getElementById('firstName').value,
+            lastName: document.getElementById('lastName').value,
+            companyName: document.getElementById('companyName').value,
+            jobTitle: document.getElementById('jobTitle').value,
+            phoneNumber: document.getElementById('phoneNumber').value,
+            country: document.getElementById('country').value,
+            bio: document.getElementById('bio').value
+        };
+        
+        localStorage.setItem(`cargolyze_profile_${currentUser?.id}`, JSON.stringify(profileData));
+    }
+
+    function loadUserPreferences() {
+        if (!currentUser) return;
+        
+        // Load saved avatar
+        const savedAvatar = localStorage.getItem(`cargolyze_avatar_${currentUser?.id}`);
+        if (savedAvatar) {
+            const avatar = document.getElementById('profileAvatar');
+            avatar.style.backgroundImage = `url(${savedAvatar})`;
+            avatar.style.backgroundSize = 'cover';
+            avatar.style.backgroundPosition = 'center';
+            document.getElementById('avatarText').style.display = 'none';
+        }
+    }
+
+    // ========== SECTION NAVIGATION ==========
+    function setupSectionNavigation() {
+        const menuLinks = document.querySelectorAll('.menu-link');
+        const sections = document.querySelectorAll('.content-section');
+        
+        menuLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all links and sections
+                menuLinks.forEach(l => l.classList.remove('active'));
+                sections.forEach(s => s.classList.remove('active'));
+                
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Show corresponding section
+                const sectionId = this.getAttribute('data-section');
+                document.getElementById(sectionId).classList.add('active');
+                
+                // Update URL hash
+                window.location.hash = sectionId;
+            });
+        });
+        
+        // Check URL hash on load
+        if (window.location.hash) {
+            const sectionId = window.location.hash.substring(1);
+            const link = document.querySelector(`.menu-link[data-section="${sectionId}"]`);
+            if (link) {
+                link.click();
+            }
+        }
+    }
+
+    // ========== EVENT HANDLERS ==========
+    document.getElementById('logoutBtn').addEventListener('click', async function() {
+        console.log('Logout initiated');
+        
+        try {
+            // Sign out from Supabase if available
+            if (supabase) {
+                const { error } = await supabase.auth.signOut();
+                if (error) {
+                    console.warn('Supabase logout warning:', error.message);
+                } else {
+                    console.log('✅ Supabase session cleared');
+                }
+            }
+        } catch (error) {
+            console.warn('Supabase logout error:', error);
+        }
+        
+        // Clear user data
+        localStorage.removeItem('cargolyze_user');
+        if (currentUser?.id) {
+            localStorage.removeItem(`cargolyze_profile_${currentUser.id}`);
+            localStorage.removeItem(`cargolyze_avatar_${currentUser.id}`);
+        }
+        
+        // Notify other tabs
+        localStorage.setItem('cargolyze_logout_event', Date.now().toString());
+        window.postMessage('userLoggedOut', '*');
+        
+        // Redirect to home page
+        window.location.href = 'index.html';
+    });
+
+    document.getElementById('saveProfile').addEventListener('click', function() {
+        if (!currentUser) return;
+        
+        const btn = this;
+        const icon = btn.querySelector('i');
+        
+        // Show loading state
+        btn.disabled = true;
+        icon.className = 'fas fa-spinner fa-spin';
+        
+        // Simulate API call
+        setTimeout(() => {
+            saveProfileData();
+            btn.disabled = false;
+            icon.className = 'fas fa-save';
+            
+            // Update display name
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            if (firstName || lastName) {
+                const fullName = `${firstName} ${lastName}`.trim();
+                document.getElementById('profileName').textContent = fullName;
+                
+                // Update current user object
+                currentUser.name = fullName;
+                localStorage.setItem('cargolyze_user', JSON.stringify(currentUser));
+                
+                // Update avatar initials
+                const initials = `${firstName[0] || ''}${lastName[0] || ''}`.toUpperCase();
+                if (initials) {
+                    const avatarText = document.getElementById('avatarText');
+                    avatarText.textContent = initials;
+                    avatarText.style.display = 'block';
+                }
+            }
+            
+            showNotification('Profile updated successfully', 'success');
+            
+            // Log activity
+            logActivity('Profile information updated');
+        }, 1000);
+    });
+
+    document.getElementById('changePassword').addEventListener('click', function() {
+        if (currentUser?.isGoogleAuth) {
+            showNotification('Google accounts use Google for password management', 'info');
+        } else {
+            window.location.href = 'update-password.html';
+        }
+    });
+
+    document.getElementById('generateApiKey').addEventListener('click', function() {
+        const modal = createApiKeyModal();
+        document.body.appendChild(modal);
+    });
+
+    document.getElementById('logoutAll').addEventListener('click', function() {
+        if (confirm('Are you sure you want to logout from all devices? You will need to login again on this device.')) {
+            showNotification('Logged out from all devices', 'success');
+            logActivity('Logged out from all active sessions');
+        }
+    });
+
+    document.getElementById('deleteAccount').addEventListener('click', function() {
+        if (confirm('⚠️ WARNING: This will permanently delete your account and all associated data. This action cannot be undone. Are you absolutely sure?')) {
+            if (prompt('Type "DELETE" to confirm account deletion:') === 'DELETE') {
+                // Clear all user data
+                localStorage.removeItem('cargolyze_user');
+                if (currentUser?.id) {
+                    localStorage.removeItem(`cargolyze_profile_${currentUser.id}`);
+                    localStorage.removeItem(`cargolyze_avatar_${currentUser.id}`);
+                    localStorage.removeItem(`cargolyze_activities_${currentUser.id}`);
+                    localStorage.removeItem(`cargolyze_shipments_${currentUser.id}`);
+                }
+                
+                // Sign out from Supabase
+                if (supabase) {
+                    supabase.auth.signOut();
+                }
+                
+                showNotification('Account deleted successfully', 'success');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 2000);
+            }
+        }
+    });
+
+    // Copy API key functionality
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.copy-key-btn')) {
+            const button = e.target.closest('.copy-key-btn');
+            const key = button.getAttribute('data-key');
+            
+            navigator.clipboard.writeText(key).then(() => {
+                const icon = button.querySelector('i');
+                icon.className = 'fas fa-check';
+                setTimeout(() => {
+                    icon.className = 'far fa-copy';
+                }, 2000);
+                
+                showNotification('API key copied to clipboard', 'success');
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                showNotification('Failed to copy API key', 'error');
+            });
+        }
+    });
+
+    // Avatar upload
+    document.getElementById('avatarUpload').addEventListener('click', function() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        
+        input.onchange = function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // Check file size (max 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    showNotification('Image size must be less than 5MB', 'error');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const avatar = document.getElementById('profileAvatar');
+                    avatar.style.backgroundImage = `url(${event.target.result})`;
+                    avatar.style.backgroundSize = 'cover';
+                    avatar.style.backgroundPosition = 'center';
+                    document.getElementById('avatarText').style.display = 'none';
+                    
+                    // Save to localStorage
+                    if (currentUser?.id) {
+                        localStorage.setItem(`cargolyze_avatar_${currentUser.id}`, event.target.result);
+                    }
+                    
+                    showNotification('Profile picture updated', 'success');
+                    logActivity('Profile picture changed');
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+        
+        input.click();
+    });
+
+    // ========== HELPER FUNCTIONS ==========
+    function showNotification(message, type = 'info') {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.innerHTML = `
+            <div class="notification-content">
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
+            </div>
+            <button class="notification-close">&times;</button>
+        `;
+        
+        // Add styles for notification
+        if (!document.querySelector('#notification-styles')) {
+            const styles = document.createElement('style');
+            styles.id = 'notification-styles';
+            styles.textContent = `
+                .notification {
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: white;
+                    border-radius: 8px;
+                    padding: 1rem;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    gap: 1rem;
+                    z-index: 1000;
+                    animation: slideIn 0.3s ease;
+                    max-width: 400px;
+                    border-left: 4px solid var(--industrial-orange);
+                }
+                .notification.success { border-left-color: var(--success); }
+                .notification.error { border-left-color: var(--danger); }
+                .notification.warning { border-left-color: var(--warning); }
+                .notification-content {
+                    display: flex;
+                        align-items: center;
+                    gap: 0.75rem;
+                }
+                .notification-content i {
+                    font-size: 1.2rem;
+                }
+                .notification.success i { color: var(--success); }
+                .notification.error i { color: var(--danger); }
+                .notification.warning i { color: var(--warning); }
+                .notification-close {
+                    background: none;
+                    border: none;
+                    font-size: 1.5rem;
+                    cursor: pointer;
+                    color: var(--light-slate-grey);
+                    line-height: 1;
+                }
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+            `;
+            document.head.appendChild(styles);
+        }
+        
+        document.body.appendChild(notification);
+        
+        // Auto-remove after 5 seconds
+        setTimeout(() => {
+            notification.remove();
+        }, 5000);
+        
+        // Close button
+        notification.querySelector('.notification-close').addEventListener('click', () => {
+            notification.remove();
+        });
+    }
+
+    function createApiKeyModal() {
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay';
+        modal.innerHTML = `
+            <div class="modal">
+                <div class="modal-header">
+                    <h3><i class="fas fa-key"></i> Generate New API Key</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="apiKeyForm">
+                        <div class="form-group">
+                            <label for="keyName">Key Name *</label>
+                            <input type="text" id="keyName" required placeholder="e.g., Production Server">
+                        </div>
+                        <div class="form-group">
+                            <label for="keyPermissions">Permissions</label>
+                            <div style="margin-top: 0.5rem;">
+                                <label style="display: block; margin-bottom: 0.5rem;">
+                                    <input type="checkbox" checked> Read shipments
+                                </label>
+                                <label style="display: block; margin-bottom: 0.5rem;">
+                                    <input type="checkbox" checked> Create shipments
+                                </label>
+                                <label style="display: block; margin-bottom: 0.5rem;">
+                                    <input type="checkbox"> Delete shipments
+                                </label>
+                                <label style="display: block;">
+                                    <input type="checkbox"> Access analytics
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="keyExpiry">Expiration (optional)</label>
+                            <select id="keyExpiry" class="form-input">
+                                <option value="">Never</option>
+                                <option value="7">7 days</option>
+                                <option value="30">30 days</option>
+                                <option value="90">90 days</option>
+                                <option value="365">1 year</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary modal-cancel">Cancel</button>
+                    <button class="btn btn-primary modal-submit" id="generateKey">
+                        <i class="fas fa-key"></i> Generate Key
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        // Add modal styles if not already added
+        if (!document.querySelector('#modal-styles')) {
+            const styles = document.createElement('style');
+            styles.id = 'modal-styles';
+            styles.textContent = `
+                .modal-overlay {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(0, 0, 0, 0.5);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 1000;
+                    animation: fadeIn 0.3s ease;
+                }
+                .modal {
+                    background: white;
+                    border-radius: var(--radius);
+                    width: 90%;
+                    max-width: 500px;
+                    max-height: 90vh;
+                    overflow-y: auto;
+                    animation: slideUp 0.3s ease;
+                }
+                .modal-header {
+                    padding: 1.5rem;
+                    border-bottom: 2px solid var(--border);
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                .modal-header h3 {
+                    margin: 0;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                }
+                .modal-close {
+                    background: none;
+                    border: none;
+                    font-size: 1.5rem;
+                    cursor: pointer;
+                    color: var(--light-slate-grey);
+                    line-height: 1;
+                }
+                .modal-body {
+                    padding: 1.5rem;
+                }
+                .modal-footer {
+                    padding: 1.5rem;
+                    border-top: 1px solid var(--border);
+                    display: flex;
+                    justify-content: flex-end;
+                    gap: 1rem;
+                }
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                @keyframes slideUp {
+                    from { transform: translateY(20px); opacity: 0; }
+                    to { transform: translateY(0); opacity: 1; }
+                }
+            `;
+            document.head.appendChild(styles);
+        }
+        
+        // Close modal handlers
+        modal.querySelector('.modal-close').addEventListener('click', () => modal.remove());
+        modal.querySelector('.modal-cancel').addEventListener('click', () => modal.remove());
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.remove();
+        });
+        
+        // Generate key handler
+        modal.querySelector('#generateKey').addEventListener('click', () => {
+            const keyName = modal.querySelector('#keyName').value;
+            if (!keyName) {
+                alert('Please enter a key name');
+                return;
+            }
+            
+            // Generate a mock API key
+            const newKey = `carg_sk_live_${Math.random().toString(36).substring(2, 15)}${Math.random().toString(36).substring(2, 15)}`;
+            
+            modal.remove();
+            showNotification(`API key "${keyName}" generated successfully`, 'success');
+            logActivity(`New API key generated: ${keyName}`);
+        });
+        
+        return modal;
+    }
+
+    function logActivity(description) {
+        if (!currentUser?.id) return;
+        
+        const activities = JSON.parse(localStorage.getItem(`cargolyze_activities_${currentUser.id}`)) || [];
+        activities.unshift({
+            description,
+            timestamp: new Date().toISOString(),
+            time: new Date().toLocaleString()
+        });
+        
+        // Keep only last 50 activities
+        if (activities.length > 50) {
+            activities.pop();
+        }
+        
+        localStorage.setItem(`cargolyze_activities_${currentUser.id}`, JSON.stringify(activities));
+    }
+
+    // ========== STORAGE EVENT LISTENERS ==========
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'cargolyze_logout_event') {
+            console.log('Logout event detected from another tab');
+            localStorage.removeItem('cargolyze_user');
+            if (currentUser?.id) {
+                localStorage.removeItem(`cargolyze_profile_${currentUser.id}`);
+                localStorage.removeItem(`cargolyze_avatar_${currentUser.id}`);
+            }
+            window.location.href = 'login.html';
+        }
+    });
+    
+    window.addEventListener('message', function(e) {
+        if (e.data === 'userLoggedOut') {
+            console.log('Logout message received from another tab');
+            localStorage.removeItem('cargolyze_user');
+            if (currentUser?.id) {
+                localStorage.removeItem(`cargolyze_profile_${currentUser.id}`);
+                localStorage.removeItem(`cargolyze_avatar_${currentUser.id}`);
+            }
+            window.location.href = 'login.html';
+        }
+    });
+</script>
+</body>
+</html>
