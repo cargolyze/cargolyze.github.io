@@ -57,7 +57,7 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Cargolyze <no-reply@cargolyze.app>',
+        from: 'Cargolyze <noreply@cargolyze.com>',
         to: [email],
         subject: 'Reset Your Cargolyze Password',
         html: htmlContent,
