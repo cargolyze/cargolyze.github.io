@@ -1386,7 +1386,7 @@ function updateNavigationForUser() {
       // Update desktop navigation - Show Dashboard
       if (accountLink) {
         accountLink.innerHTML = `<i class="fas fa-tachometer-alt" style="margin-right: 5px;"></i> Dashboard`;
-        accountLink.href = 'dashboard.html';
+        accountLink.href = 'account.html';
         accountLink.classList.add('logged-in');
         accountLink.classList.remove('cta-nav');
       }
@@ -1394,7 +1394,7 @@ function updateNavigationForUser() {
       // Update mobile navigation - Show Dashboard
       if (mobileAccountLink) {
         mobileAccountLink.innerHTML = `<i class="fas fa-tachometer-alt" style="margin-right: 8px;"></i> Dashboard`;
-        mobileAccountLink.href = 'dashboard.html';
+        mobileAccountLink.href = 'account.html';
         mobileAccountLink.classList.add('logged-in');
       }
       
@@ -1498,5 +1498,6 @@ window.addEventListener('storage', function(e) {
 });
   </script>
 </body>
+
 
 </html>
