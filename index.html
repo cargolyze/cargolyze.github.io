@@ -1365,7 +1365,7 @@
 function updateNavigationForUser() {
   const userData = localStorage.getItem('cargolyze_user');
   const accountLink = document.getElementById('accountLink');
-  const mobileAccountLink = document.getElementById('mobileAccountLink');
+  const mobileAccountButton = document.getElementById('mobileAccountButton');
   
   console.log('Checking user data:', userData);
   
@@ -1385,9 +1385,9 @@ function updateNavigationForUser() {
       
       // Update mobile navigation - Show Account
       if (mobileAccountLink) {
-        mobileAccountLink.innerHTML = `<i class="fas fa-user" style="margin-right: 8px;"></i>`;
-        mobileAccountLink.href = 'account.html';
-        mobileAccountLink.classList.add('logged-in');
+        mobileAccountButton.innerHTML = `<i class="fas fa-user" style="margin-right: 0px;"></i>`;
+        mobileAccountButton.href = 'account.html';
+        mobileAccountButton.classList.add('logged-in');
       }
       
     } catch (error) {
@@ -1401,7 +1401,7 @@ function updateNavigationForUser() {
 
 function resetNavigationToSignUp() {
   const accountLink = document.getElementById('accountLink');
-  const mobileAccountLink = document.getElementById('mobileAccountLink');
+  const mobileAccountButton = document.getElementById('mobileAccountButton');
   
   console.log('Resetting navigation to Sign Up');
   
@@ -1413,9 +1413,9 @@ function resetNavigationToSignUp() {
   }
   
   if (mobileAccountLink) {
-    mobileAccountLink.innerHTML = '<i class="fas fa-user-plus" style="margin-right: 8px;"></i>';
-    mobileAccountLink.href = 'login.html';
-    mobileAccountLink.classList.remove('logged-in');
+    mobileAccountButton.innerHTML = '<i class="fas fa-user-plus" style="margin-right: 0px;"></i>';
+    mobileAccountButton.href = 'login.html';
+    mobileAccountButton.classList.remove('logged-in');
   }
 }
 
