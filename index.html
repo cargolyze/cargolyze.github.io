@@ -56,7 +56,7 @@
     header {
       background: var(--slate-grey);
       color: white;
-      padding: 0.8rem 0;
+      padding: 0.0rem 0;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       position: sticky;
       top: 0;
@@ -77,13 +77,12 @@
     .logo {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 0px;
       font-size: 1.6rem;
       font-weight: 700;
       position: relative;
       text-decoration: none;
       color: inherit;
-      width: 35%;
     }
 
     .logo:hover {
@@ -99,54 +98,11 @@
 
     .logo-symbol {
       position: relative;
-      width: 45px;
-      height: 45px;
+      width: 65px;
+      height: 65px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      transform: scale(0.6);
-    }
-
-    .logo-symbol-inner {
-      position: relative;
-      width: 32px;
-      height: 32px;
-      transform: rotate(45deg);
-      overflow: visible;
-    }
-
-    .logo-symbol-inner::before {
-      content: '';
-      position: absolute;
-      width: 80px;
-      height: 50px;
-      background: var(--white);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(-45deg);
-    }
-
-    .logo-symbol-inner::after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 0;
-      border-left: 25px solid var(--industrial-orange);
-      border-top: 25px solid transparent;
-      border-bottom: 25px solid transparent;
-      top: 50%;
-      left: 50%;
-      transform: translate(7.5px, -43.75px) rotate(135deg);
-    }
-
-    .logo-symbol-inner .logo-square {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: var(--industrial-orange);
-      top: 50%;
-      left: 50%;
-      transform: translate(35px, -275%) rotate(-45deg);
+      text-align: left;
     }
 
     /* Logo Text */
@@ -158,8 +114,6 @@
       font-size: 1.8rem;
       font-family: 'Montserrat', sans-serif;
       text-transform: uppercase;
-      left: 10%;
-      margin-right: 0px;
     }
 
     .logo-text:hover {
@@ -183,7 +137,6 @@
       /*gap: 1rem;*/
       align-items: center;
       justify-content: flex-end;
-      margin-left: 0%;
     }
 
     .nav-links a {
@@ -195,6 +148,7 @@
       transition: all 0.3s ease;
       font-size: 0.95rem;
       position: relative;
+      justify-content: flex-end;
     }
 
     .nav-links a:hover {
@@ -204,7 +158,7 @@
     .nav-links a.cta-nav {
       background: none;
       color: var(--industrial-orange);
-      padding: 8px 20px;
+      padding: 8px;
       border-radius: 4px;
       font-weight: 700;
       transition: all 0.3s ease;
@@ -226,6 +180,13 @@
       transition: all 0.3s ease;
     }
 
+/* Mobile Buttons Container */
+.mobile-buttons {
+  display: none;
+  align-items: center;
+  gap: 5px; /* Space between the two buttons */
+}
+
     /* Mobile Menu */
     .mobile-menu-btn {
       display: none;
@@ -234,7 +195,8 @@
       color: white;
       font-size: 1.5rem;
       cursor: pointer;
-      padding: 8px;
+      padding: 2px;
+      transform: scale(0.7);
     }
 
     .mobile-nav {
@@ -278,6 +240,18 @@
 
     .mobile-nav a:last-child {
       border-bottom: none;
+    }
+
+    /* Account Button Styles */
+    .mobile-account-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 2px;
+      transform: scale(0.7);
     }
 
 /* Logged-in user styles */
@@ -836,8 +810,19 @@
         display: none;
       }
 
+      .mobile-buttons {
+        display: flex;
+      }
+
       .mobile-menu-btn {
-        display: block;
+        display: inline-flex;
+        vertical-align: middle;
+      }
+
+      .mobile-account-btn {
+        text-decoration: none;
+        display: inline-flex;
+        vertical-align: middle;
       }
 
       .hero {
@@ -859,10 +844,6 @@
         scroll-padding-top: 70px;
       }
 
-      header {
-        height: 70px;
-      }
-
       .interest-section {
         scroll-margin-top: 70px;
         padding-top: 2rem;
@@ -875,12 +856,7 @@
     }
 
     @media (max-width: 480px) {
-      header {
-	height: 60px;
-      }
-
       .header-content {
-	height: 33px;
         padding: 0 10px;
       }
 
@@ -906,14 +882,18 @@
         width: 90%;
       }
 
-      .logo {
-        transform: translate(0px, 0px) scale(0.7);
-        width: 65%;
-        left: -7.5%;
+      .logo a {
+        gap: 8.5px;
+      }
+
+      .logo-symbol {
+	height: 50px;
+	width: 50px;
+        left: 0%;
       }
 
       .logo-text {
-        font-size: 1.8rem;
+        font-size: 1.25rem;
       }
 
       .stats-grid {
@@ -961,9 +941,21 @@
         <div class="logo">
           <a href="index.html" class="logo-link">
             <div class="logo-symbol">
-              <div class="logo-symbol-inner">
-                <div class="logo-square"></div>
-              </div>
+			<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 		   viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
+			   <style type="text/css">
+			   .st0{fill:#FFFFFF;}
+			   .st1{fill:#FF5722;}
+			</style>
+			<g>
+			   <g>
+			      <polygon class="st0" points="17.74,6.46 0.04,6.46 0.04,17.54 17.74,17.54 12.21,12"/>
+			      <rect x="17.74" y="6.46" class="st0" width="0.01" height="11.07"/>
+			      <polygon class="st1" points="12.21,12 17.74,17.54 17.74,6.46"/>
+			  </g>
+			  <rect x="19.53" y="9.79" class="st1" width="4.43" height="4.43"/>
+		      </g>
+		      </svg>
             </div>
             <span class="logo-text">CARGOLYZE</span>
           </a>
@@ -983,25 +975,25 @@
           </span>
         </nav>
         
+       <div class="mobile-buttons">
+        <!-- Mobile Account Button (outside menu) -->
+        <a href="login.html" id="mobileAccountBtn" class="mobile-account-btn">
+          <i class="fas fa-user-plus" style="margin-right: 0px;"></i>
+        </a>
+
         <!-- Mobile Menu Button -->
         <button class="mobile-menu-btn" id="mobileMenuBtn">
           <i class="fas fa-bars"></i>
         </button>
-        
       </div>
+     </div>
       
       <!-- Mobile Navigation -->
       <div class="mobile-nav" id="mobileNav">
         <a href="index.html" class="current-nav">Home</a>
         <a href="#features">Features</a>
         <a href="#carriers">Carriers</a>
-        <a href="pricing.html">Pricing</a>
-        <!-- Dynamic Account Link -->
-        <span id="mobileAccountNavContainer">
-          <a href="login.html" id="mobileAccountLink">
-            <i class="fas fa-user-plus" style="margin-right: 8px;"></i> Sign Up
-          </a>
-        </span>        
+        <a href="pricing.html">Pricing</a>        
       </div>
     </div>
   </header>
@@ -1383,17 +1375,17 @@ function updateNavigationForUser() {
       
       console.log('User found:', user);
       
-      // Update desktop navigation - Show Dashboard
+      // Update desktop navigation - Show Account
       if (accountLink) {
-        accountLink.innerHTML = `<i class="fas fa-tachometer-alt" style="margin-right: 5px;"></i> Dashboard`;
+        accountLink.innerHTML = `<i class="fas fa-user" style="margin-right: 5px;"></i> Account`;
         accountLink.href = 'account.html';
         accountLink.classList.add('logged-in');
         accountLink.classList.remove('cta-nav');
       }
       
-      // Update mobile navigation - Show Dashboard
+      // Update mobile navigation - Show Account
       if (mobileAccountLink) {
-        mobileAccountLink.innerHTML = `<i class="fas fa-tachometer-alt" style="margin-right: 8px;"></i> Dashboard`;
+        mobileAccountLink.innerHTML = `<i class="fas fa-user" style="margin-right: 8px;"></i>`;
         mobileAccountLink.href = 'account.html';
         mobileAccountLink.classList.add('logged-in');
       }
@@ -1421,7 +1413,7 @@ function resetNavigationToSignUp() {
   }
   
   if (mobileAccountLink) {
-    mobileAccountLink.innerHTML = '<i class="fas fa-user-plus" style="margin-right: 8px;"></i> Sign Up';
+    mobileAccountLink.innerHTML = '<i class="fas fa-user-plus" style="margin-right: 8px;"></i>';
     mobileAccountLink.href = 'login.html';
     mobileAccountLink.classList.remove('logged-in');
   }
@@ -1498,6 +1490,5 @@ window.addEventListener('storage', function(e) {
 });
   </script>
 </body>
-
 
 </html>
