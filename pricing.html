@@ -1,4 +1,4 @@
-	<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -9,6 +9,8 @@
   <link rel="shortcut icon" type="image/png" href="./image/favicon.svg">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <!-- Paddle.js SDK -->
+  <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
   <style>
     * {
       margin: 0;
@@ -708,7 +710,7 @@
       margin-top: 1.5rem;
     }
 
-    /* Toggle Switch */
+    /* Toggle Switch - Updated for radio buttons */
     .billing-toggle {
       display: flex;
       align-items: center;
@@ -721,51 +723,32 @@
     .toggle-label {
       font-weight: 600;
       color: var(--slate-grey);
-    }
-
-    .toggle-switch {
-      position: relative;
-      display: inline-block;
-      width: 60px;
-      height: 30px;
-    }
-
-    .toggle-switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .toggle-slider {
-      position: absolute;
       cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: var(--grey-medium);
-      transition: .4s;
-      border-radius: 34px;
+      padding: 8px 16px;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
 
-    .toggle-slider:before {
-      position: absolute;
-      content: "";
-      height: 22px;
-      width: 22px;
-      left: 4px;
-      bottom: 4px;
-      background-color: white;
-      transition: .4s;
-      border-radius: 50%;
+    .toggle-label sup {
+      font-size: 0.7rem;
+      background: var(--success);
+      color: white;
+      padding: 2px 6px;
+      border-radius: 10px;
+      margin-left: 4px;
     }
 
-    input:checked + .toggle-slider {
-      background-color: var(--industrial-orange);
+    .billing-toggle input[type="radio"] {
+      display: none;
     }
 
-    input:checked + .toggle-slider:before {
-      transform: translateX(30px);
+    .billing-toggle input[type="radio"]:checked + .toggle-label {
+      background: var(--industrial-orange-light);
+      color: var(--industrial-orange);
+      font-weight: 700;
     }
 
     /* Savings Badge */
@@ -779,6 +762,12 @@
       font-weight: 700;
       margin-left: 5px;
       vertical-align: middle;
+    }
+
+    /* Price Loading State */
+    .price-loading {
+      opacity: 0.7;
+      font-style: italic;
     }
 
     /* Responsive Design */
@@ -836,11 +825,11 @@
 
     @media (max-width: 480px) {
       header {
-	height: 60px;
+        height: 60px;
       }
 
       .header-content {
-	height: 33px;
+        height: 33px;
         padding: 0 10px;
       }
 
@@ -874,6 +863,11 @@
       .footer-legal {
         flex-direction: row;
         gap: 1rem;
+      }
+      
+      .billing-toggle {
+        flex-direction: column;
+        gap: 0.5rem;
       }
     }
   </style>
@@ -930,14 +924,13 @@
       <h1 class="page-title">Simple, Transparent Pricing</h1>
       <p class="page-subtitle">Choose the perfect plan for your logistics needs. All plans include core tracking features with no hidden fees.</p>
 
-      <!-- Billing Toggle -->
+      <!-- Billing Toggle - Updated for Paddle -->
       <div class="billing-toggle">
-        <span class="toggle-label">Monthly</span>
-        <label class="toggle-switch">
-          <input type="checkbox" id="billingToggle">
-          <span class="toggle-slider"></span>
-        </label>
-        <span class="toggle-label">Annual <span class="savings-badge">Save 20%</span></span>
+        <input type="radio" name="billingCycle" id="monthlyToggle" value="month" checked>
+        <label for="monthlyToggle" class="toggle-label">Monthly</label>
+        
+        <input type="radio" name="billingCycle" id="annualToggle" value="year">
+        <label for="annualToggle" class="toggle-label">Annual <sup>Save 20%</sup></label>
       </div>
 
       <!-- Pricing Plans -->
@@ -949,9 +942,9 @@
             <p class="plan-description">Perfect for small businesses and individual logistics managers</p>
           </div>
           <div class="plan-price">
-            <div class="price-amount" data-monthly="$49" data-annually="$39">$49</div>
-            <div class="price-period">per month</div>
-            <div class="price-savings" id="starterSavings">Save $120 annually</div>
+            <div class="price-amount" id="starter-price">$49</div>
+            <div class="price-period" id="starter-period">per month</div>
+            <div class="price-savings" id="starter-savings"></div>
           </div>
           <div class="plan-features">
             <h4>What's included:</h4>
@@ -964,10 +957,6 @@
                 <i class="fas fa-check"></i>
                 <span class="feature-text">Basic ETA tracking for 5 carriers</span>
               </li>
-              <!-- <li class="feature-item">
-                <i class="fas fa-check"></i>
-                <span class="feature-text">Port-to-port transit analysis</span>
-              </li> -->
               <li class="feature-item">
                 <i class="fas fa-check"></i>
                 <span class="feature-text">Excel file integration</span>
@@ -976,10 +965,6 @@
                 <i class="fas fa-check"></i>
                 <span class="feature-text">Email support (48-hour response)</span>
               </li>
-              <!-- <li class="feature-item">
-                <i class="fas fa-times"></i>
-                <span class="feature-text"><del>Predictive analytics</del></span>
-              </li> -->
               <li class="feature-item">
                 <i class="fas fa-times"></i>
                 <span class="feature-text"><del>Port-to-port transit analysis</del></span>
@@ -994,7 +979,7 @@
               </li>
             </ul>
           </div>
-          <a href="#interest" class="plan-button secondary">Start Free Trial</a>
+          <button class="plan-button secondary" data-price-id-month="pri_01kde4v2tkqhp8agkh54ewr79t" data-price-id-year="pri_01kde4ngdrzbeyn778gj11ve0h">Start Free Trial</button>
         </div>
 
         <!-- Professional Plan (Most Popular) -->
@@ -1005,9 +990,9 @@
             <p class="plan-description">Ideal for growing logistics departments and freight forwarders</p>
           </div>
           <div class="plan-price">
-            <div class="price-amount" data-monthly="$149" data-annually="$119">$149</div>
-            <div class="price-period">per month</div>
-            <div class="price-savings" id="proSavings">Save $360 annually</div>
+            <div class="price-amount" id="pro-price">$149</div>
+            <div class="price-period" id="pro-period">per month</div>
+            <div class="price-savings" id="pro-savings"></div>
           </div>
           <div class="plan-features">
             <h4>Everything in Starter, plus:</h4>
@@ -1020,14 +1005,6 @@
                 <i class="fas fa-check"></i>
                 <span class="feature-text">Advanced tracking for all carriers <span class="feature-label">ALL 5+</span></span>
               </li>
-              <!-- <li class="feature-item">
-                <i class="fas fa-check"></i>
-                <span class="feature-text">Predictive ETA with AI algorithms</span>
-              </li>
-              <li class="feature-item">
-                <i class="fas fa-check"></i>
-                <span class="feature-text">Port congestion analytics</span>
-              </li> -->
               <li class="feature-item">
                 <i class="fas fa-check"></i>
                 <span class="feature-text">Custom reporting & dashboards</span>
@@ -1046,7 +1023,7 @@
               </li>
             </ul>
           </div>
-          <a href="#interest" class="plan-button">Start Free Trial</a>
+          <button class="plan-button" data-price-id-month="pri_01kde4c3caqdrdx9msgfxg6p50" data-price-id-year="pri_01kde4fnzbj4ahwrdtpaagntc0">Start Free Trial</button>
         </div>
 
         <!-- Enterprise Plan -->
@@ -1244,6 +1221,13 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // Paddle Configuration
+      // Note: Remove .set("sandbox") when going live
+      Paddle.Environment.set("sandbox");
+      Paddle.Initialize({ 
+        token: 'test_54c44ca44396960f6c5cd114f77' // Your client-side token
+      });
+
       // Mobile Menu Toggle
       const mobileMenuBtn = document.getElementById('mobileMenuBtn');
       const mobileNav = document.getElementById('mobileNav');
@@ -1270,41 +1254,213 @@
         }
       });
 
-      const billingToggle = document.getElementById('billingToggle');
-      const priceElements = document.querySelectorAll('.price-amount');
-      const pricePeriods = document.querySelectorAll('.price-period');
-      const savingsElements = {
-        starter: document.getElementById('starterSavings'),
-        pro: document.getElementById('proSavings')
+      // Paddle Price Management
+      const billingToggles = document.querySelectorAll('input[name="billingCycle"]');
+      const starterPriceElement = document.getElementById('starter-price');
+      const starterPeriodElement = document.getElementById('starter-period');
+      const starterSavingsElement = document.getElementById('starter-savings');
+      const proPriceElement = document.getElementById('pro-price');
+      const proPeriodElement = document.getElementById('pro-period');
+      const proSavingsElement = document.getElementById('pro-savings');
+      
+      // Define your price IDs from Paddle
+      const priceItems = {
+        month: [
+          {
+            quantity: 1,
+            priceId: 'pri_01kde4v2tkqhp8agkh54ewr79t', // Starter monthly
+          },
+          {
+            quantity: 1,
+            priceId: 'pri_01kde4c3caqdrdx9msgfxg6p50', // Professional monthly
+          }
+        ],
+        year: [
+          {
+            quantity: 1,
+            priceId: 'pri_01kde4ngdrzbeyn778gj11ve0h', // Starter yearly
+          },
+          {
+            quantity: 1,
+            priceId: 'pri_01kde4fnzbj4ahwrdtpaagntc0', // Professional yearly
+          }
+        ]
       };
 
-      // Initialize toggle state
-      billingToggle.checked = false;
-
-      // Toggle billing period
-      billingToggle.addEventListener('change', function() {
-        const isAnnual = this.checked;
-        
-        // Update prices
-        priceElements.forEach(element => {
-          const monthlyPrice = element.getAttribute('data-monthly');
-          const annualPrice = element.getAttribute('data-annually');
+      // Set default billing cycle
+      let currentBillingCycle = 'month';
+      
+// Fetch prices from Paddle
+async function getPrices(billingCycle) {
+  currentBillingCycle = billingCycle;
+  const items = priceItems[billingCycle];
+  
+  // Show loading state
+  starterPriceElement.textContent = 'Loading...';
+  starterPriceElement.classList.add('price-loading');
+  proPriceElement.textContent = 'Loading...';
+  proPriceElement.classList.add('price-loading');
+  
+  try {
+    // First, fetch the monthly prices for comparison (for annual savings calculation)
+    let monthlyStarterPriceInCents, monthlyProPriceInCents;
+    
+    if (billingCycle === 'year') {
+      // Only need to fetch monthly prices if we're showing annual plan
+      try {
+        const monthlyResult = await Paddle.PricePreview({
+          items: priceItems['month']
+        });
+        monthlyStarterPriceInCents = parseFloat(monthlyResult.data.details.lineItems[0].unitTotals.subtotal);
+        monthlyProPriceInCents = parseFloat(monthlyResult.data.details.lineItems[1].unitTotals.subtotal);
+      } catch (monthlyError) {
+        console.error('Failed to fetch monthly prices for comparison:', monthlyError);
+        // Fallback to default monthly prices
+        monthlyStarterPriceInCents = 8999; // $49.00 in cents
+        monthlyProPriceInCents = 17999;    // $149.00 in cents
+      }
+    }
+    
+    // Now fetch the actual prices for the selected billing cycle
+    const result = await Paddle.PricePreview({
+      items: items
+    });
+    
+    console.log('Paddle Price Preview Result:', result);
+    
+    const lineItems = result.data.details.lineItems;
+    const currency = result.data.currencyCode || 'USD';
+    
+    // Update prices for both plans
+    lineItems.forEach((item, index) => {
+      // Convert from cents to dollars
+      const totalAmountInCents = parseFloat(item.unitTotals.subtotal);
+      const totalAmountInDollars = totalAmountInCents / 100;
+      
+      if (index === 0) { // Starter plan
+        if (billingCycle === 'month') {
+          // Monthly plan - show full price
+          starterPriceElement.textContent = formatCurrency(totalAmountInDollars, currency);
+          starterPeriodElement.textContent = 'per month';
+          starterSavingsElement.textContent = '';
+        } else {
+          // Annual plan - show monthly equivalent price
+          const monthlyEquivalent = totalAmountInDollars / 12;
+          starterPriceElement.textContent = formatCurrency(monthlyEquivalent, currency);
+          starterPeriodElement.textContent = 'per month, billed annually';
           
-          if (monthlyPrice && annualPrice) {
-            element.textContent = isAnnual ? annualPrice : monthlyPrice;
+          // Calculate savings using actual monthly prices
+          const regularAnnualCostInCents = monthlyStarterPriceInCents * 12;
+          const annualPriceInCents = totalAmountInCents;
+          const savings = ((regularAnnualCostInCents - annualPriceInCents) / regularAnnualCostInCents) * 100;
+          starterSavingsElement.textContent = `Save ${Math.round(savings)}% annually`;
+        }
+        starterPriceElement.classList.remove('price-loading');
+        
+      } else if (index === 1) { // Professional plan
+        if (billingCycle === 'month') {
+          // Monthly plan - show full price
+          proPriceElement.textContent = formatCurrency(totalAmountInDollars, currency);
+          proPeriodElement.textContent = 'per month';
+          proSavingsElement.textContent = '';
+        } else {
+          // Annual plan - show monthly equivalent price
+          const monthlyEquivalent = totalAmountInDollars / 12;
+          proPriceElement.textContent = formatCurrency(monthlyEquivalent, currency);
+          proPeriodElement.textContent = 'per month, billed annually';
+          
+          // Calculate savings using actual monthly prices
+          const regularAnnualCostInCents = monthlyProPriceInCents * 12;
+          const annualPriceInCents = totalAmountInCents;
+          const savings = ((regularAnnualCostInCents - annualPriceInCents) / regularAnnualCostInCents) * 100;
+          proSavingsElement.textContent = `Save ${Math.round(savings)}% annually`;
+        }
+        proPriceElement.classList.remove('price-loading');
+      }
+    });
+    
+  } catch (error) {
+    console.error('Paddle Price Preview Error:', error);
+    
+    // Fallback to default prices with correct formatting
+    handleFallbackPrices(billingCycle);
+  }
+}
+
+// Fallback function for when Paddle API fails
+function handleFallbackPrices(billingCycle) {
+  if (billingCycle === 'month') {
+    starterPriceElement.textContent = '$49';
+    starterPeriodElement.textContent = 'per month';
+    starterSavingsElement.textContent = '';
+    
+    proPriceElement.textContent = '$149';
+    proPeriodElement.textContent = 'per month';
+    proSavingsElement.textContent = '';
+  } else {
+    // Annual plans - show monthly equivalent
+    starterPriceElement.textContent = '$39';
+    starterPeriodElement.textContent = 'per month, billed annually';
+    starterSavingsElement.textContent = 'Save 20% annually';
+    
+    proPriceElement.textContent = '$119';
+    proPeriodElement.textContent = 'per month, billed annually';
+    proSavingsElement.textContent = 'Save 20% annually';
+  }
+  
+  starterPriceElement.classList.remove('price-loading');
+  proPriceElement.classList.remove('price-loading');
+}
+
+// Helper function to format currency (no decimals) - ALWAYS ROUND DOWN
+function formatCurrency(amount, currencyCode) {
+  // ALWAYS ROUND DOWN to nearest whole number
+  const roundedAmount = Math.floor(amount);
+  
+  // Create formatter based on currency code
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: currencyCode,
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  });
+  
+  return formatter.format(roundedAmount);
+}
+
+      // Setup billing toggle listeners
+      billingToggles.forEach(toggle => {
+        toggle.addEventListener('change', function() {
+          if (this.checked) {
+            getPrices(this.value);
           }
         });
+      });
 
-        // Update period text
-        pricePeriods.forEach(element => {
-          element.textContent = isAnnual ? 'per month, billed annually' : 'per month';
+      // Setup checkout buttons
+      document.querySelectorAll('.plan-button[data-price-id-month]').forEach(button => {
+        button.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          const priceId = currentBillingCycle === 'month' 
+            ? this.getAttribute('data-price-id-month')
+            : this.getAttribute('data-price-id-year');
+          
+          Paddle.Checkout.open({
+            items: [{
+              priceId: priceId,
+              quantity: 1
+            }],
+            successCallback: function(data) {
+              console.log('Checkout completed:', data);
+              // Redirect to thank you page or dashboard
+              // window.location.href = '/thank-you.html';
+            },
+            closeCallback: function() {
+              console.log('Checkout closed');
+            }
+          });
         });
-
-        // Update savings visibility
-        if (savingsElements.starter) {
-          savingsElements.starter.textContent = isAnnual ? 'Save $120 annually' : '';
-          savingsElements.pro.textContent = isAnnual ? 'Save $360 annually' : '';
-        }
       });
 
       // Smooth scroll for anchor links
@@ -1324,11 +1480,9 @@
         });
       });
 
-      // Update prices on page load to show monthly by default
-      billingToggle.dispatchEvent(new Event('change'));
+      // Initialize prices on page load (default to monthly)
+      getPrices('month');
     });
   </script>
 </body>
-
-
 </html>
