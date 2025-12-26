@@ -997,7 +997,7 @@
         </div>
     </footer>
 
-<!-- Add these script references before the existing script -->
+<!-- Load Supabase SDK -->
 <script src="js/config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -1007,7 +1007,7 @@
     const SUPABASE_KEY = CONFIG.SUPABASE_ANON_KEY;
 
     let currentUser = null;
-    //let supabase = null;
+    let supabase = null;
 
     // ========== INITIALIZATION ==========
     document.addEventListener('DOMContentLoaded', async function() {
@@ -1027,7 +1027,7 @@
             // Load shipments
             loadShipments();
             
-            // Listen for storage events (for logout from other tabs)
+            // Setup event listeners
             setupEventListeners();
             
             console.log('Dashboard initialized successfully');
@@ -1159,54 +1159,54 @@
         }
     }
 
-        // ========== SHIPMENT DATA ==========
-        const sampleShipments = [
-            {
-                container: "CMAU 1234567",
-                origin: "Shanghai",
-                destination: "Los Angeles",
-                carrier: "CMA CGM",
-                status: "in-transit",
-                eta: "2025-01-15",
-                days: 3
-            },
-            {
-                container: "MAEU 7654321",
-                origin: "Rotterdam",
-                destination: "Singapore",
-                carrier: "Maersk",
-                status: "at-port",
-                eta: "2025-01-12",
-                days: 1
-            },
-            {
-                container: "MSCU 9876543",
-                origin: "Singapore",
-                destination: "New York",
-                carrier: "MSC",
-                status: "delivered",
-                eta: "2025-01-10",
-                days: 0
-            },
-            {
-                container: "HLCU 4567890",
-                origin: "Hamburg",
-                destination: "Tokyo",
-                carrier: "Hapag-Lloyd",
-                status: "delayed",
-                eta: "2025-01-18",
-                days: 6
-            },
-            {
-                container: "CMAU 2345678",
-                origin: "Shenzhen",
-                destination: "Long Beach",
-                carrier: "CMA CGM",
-                status: "in-transit",
-                eta: "2025-01-20",
-                days: 8
-            }
-        ];
+    // ========== SHIPMENT DATA ==========
+    const sampleShipments = [
+        {
+            container: "CMAU 1234567",
+            origin: "Shanghai",
+            destination: "Los Angeles",
+            carrier: "CMA CGM",
+            status: "in-transit",
+            eta: "2025-01-15",
+            days: 3
+        },
+        {
+            container: "MAEU 7654321",
+            origin: "Rotterdam",
+            destination: "Singapore",
+            carrier: "Maersk",
+            status: "at-port",
+            eta: "2025-01-12",
+            days: 1
+        },
+        {
+            container: "MSCU 9876543",
+            origin: "Singapore",
+            destination: "New York",
+            carrier: "MSC",
+            status: "delivered",
+            eta: "2025-01-10",
+            days: 0
+        },
+        {
+            container: "HLCU 4567890",
+            origin: "Hamburg",
+            destination: "Tokyo",
+            carrier: "Hapag-Lloyd",
+            status: "delayed",
+            eta: "2025-01-18",
+            days: 6
+        },
+        {
+            container: "CMAU 2345678",
+            origin: "Shenzhen",
+            destination: "Long Beach",
+            carrier: "CMA CGM",
+            status: "in-transit",
+            eta: "2025-01-20",
+            days: 8
+        }
+    ];
 
     function formatDate(dateString) {
         const date = new Date(dateString);
@@ -1388,324 +1388,283 @@
         window.location.href = 'index.html';
     }
 
-        // ========== MODAL FUNCTIONS ==========
-        function showNotification(message, type = 'info') {
-            // Create notification element
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.innerHTML = `
-                <div class="notification-content">
-                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
-                    <span>${message}</span>
-                </div>
-                <button class="notification-close">&times;</button>
+    // ========== MODAL FUNCTIONS ==========
+    function showNotification(message, type = 'info') {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.innerHTML = `
+            <div class="notification-content">
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
+            </div>
+            <button class="notification-close">&times;</button>
+        `;
+        
+        // Add styles for notification
+        if (!document.querySelector('#notification-styles')) {
+            const styles = document.createElement('style');
+            styles.id = 'notification-styles';
+            styles.textContent = `
+                .notification {
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: white;
+                    border-radius: 8px;
+                    padding: 1rem;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    gap: 1rem;
+                    z-index: 1000;
+                    animation: slideIn 0.3s ease;
+                    max-width: 400px;
+                    border-left: 4px solid var(--industrial-orange);
+                }
+                .notification.success { border-left-color: var(--success); }
+                .notification.error { border-left-color: var(--danger); }
+                .notification.warning { border-left-color: var(--warning); }
+                .notification-content {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.75rem;
+                }
+                .notification-content i {
+                    font-size: 1.2rem;
+                }
+                .notification.success i { color: var(--success); }
+                .notification.error i { color: var(--danger); }
+                .notification.warning i { color: var(--warning); }
+                .notification-close {
+                    background: none;
+                    border: none;
+                    font-size: 1.5rem;
+                    cursor: pointer;
+                    color: var(--light-slate-grey);
+                    line-height: 1;
+                }
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
             `;
-            
-            // Add styles for notification
-            if (!document.querySelector('#notification-styles')) {
-                const styles = document.createElement('style');
-                styles.id = 'notification-styles';
-                styles.textContent = `
-                    .notification {
-                        position: fixed;
-                        top: 20px;
-                        right: 20px;
-                        background: white;
-                        border-radius: 8px;
-                        padding: 1rem;
-                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
-                        gap: 1rem;
-                        z-index: 1000;
-                        animation: slideIn 0.3s ease;
-                        max-width: 400px;
-                        border-left: 4px solid var(--industrial-orange);
-                    }
-                    .notification.success { border-left-color: var(--success); }
-                    .notification.error { border-left-color: var(--danger); }
-                    .notification.warning { border-left-color: var(--warning); }
-                    .notification-content {
-                        display: flex;
-                        align-items: center;
-                        gap: 0.75rem;
-                    }
-                    .notification-content i {
-                        font-size: 1.2rem;
-                    }
-                    .notification.success i { color: var(--success); }
-                    .notification.error i { color: var(--danger); }
-                    .notification.warning i { color: var(--warning); }
-                    .notification-close {
-                        background: none;
-                        border: none;
-                        font-size: 1.5rem;
-                        cursor: pointer;
-                        color: var(--light-slate-grey);
-                        line-height: 1;
-                    }
-                    @keyframes slideIn {
-                        from { transform: translateX(100%); opacity: 0; }
-                        to { transform: translateX(0); opacity: 1; }
-                    }
-                `;
-                document.head.appendChild(styles);
-            }
-            
-            document.body.appendChild(notification);
-            
-            // Auto-remove after 5 seconds
-            setTimeout(() => {
-                notification.remove();
-            }, 5000);
-            
-            // Close button
-            notification.querySelector('.notification-close').addEventListener('click', () => {
-                notification.remove();
-            });
+            document.head.appendChild(styles);
         }
-
-        function showAddShipmentModal() {
-            const modal = document.createElement('div');
-            modal.className = 'modal-overlay';
-            modal.innerHTML = `
-                <div class="modal">
-                    <div class="modal-header">
-                        <h3><i class="fas fa-plus"></i> Add New Shipment</h3>
-                        <button class="modal-close">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="addShipmentForm">
-                            <div class="form-group">
-                                <label for="containerNumber">Container Number *</label>
-                                <input type="text" id="containerNumber" required placeholder="e.g., CMAU 1234567">
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="origin">Origin Port *</label>
-                                    <input type="text" id="origin" required placeholder="e.g., Shanghai">
-                                </div>
-                                <div class="form-group">
-                                    <label for="destination">Destination Port *</label>
-                                    <input type="text" id="destination" required placeholder="e.g., Los Angeles">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="carrier">Carrier *</label>
-                                <select id="carrier" required>
-                                    <option value="">Select Carrier</option>
-                                    <option value="CMA CGM">CMA CGM</option>
-                                    <option value="Maersk">Maersk</option>
-                                    <option value="MSC">MSC</option>
-                                    <option value="Hapag-Lloyd">Hapag-Lloyd</option>
-                                    <option value="PIL">PIL</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="eta">Estimated Arrival Date</label>
-                                <input type="date" id="eta">
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary modal-cancel">Cancel</button>
-                        <button class="btn btn-primary modal-submit" id="submitShipment">
-                            <i class="fas fa-plus"></i> Add Shipment
-                        </button>
-                    </div>
-                </div>
-            `;
-            
-            // Add modal styles
-            if (!document.querySelector('#modal-styles')) {
-                const styles = document.createElement('style');
-                styles.id = 'modal-styles';
-                styles.textContent = `
-                    .modal-overlay {
-                        position: fixed;
-                        top: 0;
-                        left: 0;
-                        right: 0;
-                        bottom: 0;
-                        background: rgba(0, 0, 0, 0.5);
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        z-index: 1000;
-                        animation: fadeIn 0.3s ease;
-                    }
-                    .modal {
-                        background: white;
-                        border-radius: var(--radius);
-                        width: 90%;
-                        max-width: 500px;
-                        max-height: 90vh;
-                        overflow-y: auto;
-                        animation: slideUp 0.3s ease;
-                    }
-                    .modal-header {
-                        padding: 1.5rem;
-                        border-bottom: 2px solid var(--border);
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                    }
-                    .modal-header h3 {
-                        margin: 0;
-                        display: flex;
-                        align-items: center;
-                        gap: 10px;
-                    }
-                    .modal-close {
-                        background: none;
-                        border: none;
-                        font-size: 1.5rem;
-                        cursor: pointer;
-                        color: var(--light-slate-grey);
-                        line-height: 1;
-                    }
-                    .modal-body {
-                        padding: 1.5rem;
-                    }
-                    .modal-footer {
-                        padding: 1.5rem;
-                        border-top: 1px solid var(--border);
-                        display: flex;
-                        justify-content: flex-end;
-                        gap: 1rem;
-                    }
-                    .form-group {
-                        margin-bottom: 1.5rem;
-                    }
-                    .form-group label {
-                        display: block;
-                        margin-bottom: 0.5rem;
-                        font-weight: 600;
-                        color: var(--slate-grey);
-                        font-size: 0.9rem;
-                    }
-                    .form-group input,
-                    .form-group select {
-                        width: 100%;
-                        padding: 0.75rem;
-                        border: 2px solid var(--border);
-                        border-radius: var(--radius-sm);
-                        font-size: 1rem;
-                        transition: border-color 0.3s;
-                    }
-                    .form-group input:focus,
-                    .form-group select:focus {
-                        outline: none;
-                        border-color: var(--industrial-orange);
-                    }
-                    .form-row {
-                        display: grid;
-                        grid-template-columns: 1fr 1fr;
-                        gap: 1rem;
-                    }
-                    @keyframes fadeIn {
-                        from { opacity: 0; }
-                        to { opacity: 1; }
-                    }
-                    @keyframes slideUp {
-                        from { transform: translateY(20px); opacity: 0; }
-                        to { transform: translateY(0); opacity: 1; }
-                    }
-                `;
-                document.head.appendChild(styles);
-            }
-            
-            document.body.appendChild(modal);
-            
-            // Close modal
-            modal.querySelector('.modal-close').addEventListener('click', () => modal.remove());
-            modal.querySelector('.modal-cancel').addEventListener('click', () => modal.remove());
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) modal.remove();
-            });
-            
-            // Form submission
-            modal.querySelector('#submitShipment').addEventListener('click', () => {
-                const form = modal.querySelector('#addShipmentForm');
-                if (!form.checkValidity()) {
-                    form.reportValidity();
-                    return;
-                }
-                
-                const newShipment = {
-                    container: document.getElementById('containerNumber').value,
-                    origin: document.getElementById('origin').value,
-                    destination: document.getElementById('destination').value,
-                    carrier: document.getElementById('carrier').value,
-                    eta: document.getElementById('eta').value || new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                    status: 'in-transit',
-                    days: Math.floor(Math.random() * 14) + 3
-                };
-                
-                // Save to localStorage
-                const userShipments = JSON.parse(localStorage.getItem(`cargolyze_shipments_${currentUser?.id}`)) || sampleShipments;
-                userShipments.unshift(newShipment);
-                localStorage.setItem(`cargolyze_shipments_${currentUser?.id}`, JSON.stringify(userShipments));
-                
-                modal.remove();
-                loadShipments();
-                showNotification('Shipment added successfully', 'success');
-            });
-        }
-
-        function showTrackModal() {
-            alert('Track Shipment feature coming soon!');
-            // In a real implementation, this would open a modal to enter container number
-        }
-
-        function showImportModal() {
-            alert('Excel Import feature coming soon!');
-            // In a real implementation, this would handle file upload
-        }
-
-        function showReportModal() {
-            alert('Report Generation feature coming soon!');
-        }
-
-        function showSettingsModal() {
-            alert('Settings feature coming soon!');
-        }
-
-        // ========== INITIALIZATION ==========
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Dashboard initializing...');
-            
-            // Check user authentication
-            currentUser = getUserData();
-            if (!currentUser) return;
-            
-            // Update UI with user data
-            updateUserDisplay();
-            
-            // Load shipments
-            loadShipments();
-            
-            // Listen for storage events (for logout from other tabs)
-            window.addEventListener('storage', function(e) {
-                if (e.key === 'cargolyze_logout_event') {
-                    console.log('Logout event detected, redirecting...');
-                    localStorage.removeItem('cargolyze_user');
-                    window.location.href = 'login.html';
-                }
-            });
-            
-            // Listen for message events
-            window.addEventListener('message', function(e) {
-                if (e.data === 'userLoggedOut') {
-                    console.log('Logout message received, redirecting...');
-                    localStorage.removeItem('cargolyze_user');
-                    window.location.href = 'login.html';
-                }
-            });
-            
-            console.log('Dashboard initialized successfully');
+        
+        document.body.appendChild(notification);
+        
+        // Auto-remove after 5 seconds
+        setTimeout(() => {
+            notification.remove();
+        }, 5000);
+        
+        // Close button
+        notification.querySelector('.notification-close').addEventListener('click', () => {
+            notification.remove();
         });
+    }
+
+    function showAddShipmentModal() {
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay';
+        modal.innerHTML = `
+            <div class="modal">
+                <div class="modal-header">
+                    <h3><i class="fas fa-plus"></i> Add New Shipment</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="addShipmentForm">
+                        <div class="form-group">
+                            <label for="containerNumber">Container Number *</label>
+                            <input type="text" id="containerNumber" required placeholder="e.g., CMAU 1234567">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="origin">Origin Port *</label>
+                                <input type="text" id="origin" required placeholder="e.g., Shanghai">
+                            </div>
+                            <div class="form-group">
+                                <label for="destination">Destination Port *</label>
+                                <input type="text" id="destination" required placeholder="e.g., Los Angeles">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="carrier">Carrier *</label>
+                            <select id="carrier" required>
+                                <option value="">Select Carrier</option>
+                                <option value="CMA CGM">CMA CGM</option>
+                                <option value="Maersk">Maersk</option>
+                                <option value="MSC">MSC</option>
+                                <option value="Hapag-Lloyd">Hapag-Lloyd</option>
+                                <option value="PIL">PIL</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="eta">Estimated Arrival Date</label>
+                            <input type="date" id="eta">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary modal-cancel">Cancel</button>
+                    <button class="btn btn-primary modal-submit" id="submitShipment">
+                        <i class="fas fa-plus"></i> Add Shipment
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        // Add modal styles
+        if (!document.querySelector('#modal-styles')) {
+            const styles = document.createElement('style');
+            styles.id = 'modal-styles';
+            styles.textContent = `
+                .modal-overlay {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(0, 0, 0, 0.5);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 1000;
+                    animation: fadeIn 0.3s ease;
+                }
+                .modal {
+                    background: white;
+                    border-radius: var(--radius);
+                    width: 90%;
+                    max-width: 500px;
+                    max-height: 90vh;
+                    overflow-y: auto;
+                    animation: slideUp 0.3s ease;
+                }
+                .modal-header {
+                    padding: 1.5rem;
+                    border-bottom: 2px solid var(--border);
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                .modal-header h3 {
+                    margin: 0;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                }
+                .modal-close {
+                    background: none;
+                    border: none;
+                    font-size: 1.5rem;
+                    cursor: pointer;
+                    color: var(--light-slate-grey);
+                    line-height: 1;
+                }
+                .modal-body {
+                    padding: 1.5rem;
+                }
+                .modal-footer {
+                    padding: 1.5rem;
+                    border-top: 1px solid var(--border);
+                    display: flex;
+                    justify-content: flex-end;
+                    gap: 1rem;
+                }
+                .form-group {
+                    margin-bottom: 1.5rem;
+                }
+                .form-group label {
+                    display: block;
+                    margin-bottom: 0.5rem;
+                    font-weight: 600;
+                    color: var(--slate-grey);
+                    font-size: 0.9rem;
+                }
+                .form-group input,
+                .form-group select {
+                    width: 100%;
+                    padding: 0.75rem;
+                    border: 2px solid var(--border);
+                    border-radius: var(--radius-sm);
+                    font-size: 1rem;
+                    transition: border-color 0.3s;
+                }
+                .form-group input:focus,
+                .form-group select:focus {
+                    outline: none;
+                    border-color: var(--industrial-orange);
+                }
+                .form-row {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 1rem;
+                }
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                @keyframes slideUp {
+                    from { transform: translateY(20px); opacity: 0; }
+                    to { transform: translateY(0); opacity: 1; }
+                }
+            `;
+            document.head.appendChild(styles);
+        }
+        
+        document.body.appendChild(modal);
+        
+        // Close modal
+        modal.querySelector('.modal-close').addEventListener('click', () => modal.remove());
+        modal.querySelector('.modal-cancel').addEventListener('click', () => modal.remove());
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.remove();
+        });
+        
+        // Form submission
+        modal.querySelector('#submitShipment').addEventListener('click', () => {
+            const form = modal.querySelector('#addShipmentForm');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            
+            const newShipment = {
+                container: document.getElementById('containerNumber').value,
+                origin: document.getElementById('origin').value,
+                destination: document.getElementById('destination').value,
+                carrier: document.getElementById('carrier').value,
+                eta: document.getElementById('eta').value || new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                status: 'in-transit',
+                days: Math.floor(Math.random() * 14) + 3
+            };
+            
+            // Save to localStorage
+            const userShipments = JSON.parse(localStorage.getItem(`cargolyze_shipments_${currentUser?.id}`)) || sampleShipments;
+            userShipments.unshift(newShipment);
+            localStorage.setItem(`cargolyze_shipments_${currentUser?.id}`, JSON.stringify(userShipments));
+            
+            modal.remove();
+            loadShipments();
+            showNotification('Shipment added successfully', 'success');
+        });
+    }
+
+    function showTrackModal() {
+        alert('Track Shipment feature coming soon!');
+    }
+
+    function showImportModal() {
+        alert('Excel Import feature coming soon!');
+    }
+
+    function showReportModal() {
+        alert('Report Generation feature coming soon!');
+    }
 
     // ========== PAGE NAVIGATION ==========
     window.addEventListener('pageshow', function(event) {
