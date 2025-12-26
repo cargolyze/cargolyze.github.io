@@ -1384,7 +1384,7 @@ function updateNavigationForUser() {
       }
       
       // Update mobile navigation - Show Account
-      if (mobileAccountLink) {
+      if (mobileAccountBtn) {
         mobileAccountBtn.innerHTML = `<i class="fas fa-user" style="margin-right: 0px;"></i>`;
         mobileAccountBtn.href = 'account.html';
         mobileAccountBtn.classList.add('logged-in');
@@ -1412,7 +1412,7 @@ function resetNavigationToSignUp() {
     accountLink.classList.add('cta-nav');
   }
   
-  if (mobileAccountLink) {
+  if (mobileAccountBtn) {
     mobileAccountBtn.innerHTML = '<i class="fas fa-user-plus" style="margin-right: 0px;"></i>';
     mobileAccountBtn.href = 'login.html';
     mobileAccountBtn.classList.remove('logged-in');
